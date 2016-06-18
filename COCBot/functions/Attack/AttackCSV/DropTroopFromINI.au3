@@ -264,7 +264,6 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 						Case $eBarb To $eLava ; drop normal troops
 							If $debug = True Then
 								Setlog("PureClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ")")
-							Else
 								PureClick($pixel[0], $pixel[1], $qty2, $delayPoint)
 							Else
 								If ( $Android = "BlueStacks" ) Or ( $Android = "BlueStacks2" ) Then
