@@ -2356,7 +2356,7 @@ EndIf
 	_GUICtrlComboBox_SetCurSel($cmbLvl11, $cmbLvl11Fill)
 	_GUICtrlComboBox_SetCurSel($cmbLvl12, $cmbLvl12Fill)
 	GUICtrlSetData($sldCollectorTolerance, $toleranceOffset)
-	checkCollectors()
+;	checkCollectors()
 	;Share Attack Settings----------------------------------------
 	GUICtrlSetData($txtShareMinGold, $iShareminGold)
 	GUICtrlSetData($txtShareMinElixir, $iShareminElixir)
@@ -2555,6 +2555,15 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	sldAttacksMin()
 	sldAttacksMax()
 
+	; Check Collectors Outside
+	If $ichkDBMeetCollOutside = 1 Then
+	GUICtrlSetState($chkDBMeetCollOutside, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDBMeetCollOutside, $GUI_UNCHECKED)
+	EndIf
+	chkDBMeetCollOutside()
+	GUICtrlSetData($txtDBMinCollOutsidePercent, $iDBMinCollOutsidePercent)
+	
 	; Simulate Sleep Settings
 	If $ichkCloseNight = 1 Then
 		GUICtrlSetState($chkUseSleep, $GUI_CHECKED)

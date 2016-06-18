@@ -198,7 +198,7 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 				Case $CheckVersionConfig
 					If CheckMODVersion() Then MsgBox(0, "", "You Are Using The Latest Version Of Mod By TheRevenor")
 				Case $DownloadLatestConfig
-					ShellExecute("https://github.com/" & $sGitHubModOwner & "/" & $sGitHubModRepo & "/releases")
+					ShellExecute("https://github.com/" & $sGitHubModOwner & "/" & $sGitHubModRepo & "/releases/latest")
 				Case $ModSupportConfig
 					ShellExecute($sModSupportUrl)
 				Case $btnDeletePBMessages

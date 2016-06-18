@@ -1502,10 +1502,15 @@ Global Const $drillLevelSteal[6] = [59, _
 								    343, _
 								    479]
 
+
+									
 ; Android Settings - Added by LunaEclipse
 Global $sAndroid = "<No Emulators>"
 Global $sAndroidInstance = ""
 Global $ichkHideTaskBar = 0
+
+; Check Collector Outside
+Global $ichkDBMeetCollOutside, $iDBMinCollOutsidePercent, $iCollOutsidePercent ; check later if $iCollOutsidePercent obsolete
 
 ; AwesomeGamer CSV Mod
 Global $attackcsv_use_red_line = 1

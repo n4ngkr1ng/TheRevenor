@@ -2260,6 +2260,14 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "android", "adb.clicks.enabled", ($AndroidAdbClicksEnabled ? "1" : "0"))
 	IniWriteS($config, "android", "adb.clicks.troop.deploy.size", $AndroidAdbClicksTroopDeploySize)
 
+	; Check Collectors Outside
+	If GUICtrlRead($chkDBMeetCollOutside) = $GUI_CHECKED Then
+		IniWriteS($config, "search", "DBMeetCollOutside", 1)
+	Else
+		IniWriteS($config, "search", "DBMeetCollOutside", 0)
+	EndIf
+	IniWriteS($config, "search", "DBMinCollOutsidePercent", GUICtrlRead($txtDBMinCollOutsidePercent))
+	
 	; SmartZap Settings - Added by LunaEclipse
 	If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
 		IniWrite($config, "SmartZap", "UseSmartZap", 1)

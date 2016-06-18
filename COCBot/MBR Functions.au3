@@ -261,6 +261,8 @@
 
 #include "functions\Village\ProfileSwitch.au3"
 
+; Check Collector Outside
+#include "functions\Village\AreCollectorsOutside.au3"
 
 ; Attack files - Added by LunaEclipse
 #include "functions\Attack\attackFunctions.au3"
