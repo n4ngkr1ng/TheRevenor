@@ -49,25 +49,71 @@ EndIf
 
 Global $sGitHubModOwner = "TheRevenor"
 Global $sGitHubModRepo = "MyBot-v6.1.2-MyMod"
-Global $sGitHubModLatestReleaseTag = "v1.0"
-Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/19794-mybot-6121-latest-release" ; Website
+Global $sGitHubModLatestReleaseTag = "v1.0.1"
+Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016" ; Website
 
 $sBotVersion = "v6.1.2.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
-$sModversion = "v1.0"
+$sModversion = $sGitHubModLatestReleaseTag
 $sBotTitle = "My Bot " & $sBotVersion & " MOD TheRevenor " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
 Global $sBotTitleDefault = $sBotTitle
 
+$ichkDisableSplash = IniRead($config, "General", "ChkDisableSplash", "0")
+#include "COCBot\GUI\MBR GUI Design Splash.au3"
+
+SplashStep("Loading Android functions...")
 Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
 #include "COCBot\functions\Android\Android.au3"
 
 ;multilanguage
+SplashStep("Detecting Language...")
 #include "COCBot\functions\Other\Multilanguage.au3"
 DetectLanguage()
+
+SplashStep("Detecting Android...")
+If $aCmdLine[0] < 2 Then
+	DetectRunningAndroid()
+	If Not $FoundRunningAndroid Then DetectInstalledAndroid()
+EndIf
+; Update Bot title
+$sBotTitle = $sBotTitle & "(" & ($AndroidInstance <> "" ? $AndroidInstance : $Android) & ")" ;Do not change this. If you do, multiple instances will not work.
+
+UpdateSplashTitle($sBotTitle)
+
+If $bBotLaunchOption_Restart = True Then
+   If CloseRunningBot($sBotTitle) = True Then
+	  ; wait for Mutexes to get disposed
+	  ;Sleep(1000) ; slow systems
+   EndIf
+EndIF
+
+Local $cmdLineHelp = "By using the commandline (or a shortcut) you can start multiple Bots:" & @CRLF & _
+					 "     MyBot.run.exe [ProfileName] [EmulatorName] [InstanceName]" & @CRLF & @CRLF & _
+					 "With the first command line parameter, specify the Profilename (you can create profiles on the Misc tab, if a " & _
+					 "profilename contains a {space}, then enclose the profilename in double quotes). " & _
+					 "With the second, specify the name of the Emulator and with the third, an Android Instance (not for BlueStacks). " & @CRLF & _
+					 "Supported Emulators are MEmu, Droid4X, Nox, BlueStacks2 and BlueStacks." & @CRLF & @CRLF & _
+					 "Examples:" & @CRLF & _
+					 "     MyBot.run.exe MyVillage BlueStacks2" & @CRLF & _
+					 '     MyBot.run.exe "My Second Village" MEmu MEmu_1'
+
+$hMutex_BotTitle = _Singleton($sBotTitle, 1)
+If $hMutex_BotTitle = 0 Then
+	MsgBox($MB_OK + $MB_ICONINFORMATION, $sBotTitle, "My Bot for " & $Android & ($AndroidInstance <> "" ? " (instance " & $AndroidInstance & ")" : "") & " is already running." & @CRLF & @CRLF & $cmdLineHelp)
+	Exit
+EndIf
+
+$hMutex_Profile = _Singleton(StringReplace($sProfilePath & "\" & $sCurrProfile, "\", "-"), 1)
+If $hMutex_Profile = 0 Then
+   _WinAPI_CloseHandle($hMutex_BotTitle)
+	MsgBox($MB_OK + $MB_ICONINFORMATION, $sBotTitle, "My Bot with Profile " & $sCurrProfile & " is already running in " & $sProfilePath & "\" & $sCurrProfile & "." & @CRLF & @CRLF & $cmdLineHelp)
+	Exit
+EndIf
 
 $hMutex_MyBot = _Singleton("MyBot.run", 1)
 $OnlyInstance = $hMutex_MyBot <> 0 ; And False
 SetDebugLog("My Bot is " & ($OnlyInstance ? "" : "not ") & "the only running instance")
+
 
 #include "COCBot\MBR Global Variables Troops.au3"
 #include "COCBot\MBR GUI Design.au3"
@@ -101,6 +147,7 @@ FileChangeDir($LibDir)
 MBRFunc(True) ; start MBRFunctions dll
 debugMBRFunctions($debugSearchArea, $debugRedArea, $debugOcr) ; set debug levels
 
+#cs
 If $aCmdLine[0] < 2 and $sAndroid = "" Then
 	DetectRunningAndroid()
 	If Not $FoundRunningAndroid Then DetectInstalledAndroid()
@@ -141,6 +188,7 @@ If $hMutex_Profile = 0 Then
 	MsgBox($MB_OK + $MB_ICONINFORMATION, $sBotTitle, "My Bot with Profile " & $sCurrProfile & " is already running in " & $sProfilePath & "\" & $sCurrProfile & "." & @CRLF & @CRLF & $cmdLineHelp)
 	Exit
 EndIf
+#ce
 
 If $FoundRunningAndroid Then
 	SetLog("Found running " & $Android & " " & $AndroidVersion, $COLOR_GREEN)
@@ -512,7 +560,8 @@ EndFunc   ;==>Idle
 Func AttackMain() ;Main control for attack functions
 	;LoadAmountOfResourcesImages() ; for debug
 	If GotoAttack() Then
-		If (IsSearchModeActive($DB) And checkCollectors(True, False)) or IsSearchModeActive($LB) or IsSearchModeActive($TS) Then
+;		If (IsSearchModeActive($DB) And checkCollectors(True, False)) or IsSearchModeActive($LB) or IsSearchModeActive($TS) Then
+		If IsSearchModeActive($DB) or IsSearchModeActive($LB) or IsSearchModeActive($TS) Then ; MOD ; MMHK ; fix no collectors are selected warning error
 			If $iChkUseCCBalanced = 1 or $iChkUseCCBalancedCSV = 1 Then ;launch profilereport() only if option balance D/R it's activated
 				ProfileReport()
 				If _Sleep($iDelayAttackMain1) Then Return

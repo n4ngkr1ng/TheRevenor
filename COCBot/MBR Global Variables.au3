@@ -47,6 +47,7 @@
 #include <Process.au3>
 #include <GuiListView.au3>
 #include <GUIToolTip.au3>
+#include <ProgressConstants.au3> ; Added for Splash
 
 Global Const $DEFAULT_HEIGHT = 780
 Global Const $DEFAULT_WIDTH = 860
@@ -1438,6 +1439,8 @@ Global $configLoaded = false
 
 Global $chkMakeIMGCSV
 
+; Splash Variables - mikemikemikecoc
+ Global $hSplash, $hSplashProgress, $lSplashStatus, $lSplashTitle, $iTotalSteps = 11, $iCurrentStep = 0
 
 ; TH Snipe Before Attack
 Global $THSnipeBeforeDBEnable = 0 , $THSnipeBeforeLBEnable = 0

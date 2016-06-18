@@ -5,14 +5,14 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: zengzeng
-; Modified ......:
+; Modified ......: MMHK (Jun-2016)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-
+#cs
 Global $chkLvl6Enabled
 Global $chkLvl7Enabled
 Global $chkLvl8Enabled
@@ -27,7 +27,11 @@ Global $cmbLvl9Fill
 Global $cmbLvl10Fill
 Global $cmbLvl11Fill
 Global $cmbLvl12Fill
+#ce
+Global $chkLvl6Enabled, $chkLvl7Enabled, $chkLvl8Enabled, $chkLvl9Enabled, $chkLvl10Enabled, $chkLvl11Enabled, $chkLvl12Enabled
+Global $cmbLvl6Fill, $cmbLvl7Fill, $cmbLvl8Fill, $cmbLvl9Fill, $cmbLvl10Fill, $cmbLvl11Fill, $cmbLvl12Fill
 Global $toleranceOffset
+#cs
 Func checkCollectors($log = False, $showLabel = True)
 	Local $anyCollectorsEnabled = 0
 	For $i = 6 To 12
@@ -49,15 +53,21 @@ Func checkCollectors($log = False, $showLabel = True)
 		Return True
 	EndIf
 EndFunc
+#ce
 Func chkLvl6()
 	If GUICtrlRead($chkLvl6) = $GUI_CHECKED Then
 		$chkLvl6Enabled = "1"
 		GUICtrlSetState($cmbLvl6, $GUI_ENABLE)
 	Else
 		$chkLvl6Enabled = "0"
-		GUICtrlSetState($cmbLvl6, $GUI_DISABLE)
+		If allUnChecked() Then
+			$chkLvl6Enabled = "1"
+			GUICtrlSetState($chkLvl6, $GUI_CHECKED)
+		Else
+			GUICtrlSetState($cmbLvl6, $GUI_DISABLE)
+		EndIf
 	EndIf
-	checkCollectors()
+;	checkCollectors()
 EndFunc   ;==>chkLvl6
 Func chkLvl7()
 	If GUICtrlRead($chkLvl7) = $GUI_CHECKED Then
@@ -65,9 +75,14 @@ Func chkLvl7()
 		GUICtrlSetState($cmbLvl7, $GUI_ENABLE)
 	Else
 		$chkLvl7Enabled = "0"
-		GUICtrlSetState($cmbLvl7, $GUI_DISABLE)
+		If allUnChecked() Then
+			$chkLvl7Enabled = "1"
+			GUICtrlSetState($chkLvl7, $GUI_CHECKED)
+		Else
+			GUICtrlSetState($cmbLvl7, $GUI_DISABLE)
+		EndIf
 	EndIf
-	checkCollectors()
+;	checkCollectors()
 EndFunc   ;==>chkLvl7
 Func chkLvl8()
 	If GUICtrlRead($chkLvl8) = $GUI_CHECKED Then
@@ -75,9 +90,14 @@ Func chkLvl8()
 		GUICtrlSetState($cmbLvl8, $GUI_ENABLE)
 	Else
 		$chkLvl8Enabled = "0"
-		GUICtrlSetState($cmbLvl8, $GUI_DISABLE)
+		If allUnChecked() Then
+			$chkLvl8Enabled = "1"
+			GUICtrlSetState($chkLvl8, $GUI_CHECKED)
+		Else
+			GUICtrlSetState($cmbLvl8, $GUI_DISABLE)
+		EndIf
 	EndIf
-	checkCollectors()
+;	checkCollectors()
 EndFunc   ;==>chkLvl8
 Func chkLvl9()
 	If GUICtrlRead($chkLvl9) = $GUI_CHECKED Then
@@ -85,9 +105,14 @@ Func chkLvl9()
 		GUICtrlSetState($cmbLvl9, $GUI_ENABLE)
 	Else
 		$chkLvl9Enabled = "0"
-		GUICtrlSetState($cmbLvl9, $GUI_DISABLE)
+		If allUnChecked() Then
+			$chkLvl9Enabled = "1"
+			GUICtrlSetState($chkLvl9, $GUI_CHECKED)
+		Else
+			GUICtrlSetState($cmbLvl9, $GUI_DISABLE)
+		EndIf
 	EndIf
-	checkCollectors()
+;	checkCollectors()
 EndFunc   ;==>chkLvl9
 Func chkLvl10()
 	If GUICtrlRead($chkLvl10) = $GUI_CHECKED Then
@@ -95,9 +120,14 @@ Func chkLvl10()
 		GUICtrlSetState($cmbLvl10, $GUI_ENABLE)
 	Else
 		$chkLvl10Enabled = "0"
-		GUICtrlSetState($cmbLvl10, $GUI_DISABLE)
+		If allUnChecked() Then
+			$chkLvl10Enabled = "1"
+			GUICtrlSetState($chkLvl10, $GUI_CHECKED)
+		Else
+			GUICtrlSetState($cmbLvl10, $GUI_DISABLE)
+		EndIf
 	EndIf
-	checkCollectors()
+;	checkCollectors()
 EndFunc   ;==>chkLvl10
 Func chkLvl11()
 	If GUICtrlRead($chkLvl11) = $GUI_CHECKED Then
@@ -105,9 +135,14 @@ Func chkLvl11()
 		GUICtrlSetState($cmbLvl11, $GUI_ENABLE)
 	Else
 		$chkLvl11Enabled = "0"
-		GUICtrlSetState($cmbLvl11, $GUI_DISABLE)
+		If allUnChecked() Then
+			$chkLvl11Enabled = "1"
+			GUICtrlSetState($chkLvl11, $GUI_CHECKED)
+		Else
+			GUICtrlSetState($cmbLvl11, $GUI_DISABLE)
+		EndIf
 	EndIf
-	checkCollectors()
+;	checkCollectors()
 EndFunc   ;==>chkLvl11
 Func chkLvl12()
 	If GUICtrlRead($chkLvl12) = $GUI_CHECKED Then
@@ -115,9 +150,14 @@ Func chkLvl12()
 		GUICtrlSetState($cmbLvl12, $GUI_ENABLE)
 	Else
 		$chkLvl12Enabled = "0"
-		GUICtrlSetState($cmbLvl12, $GUI_DISABLE)
+		If allUnChecked() Then
+			$chkLvl12Enabled = "1"
+			GUICtrlSetState($chkLvl12, $GUI_CHECKED)
+		Else
+			GUICtrlSetState($cmbLvl12, $GUI_DISABLE)
+		EndIf
 	EndIf
-	checkCollectors()
+;	checkCollectors()
 EndFunc   ;==>chkLvl12
 Func cmbLvl6()
 	$cmbLvl6Fill = _GUICtrlComboBox_GetCurSel($cmbLvl6)
@@ -143,3 +183,19 @@ EndFunc   ;==>cmbLvl12
 Func sldCollectorTolerance()
 	$toleranceOffset = GUICtrlRead($sldCollectorTolerance)
 EndFunc   ;==>sldCollectorTolerance
+
+; MOD ; MMHK ; fix no collectors are selected warning error
+Func allUnChecked()
+	Local $someChecked = BitOR($chkLvl6Enabled, $chkLvl7Enabled, $chkLvl8Enabled, $chkLvl9Enabled, $chkLvl10Enabled, $chkLvl11Enabled, $chkLvl12Enabled)
+	If $someChecked Then return False
+	Return True
+EndFunc   ;==>allUnChecked
+
+; MOD ; MMHK ; Check Collectors Outside
+Func chkDBMeetCollOutside()
+	If GUICtrlRead($chkDBMeetCollOutside) = $GUI_CHECKED Then
+		_GUICtrlEdit_SetReadOnly($txtDBMinCollOutsidePercent, False)
+	Else
+		_GUICtrlEdit_SetReadOnly($txtDBMinCollOutsidePercent, True)
+	EndIf
+EndFunc   ;==>chkDBMeetCollOutside

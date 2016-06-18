@@ -716,6 +716,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$iValuePBTimeForcedExit = IniRead($config, "other", "ValuePBTimeForcedExit", "15")
 
 		$ichkLanguage = IniRead($config, "General", "ChkLanguage", "1")
+		$ichkDisableSplash = IniRead($config, "General", "ChkDisableSplash", "1") ;<--------- Splash
 		$ichkVersion = IniRead($config, "General", "ChkVersion", "1")
 		;InireadS(xxxx,$config, "attack", "xxxx", "0")
 		;InireadS(xxxx,$config, "attack", "xxxx", "0")
@@ -1106,5 +1107,3 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 	$itxtMinTrophyAmount = IniRead($config, "profiles", "txtMinTrophyAmount", "1000")
 	
 EndFunc   ;==>readConfig
-
-
