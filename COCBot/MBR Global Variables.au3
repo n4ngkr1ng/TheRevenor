@@ -235,6 +235,7 @@ Global $sProfilePath = @ScriptDir & "\Profiles"
 ;Global $sTemplates = @ScriptDir & "\Templates"
 Global $sPreset = @ScriptDir & "\Strategies"
 Global $aTxtLogInitText[0][6] = [[]]
+Global $profileString
 
 Global $iMoveMouseOutBS = 0 ; If enabled moves mouse out of Android window when bot is running
 Global $SilentSetLog = False ; No logs to Log Control when enabled
@@ -329,7 +330,7 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eIcnCollectorLocate, $eIcnDrillLocate, $eIcnMineLocate, $eIcnBarrackLocate, $eIcnDarkBarrackLocate, $eIcnDarkSpellFactoryLocate, $eIcnDarkSpellFactory, $eIcnEarthQuakeSpell, $eIcnHasteSpell, $eIcnPoisonSpell, $eIcnBldgTarget, $eIcnBldgX, $eIcnRecycle, $eIcnHeroes, _
 		$eIcnBldgElixir, $eIcnBldgGold, $eIcnMagnifier, $eIcnWallElixir, $eIcnWallGold, $eIcnQueen, $eIcnKing, $eIcnDarkSpellBoost, $eIcnQueenBoostLocate, $eIcnKingBoostLocate, $eIcnKingUpgr, $eIcnQueenUpgr, $eIcnWardenAbility, $eIcnWarden, $eIcnWardenBoostLocate, $eIcnKingBoost, _
 		$eIcnQueenBoost, $eIcnWardenBoost, $eIcnWardenUpgr, $eIcnReload, $eIcnCopy, $eIcnAddcvs, $eIcnEdit, $eIcnTreeSnow, $eIcnSleepingQueen, $eIcnSleepingKing, $eIcnGoldElixir, $eIcnBowler, $eIcnDonBowler, $eIcnCCDonate, $eIcnEagleArt, $eIcnGembox, $eIcnInferno4, $eIcnInfo, $eIcnMain, _
-		$eIcnTree, $eIcnProfile, $eIcnCCRequest, $eIcnTelegram, $eIcnTiles, $eIcnXbow3, $eIcnBark, $eIcnDailyProgram, $eIcnLootCart, $eIcnSleepMode, $eIcnTH11, $eIcnTrainMode, $eIcnSleepingWarden
+		$eIcnTree, $eIcnProfile, $eIcnCCRequest, $eIcnTelegram, $eIcnTiles, $eIcnXbow3, $eIcnBark, $eIcnDailyProgram, $eIcnLootCart, $eIcnSleepMode, $eIcnTH11, $eIcnTrainMode, $eIcnSleepingWarden, $eIcnDevo
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $eIcnOptions = $eIcnDonBlacklist
@@ -393,6 +394,16 @@ Global $icmbHoursPushBullet
 Global $chkDeleteAllPBPushes
 Global $ichkAlertPBCampFull
 Global $ichkAlertPBCampFullTest = 0
+
+;Pushbullet Stuff
+Global $StartTime = @HOUR & ":" & @MIN &", " & @MON & "/" & @MDAY
+Global $Attackcount = 0
+Global $VillageStatIncrement
+Global $VillageStatIncrementTXT
+Global $SearchNotifyCount
+Global $SearchNotifyCountTXT
+Global $SearchNotifyCountMsgIden
+Global $PersonalBreakNotified = False
 
 Global $sLogFName
 Global $sAttackLogFName
@@ -909,11 +920,11 @@ Global $itxtRestartDark = 500
 ;Global $iWBMortar
 ;Global $iWBWizTower
 ;Global $iWBXbow
-Global $TroopGroup[10][3] = [["Arch", 1, 1], ["Giant", 2, 5], ["Wall", 4, 2], ["Barb", 0, 1], ["Gobl", 3, 1], ["Heal", 7, 14], ["Pekk", 9, 25], ["Ball", 5, 5], ["Wiza", 6, 4], ["Drag", 8, 20]]
+Global $TroopGroup[10][3] = [["Pekk", 9, 25], ["Drag", 8, 20], ["Heal", 7, 14], ["Ball", 5, 5], ["Giant", 2, 5], ["Wiza", 6, 4], ["Wall", 4, 2], ["Arch", 1, 1], ["Barb", 0, 1], ["Gobl", 3, 1]]
 Global $TroopName[UBound($TroopGroup, 1)]
 Global $TroopNamePosition[UBound($TroopGroup, 1)]
 Global $TroopHeight[UBound($TroopGroup, 1)]
-Global $TroopGroupDark[6][3] = [["Mini", 0, 2], ["Hogs", 1, 5], ["Valk", 2, 8], ["Gole", 3, 30], ["Witc", 4, 12], ["Lava", 5, 30]]
+Global $TroopGroupDark[6][3] = [["Gole", 3, 30], ["Lava", 5, 30], ["Witc", 4, 12], ["Valk", 2, 8], ["Hogs", 1, 5], ["Mini", 0, 2]]
 Global $TroopDarkName[UBound($TroopGroupDark, 1)]
 Global $TroopDarkNamePosition[UBound($TroopGroupDark, 1)]
 Global $TroopDarkHeight[UBound($TroopGroupDark, 1)]
@@ -1118,9 +1129,12 @@ Global $iMakeScreenshotNow = False
 
 
 Global $lastversion = "" ;latest version from GIT
+Global $lastModversion = "" ;latest version from GIT
 Global $lastmessage = "" ;message for last version
+Global $lastModmessage = "" ;message for last version
 Global $ichkVersion = 1
 Global $oldversmessage = "" ;warning message for old bot
+Global $oldModversmessage = "" ;warning message for old bot
 
 ;BarracksStatus
 Global $numBarracks = 0
@@ -1425,9 +1439,90 @@ Global $configLoaded = false
 Global $chkMakeIMGCSV
 
 
-;TH Snipe Before Attack
+; TH Snipe Before Attack
 Global $THSnipeBeforeDBEnable = 0 , $THSnipeBeforeLBEnable = 0
 Global $THSnipeBeforeDBTiles = 0 , $THSnipeBeforeLBTiles = 0
 Global $THSnipeBeforeDBScript = 0 , $THSnipeBeforeLBScript = 0
 
+; mikemikemikecoc - Wait For Spells
+Global $iEnableSpellsWait[$iModeCount], $iTotalSpellSpace = 0, $bFullArmySpells = False
 
+; Close while training variables
+Global $ichkCloseTraining = 1
+Global $minTrainAddition = 10, $maxTrainAddition = 20
+Global $LeaveCoCOpen = 0
+Global $CloseCoCGame = 1
+Global $RandomCoCOpen = 0
+Global $RandomCloseTraining = 0
+Global $RandomCloseTraining2 = 0
+
+; Sleep at night variables
+Global $ichkCloseNight = 1
+Global $sleepStart = 0, $sleepEnd = 8
+Global $nextSleepStart = -999, $nextSleepEnd = -999
+
+; Daily attack variables
+Global $ichkLimitAttacks = 1
+Global $rangeAttacksStart = 20, $rangeAttacksEnd = 25
+Global $dailyAttacks = 0, $dailyAttackLimit = 0
+
+; Profile Switch
+Global $ichkGoldSwitchMax, $itxtMaxGoldAmount, $icmbGoldMaxProfile, $ichkGoldSwitchMin, $itxtMinGoldAmount, $icmbGoldMinProfile
+Global $ichkElixirSwitchMax, $itxtMaxElixirAmount, $icmbElixirMaxProfile, $ichkElixirSwitchMin, $itxtMinElixirAmount, $icmbElixirMinProfile
+Global $ichkDESwitchMax, $itxtMaxDEAmount, $icmbDEMaxProfile, $ichkDESwitchMin, $itxtMinDEAmount, $icmbDEMinProfile
+Global $ichkTrophySwitchMax, $itxtMaxTrophyAmount, $icmbTrophyMaxProfile, $ichkTrophySwitchMin, $itxtMinTrophyAmount, $icmbTrophyMinProfile
+
+
+; SmartZap GUI variables - Added by LunaEclipse
+Global $ichkSmartZap = 1
+Global $ichkSmartZapDB = 1
+Global $ichkSmartZapSaveHeroes = 1
+Global $itxtMinDE = 250
+
+; SmartZap stats - Added by LunaEclipse
+Global $smartZapGain = 0
+Global $numLSpellsUsed = 0
+
+; SmartZap Array to hold Total Amount of DE available from Drill at each level (1-6) - Added by LunaEclipse
+Global Const $drillLevelHold[6] = [120, _
+								   225, _
+								   405, _
+								   630, _
+								   960, _
+								   1350]
+
+; SmartZap Array to hold Amount of DE available to steal from Drills at each level (1-6) - Added by LunaEclipse
+Global Const $drillLevelSteal[6] = [59, _
+                                    102, _
+								    172, _
+								    251, _
+								    343, _
+								    479]
+
+; Android Settings - Added by LunaEclipse
+Global $sAndroid = "<No Emulators>"
+Global $sAndroidInstance = ""
+Global $ichkHideTaskBar = 0
+
+; AwesomeGamer CSV Mod
+Global $attackcsv_use_red_line = 1
+Global $TroopDropNumber = 0
+Global $remainingTroops[12][2]
+
+; CSV Deployment Speed Mod
+Global $isldSelectedCSVSpeed[$iModeCount], $iCSVSpeeds[13]
+$isldSelectedCSVSpeed[$DB] = 4
+$isldSelectedCSVSpeed[$LB] = 4
+$iCSVSpeeds[0] = .1
+$iCSVSpeeds[1] = .25
+$iCSVSpeeds[2] = .5
+$iCSVSpeeds[3] = .75
+$iCSVSpeeds[4] = 1
+$iCSVSpeeds[5] = 1.25
+$iCSVSpeeds[6] = 1.5
+$iCSVSpeeds[7] = 1.75
+$iCSVSpeeds[8] = 2
+$iCSVSpeeds[9] = 2.25
+$iCSVSpeeds[10] = 2.5
+$iCSVSpeeds[11] = 2.75
+$iCSVSpeeds[12] = 3

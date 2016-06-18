@@ -47,8 +47,16 @@ EndIf
 #include "COCBot\MBR Global Variables.au3"
 #include "COCBot\functions\Config\ScreenCoordinates.au3"
 
+Global $sGitHubModOwner = "TheRevenor"
+Global $sGitHubModRepo = "MyBot-v6.1.2-MyMod"
+Global $sGitHubModLatestReleaseTag = "v1.0"
+Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/19794-mybot-6121-latest-release" ; Website
+
 $sBotVersion = "v6.1.2.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
-$sBotTitle = "My Bot " & $sBotVersion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
+$sModversion = "v1.0"
+$sBotTitle = "My Bot " & $sBotVersion & " MOD TheRevenor " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
+
+Global $sBotTitleDefault = $sBotTitle
 
 Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
 #include "COCBot\functions\Android\Android.au3"
@@ -56,43 +64,6 @@ Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
 ;multilanguage
 #include "COCBot\functions\Other\Multilanguage.au3"
 DetectLanguage()
-
-If $aCmdLine[0] < 2 Then
-	DetectRunningAndroid()
-	If Not $FoundRunningAndroid Then DetectInstalledAndroid()
-EndIf
-; Update Bot title
-$sBotTitle = $sBotTitle & "(" & ($AndroidInstance <> "" ? $AndroidInstance : $Android) & ")" ;Do not change this. If you do, multiple instances will not work.
-
-If $bBotLaunchOption_Restart = True Then
-   If CloseRunningBot($sBotTitle) = True Then
-	  ; wait for Mutexes to get disposed
-	  ;Sleep(1000) ; slow systems
-   EndIf
-EndIF
-
-Local $cmdLineHelp = "By using the commandline (or a shortcut) you can start multiple Bots:" & @CRLF & _
-					 "     MyBot.run.exe [ProfileName] [EmulatorName] [InstanceName]" & @CRLF & @CRLF & _
-					 "With the first command line parameter, specify the Profilename (you can create profiles on the Misc tab, if a " & _
-					 "profilename contains a {space}, then enclose the profilename in double quotes). " & _
-					 "With the second, specify the name of the Emulator and with the third, an Android Instance (not for BlueStacks). " & @CRLF & _
-					 "Supported Emulators are MEmu, Droid4X, Nox, BlueStacks2 and BlueStacks." & @CRLF & @CRLF & _
-					 "Examples:" & @CRLF & _
-					 "     MyBot.run.exe MyVillage BlueStacks2" & @CRLF & _
-					 '     MyBot.run.exe "My Second Village" MEmu MEmu_1'
-
-$hMutex_BotTitle = _Singleton($sBotTitle, 1)
-If $hMutex_BotTitle = 0 Then
-	MsgBox($MB_OK + $MB_ICONINFORMATION, $sBotTitle, "My Bot for " & $Android & ($AndroidInstance <> "" ? " (instance " & $AndroidInstance & ")" : "") & " is already running." & @CRLF & @CRLF & $cmdLineHelp)
-	Exit
-EndIf
-
-$hMutex_Profile = _Singleton(StringReplace($sProfilePath & "\" & $sCurrProfile, "\", "-"), 1)
-If $hMutex_Profile = 0 Then
-   _WinAPI_CloseHandle($hMutex_BotTitle)
-	MsgBox($MB_OK + $MB_ICONINFORMATION, $sBotTitle, "My Bot with Profile " & $sCurrProfile & " is already running in " & $sProfilePath & "\" & $sCurrProfile & "." & @CRLF & @CRLF & $cmdLineHelp)
-	Exit
-EndIf
 
 $hMutex_MyBot = _Singleton("MyBot.run", 1)
 $OnlyInstance = $hMutex_MyBot <> 0 ; And False
@@ -129,6 +100,47 @@ FileChangeDir($LibDir)
 ;MBRfunctions.dll & debugger
 MBRFunc(True) ; start MBRFunctions dll
 debugMBRFunctions($debugSearchArea, $debugRedArea, $debugOcr) ; set debug levels
+
+If $aCmdLine[0] < 2 and $sAndroid = "" Then
+	DetectRunningAndroid()
+	If Not $FoundRunningAndroid Then DetectInstalledAndroid()
+EndIf
+; Update Bot title
+$sBotTitle = $sBotTitleDefault & "(" & ($AndroidInstance <> "" ? $AndroidInstance : $Android) & ")" ; Do not change this. If you do, multiple instances will not work.
+WinSetTitle($frmBot, "", $sBotTitle)
+
+If $bBotLaunchOption_Restart = True Then
+   If CloseRunningBot($sBotTitle) = True Then
+	  ; wait for Mutexes to get disposed
+	  ;Sleep(1000) ; slow systems
+   EndIf
+EndIF
+
+Local $cmdLineHelp = "By using the commandline (or a shortcut) you can start multiple Bots:" & @CRLF & _
+					 "     MyBot.run.exe [ProfileName] [EmulatorName] [InstanceName]" & @CRLF & @CRLF & _
+					 "With the first command line parameter, specify the Profilename (you can create profiles on the Misc tab, if a " & _
+					 "profilename contains a {space}, then enclose the profilename in double quotes). " & _
+					 "With the second, specify the name of the Emulator and with the third, an Android Instance (not for BlueStacks). " & @CRLF & _
+					 "Supported Emulators are MEmu, Droid4X, Nox, BlueStacks2 and BlueStacks." & @CRLF & @CRLF & _
+					 "Examples:" & @CRLF & _
+					 "     MyBot.run.exe MyVillage BlueStacks2" & @CRLF & _
+					 "     MyBot.run.exe ""My Second Village"" MEmu MEmu_1"
+
+; Only check the Title if a specific emulator and/or instance was specified.
+If $aCmdLine[0] > 1 Then
+	$hMutex_BotTitle = _Singleton($sBotTitle, 1)
+	If $hMutex_BotTitle = 0 Then
+		MsgBox(0, $sBotTitle, "My Bot for " & $Android & ($AndroidInstance <> "" ? " (instance " & $AndroidInstance & ")" : "") & " is already running." & @CRLF & @CRLF & $cmdLineHelp)
+		Exit
+	EndIf
+EndIF
+
+$hMutex_Profile = _Singleton(StringReplace($sProfilePath & "\" & $sCurrProfile, "\", "-"), 1)
+If $hMutex_Profile = 0 Then
+   _WinAPI_CloseHandle($hMutex_BotTitle)
+	MsgBox($MB_OK + $MB_ICONINFORMATION, $sBotTitle, "My Bot with Profile " & $sCurrProfile & " is already running in " & $sProfilePath & "\" & $sCurrProfile & "." & @CRLF & @CRLF & $cmdLineHelp)
+	Exit
+EndIf
 
 If $FoundRunningAndroid Then
 	SetLog("Found running " & $Android & " " & $AndroidVersion, $COLOR_GREEN)
@@ -183,10 +195,45 @@ BotClose()
 Func runBot() ;Bot that runs everything in order
 	$TotalTrainedTroops = 0
 	Local $Quickattack = False
+	Local $LeaveOrClose = 0
 	While 1
+		If checkSleep() And $RunState And $ichkCloseNight = 1 Then
+
+			If $debugSetLog = 1 Then SetLog("Sleep Start: " & $nextSleepStart & " - Sleep End: " & $nextSleepEnd, $COLOR_MAROON)
+			SetLog("Time to log out for sleep period...", $COLOR_GREEN)
+			CloseCOCAndWait(calculateTimeRemaining($nextSleepEnd), True)
+			; Set Collector counter to 11 so it collects immediately after attacking
+			;$iCollectCounter = 11
+			$RandomTimer = true
+			$FirstStart = true
+			;RandomAttack()
+		ElseIf $RunState And $ichkLimitAttacks = 1 And $dailyAttacks >= $dailyAttackLimit Then
+			If $debugSetLog = 1 Then SetLog("Attacks: " & $dailyAttacks & " - Limit: " & $dailyAttackLimit, $COLOR_MAROON)
+			SetLog("Already reached today's quota of attacks...", $COLOR_GREEN)
+			CloseCOCAndWait(calculateTimeRemaining($nextSleepEnd), True)
+			; Set Collector counter to 11 so it collects immediately after attacking
+			;$iCollectCounter = 11
+			$RandomTimer = true
+			$FirstStart = true
+			;RandomAttack()
+		ElseIf $RunState Then
+EndIf
 		$Restart = False
 		$fullArmy = False
 		$CommandStop = -1
+			
+			; each loop ( after each attack ) will determinate if close while train or not 
+			If $RandomCloseTraining = 1 then 
+				if $debugSetlog = 1 then Setlog("You chose the Random Close Or Leave train...", $COLOR_RED)
+				$RandomCloseTraining2 = Random(0,1,1)
+				If $RandomCloseTraining2 = 1 then $LeaveOrClose +=1 
+				If $LeaveOrClose = 3 then 
+					$RandomCloseTraining2 = 0
+					$LeaveOrClose = 0 
+				EndIf 
+				if $debugSetlog = 1 then Setlog("$RandomCloseTraining2: " & $RandomCloseTraining2)
+			EndIf
+			
 		If _Sleep($iDelayRunBot1) Then Return
 		checkMainScreen()
 		If $Restart = True Then ContinueLoop
@@ -208,6 +255,7 @@ Func runBot() ;Bot that runs everything in order
 			If $RequestScreenshot = 1 Then PushMsg("RequestScreenshot")
 			If _Sleep($iDelayRunBot3) Then Return
 			VillageReport()
+			ProfileSwitch() ; Added for Switch profile
 			If $OutOfGold = 1 And (Number($iGoldCurrent) >= Number($itxtRestartGold)) Then ; check if enough gold to begin searching again
 				$OutOfGold = 0 ; reset out of gold flag
 				Setlog("Switching back to normal after no gold to search ...", $COLOR_RED)
@@ -342,7 +390,28 @@ EndFunc   ;==>runBot
 Func Idle() ;Sequence that runs until Full Army
 	Local $TimeIdle = 0 ;In Seconds
 	;If $debugsetlog = 1 Then SetLog("Func Idle ", $COLOR_PURPLE)
-	While $fullArmy = False Or $bFullArmyHero = False
+	
+	;mikemikemikecoc - Wait For Spells
+	While $fullArmy = False Or $bFullArmyHero = False Or $bFullArmySpells = False
+		If checkSleep() And $RunState And $ichkCloseNight = 1 Then
+			If $debugSetLog = 1 Then SetLog("Sleep Start: " & $nextSleepStart & " - Sleep End: " & $nextSleepEnd, $COLOR_MAROON)
+			SetLog("Time to log out for sleep period...", $COLOR_GREEN)
+			CloseCOCAndWait(calculateTimeRemaining($nextSleepEnd), True)
+			; Set Collector counter to 11 so it collects immediately after attacking
+			;$iCollectCounter = 11
+			$RandomTimer = true
+			$FirstStart = true
+			;RandomAttack()
+		ElseIf $RunState And $ichkLimitAttacks = 1 And $dailyAttacks >= $dailyAttackLimit Then
+			If $debugSetLog = 1 Then SetLog("Attacks: " & $dailyAttacks & " - Limit: " & $dailyAttackLimit, $COLOR_MAROON)
+			SetLog("Already reached today's quota of attacks...", $COLOR_GREEN)
+			CloseCOCAndWait(calculateTimeRemaining($nextSleepEnd), True)
+			; Set Collector counter to 11 so it collects immediately after attacking
+			;$iCollectCounter = 11
+			$RandomTimer = true
+			$FirstStart = true
+			;RandomAttack()
+		ElseIf $RunState Then
 		checkAndroidTimeLag()
 
 		If $RequestScreenshot = 1 Then PushMsg("RequestScreenshot")
@@ -363,6 +432,7 @@ Func Idle() ;Sequence that runs until Full Army
 			CheckOverviewFullArmy(True)
 			If _Sleep($iDelayIdle1) Then Return
 			getArmyHeroCount(True, True)
+			getArmySpellCount(True, True) ;mikemikemikecoc - Wait For Spells
 			If Not ($fullArmy) And $bTrainEnabled = True Then
 				SetLog("Army Camp and Barracks are not full, Training Continues...", $COLOR_ORANGE)
 				$CommandStop = 0
@@ -395,6 +465,7 @@ Func Idle() ;Sequence that runs until Full Army
 		$iCollectCounter = $iCollectCounter + 1
 		If $CommandStop = -1 Then
 			Train()
+			checkRemainingTraining()
 				If $Restart = True Then ExitLoop
 				If _Sleep($iDelayIdle1) Then ExitLoop
 				checkMainScreen(False)
@@ -434,6 +505,7 @@ Func Idle() ;Sequence that runs until Full Army
 
 		If $OutOfGold = 1 Or $OutOfElixir = 1 Then Return  ; Halt mode due low resources, only 1 idle loop
 		If $iChkSnipeWhileTrain = 1 Then SnipeWhileTrain()  ;snipe while train
+		EndIf
 	WEnd
 EndFunc   ;==>Idle
 
@@ -469,11 +541,13 @@ Func AttackMain() ;Main control for attack functions
 			Attack()
 				If $Restart = True Then Return
 			ReturnHome($TakeLootSnapShot)
+		; Increase the counter for the number of attacks today
+		$dailyAttacks += 1
 				If _Sleep($iDelayAttackMain2) Then Return
 			Return True
 		Else
-			Setlog("No one of search condition match: (wait troops and/or heroes according to search settings)", $COLOR_BLUE)
-			Setlog(" - wait troops and/or heroes according to search settings", $COLOR_BLUE)
+			Setlog("No one of search condition match:", $COLOR_BLUE) ;mikemikemikecoc - Wait For Spells
+			Setlog(" - wait troops, heroes and/or spells according to search settings", $COLOR_BLUE)
 		EndIf
 	Else
 		SetLog("Attacking Not Planned, Skipped..", $COLOR_RED)

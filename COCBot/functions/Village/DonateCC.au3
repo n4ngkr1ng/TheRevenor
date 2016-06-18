@@ -132,8 +132,10 @@ Func DonateCC($Check = False)
 					If $ichkExtraAlphabets = 1 Then
 						ClipPut($ClanString)
 						Local $tempClip = ClipGet()
+						SetLog("----------------------------------")
 						SetLog("Chat Request: " & $tempClip)
 					Else
+						SetLog("----------------------------------")
 						SetLog("Chat Request: " & $ClanString)
 					EndIf
 				EndIf
@@ -364,6 +366,7 @@ Func DonateCC($Check = False)
 		EndIf
 	WEnd
 
+	SetLog("-----------End Donate-----------", $COLOR_BLUE)
 	If _Sleep($iDelayDonateCC2) Then Return
 
 EndFunc   ;==>DonateCC
@@ -422,7 +425,7 @@ Func CheckDonateString($String, $ClanString) ;Checks if exact
 EndFunc   ;==>CheckDonateString
 
 Func DonateTroopType($Type, $Quant = 0, $Custom = False, $bDonateAll = False)
-Setlog ($debugOCRdonate,$color_aqua)
+Setlog ($debugOCRdonate,$color_green) ; aqua
 
 	If $debugSetlog = 1 Then Setlog("$DonateTroopType Start: " & NameOfTroop($Type), $COLOR_PURPLE)
 

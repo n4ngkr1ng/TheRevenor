@@ -43,6 +43,10 @@ $hToolTip = _GUIToolTip_Create($frmBot) ; tool tips for URL links etc
 
 $idMENU_DONATE = GUICtrlCreateMenu("&" & GetTranslated(601,18,"Paypal Donate?"))
 $idMENU_DONATE_SUPPORT = GUICtrlCreateMenuItem(GetTranslated(601,19,"Support the development"), $idMENU_DONATE)
+$AboutMenu = GUICtrlCreateMenu("Help")
+$CheckVersionConfig = GUICtrlCreateMenuItem("Check Version", $AboutMenu)
+$DownloadLatestConfig = GUICtrlCreateMenuItem("Download Latest", $AboutMenu)
+$ModSupportConfig = GUICtrlCreateMenuItem("Mod Support", $AboutMenu)
 GUICtrlSetOnEvent(-1, "")
 ;$idMENU_OPTIONS = GUICtrlCreateMenu("&Options")
 ;GUICtrlSetOnEvent(-1, "")
@@ -62,12 +66,16 @@ GUICtrlSetOnEvent(-1, "")
 #include "GUI\MBR GUI Design Child Village.au3"
 #include "GUI\MBR GUI Design Child Attack.au3"
 #include "GUI\MBR GUI Design Child Bot.au3"
+;Mod
+#include "GUI\MBR GUI Design Child Mod.au3"
+
 ;GUISetState()
 GUISwitch($frmBot)
 $tabMain = GUICtrlCreateTab(5, 85, $_GUI_MAIN_WIDTH - 9, $_GUI_MAIN_HEIGHT - 225); , $TCS_MULTILINE)
 $tabGeneral = GUICtrlCreateTabItem(GetTranslated(600,1, "Log"))
 $tabVillage = GUICtrlCreateTabItem(GetTranslated(600,2, "Village")) ; Village
 $tabAttack = GUICtrlCreateTabItem(GetTranslated(600,3,"Attack Plan"))
+$tabMod = GUICtrlCreateTabItem("MOD")
 $tabBot = GUICtrlCreateTabItem(GetTranslated(600,4,"Bot"))
 
 ;~ -------------------------------------------------------------

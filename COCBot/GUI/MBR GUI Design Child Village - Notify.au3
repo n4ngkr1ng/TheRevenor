@@ -106,6 +106,27 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet")
 			GUICtrlSetTip(-1, GetTranslated(619,38, "Send an Alert when your village is connected to from another device."))
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
+		
+;Periodic village stats and Searchcount Nofications.		
+$y += 20
+		$chkSearchNotifyCount = GUICtrlCreateCheckbox("Searchcount.  Increment:", $x + 10, $y, -1, -1)
+		GUICtrlSetTip(-1, "Searchcount Notification every ____ searches.  If getting pushbullet errors or acting funny, increase increment.  ")
+		GUICtrlSetState(-1, $GUI_DISABLE)
+		$txtSearchNotifyCount = GUICtrlCreateInput("25", $x + 150, $y + 2, 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+		$txtTip = "Searchcount Notification every ____ searches."
+		GUICtrlSetTip(-1, $txtTip)
+		GUICtrlSetLimit(-1, 3)
+		GUICtrlSetOnEvent(-1, "txtSearchNotifyCount")
+		GUICtrlSetState(-1, $GUI_DISABLE)
+		$chkVillageStatIncrement = GUICtrlCreateCheckbox("Stats.  Increment:", $x + 210, $y, -1, -1)
+		GUICtrlSetTip(-1, "Send Village Stats every ____ attacks.")
+		GUICtrlSetState(-1, $GUI_DISABLE)
+		$txtVillageStatIncrement = GUICtrlCreateInput("5", $x + 313, $y + 2, 30, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+		$txtTip = "No. of attacks between stat updates."
+		GUICtrlSetTip(-1, $txtTip)
+		GUICtrlSetLimit(-1, 3)
+		GUICtrlSetOnEvent(-1, "txtVillageStatIncrement")
+		GUICtrlSetState(-1, $GUI_DISABLE)
 GUICtrlCreateTabItem("")
 $hGUI_NOTIFY_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600,19,"Instructions"))
 	Local $x = 25, $y = 45

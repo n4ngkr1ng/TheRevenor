@@ -19,6 +19,21 @@
 #include <Array.au3>
 #include <String.au3>
 
+;Prevent crashes
+    $oMyError = ObjEvent("AutoIt.Error","MyErrFunc")
+    Func MyErrFunc()
+      SetLog("COM Error!"    & @CRLF  & @CRLF & _
+                 "err.description is: " & @TAB & $oMyError.description  & @CRLF & _
+                 "err.windescription:"   & @TAB & $oMyError.windescription & @CRLF & _
+                 "err.number is: "       & @TAB & hex($oMyError.number,8)  & @CRLF & _
+                 "err.lastdllerror is: "   & @TAB & $oMyError.lastdllerror   & @CRLF & _
+                 "err.scriptline is: "   & @TAB & $oMyError.scriptline   & @CRLF & _
+                 "err.source is: "       & @TAB & $oMyError.source       & @CRLF & _
+                 "err.helpfile is: "       & @TAB & $oMyError.helpfile     & @CRLF & _
+                 "err.helpcontext is: " & @TAB & $oMyError.helpcontext _
+                )
+    Endfunc
+
 Func _RemoteControlPushBullet()
 	If $PushBulletEnabled = 0 Or $pRemote = 0 Then Return
 	$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
@@ -117,11 +132,11 @@ Func _RemoteControlPushBullet()
 						_DeleteMessageOfPushBullet($iden[$x])
 					Case GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(20,23, -1) ;"LASTRAIDTXT"
 						SetLog("Pusbullet: Your request has been received. Last Raid txt sent", $COLOR_GREEN)
-						_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,34, "Last Raid txt") & "\n" & "[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldLast) & " [" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirLast) & " [" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkLast) & " [" & GetTranslated(620,38, "T") & "]: " & $iTrophyLast)
+						_PushToPushBullet(@HOUR & ":" & @MIN &" - " &$iOrigPushBullet& " - Last Raid - [S]"& _NumberFormat($SearchCount) &"\n[G]" & _NumberFormat(int($iGoldLast/1000+$iGoldLastBonus/1000)) & "k [E]" & _NumberFormat(int($iElixirLast/1000+$iElixirLastBonus/1000)) & "k [DE]" & _NumberFormat($iDarkLast+$iDarkLastBonus) & " [T]" & _NumberFormat($iTrophyLast))
 						_DeleteMessageOfPushBullet($iden[$x])
 					Case GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(620,20, -1) ;"STATS"
 						SetLog("Pushbullet: Your request has been received. Statistics sent", $COLOR_GREEN)
-						_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,39, "Stats Village Report") & "\n" & GetTranslated(620,91, "At Start") & "\n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldStart) & " [" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirStart) & " [" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkStart) & " [" & GetTranslated(620,38, "T") & "]: " & $iTrophyStart & "\n\n" & GetTranslated(620,40, "Now (Current Resources)") &"\n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldCurrent) & " [" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirCurrent) & " [" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkCurrent) & " [" & GetTranslated(620,38, "T") & "]: " & $iTrophyCurrent & " [" & GetTranslated(620,41, "GEM") & "]: " & $iGemAmount & "\n \n [" & GetTranslated(620,42, "No. of Free Builders") & "]: " & $iFreeBuilderCount & "\n " & GetTranslated(620,43, "[No. of Wall Up]") & ": " & GetTranslated(620,35, "G") & ": " & $iNbrOfWallsUppedGold & "/ " & GetTranslated(620,36, "E") & ": " & $iNbrOfWallsUppedElixir & "\n\n" & GetTranslated(620,44, "Attacked") & ": " & GUICtrlRead($lblresultvillagesattacked) & "\n" & GetTranslated(620,45, "Skipped") & ": " & $iSkippedVillageCount)
+						PushMsgToPushBullet("AttackCountStats")
 						_DeleteMessageOfPushBullet($iden[$x])
 					Case GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(620,24, -1) ;"SCREENSHOT"
 						SetLog("Pushbullet: ScreenShot request received", $COLOR_GREEN)
@@ -173,9 +188,7 @@ Func _PushBullet($pMessage = "")
 	$oHTTP.Open("Post", "https://api.pushbullet.com/v2/pushes", False)
 	$oHTTP.SetCredentials($PushBulletToken, "", 0)
 	$oHTTP.SetRequestHeader("Content-Type", "application/json")
-	Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
-	Local $Time = @HOUR & "." & @MIN
-	Local $pPush = '{"type": "note", "body": "' & $pMessage & "\n" & $Date & "__" & $Time & '"}'
+	Local $pPush = '{"type": "note", "body": "' & $pMessage & '"}'
 	$oHTTP.Send($pPush)
 EndFunc   ;==>_PushBullet
 
@@ -186,9 +199,7 @@ Func _PushToPushBullet($pMessage)
 	$access_token = $PushBulletToken
 	$oHTTP.SetCredentials($access_token, "", 0)
 	$oHTTP.SetRequestHeader("Content-Type", "application/json")
-	Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
-	Local $Time = @HOUR & "." & @MIN
-	Local $pPush = '{"type": "note", "body": "' & $pMessage & "\n" & $Date & "__" & $Time & '"}'
+	Local $pPush = '{"type": "note", "body": "' & $pMessage & '"}'
 	$oHTTP.Send($pPush)
 EndFunc   ;==>_Push
 
@@ -257,7 +268,7 @@ Func PushMsgToPushBullet($Message, $Source = "")
 			If $PushBulletEnabled = 1 And $pOOS = 1 Then _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,57, "Restarted after Out of Sync Error") & "\n" & GetTranslated(620,58, "Attacking now") & "...")
 		Case "LastRaid"
 			If $PushBulletEnabled = 1 And $iAlertPBLastRaidTxt = 1 Then
-				_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,34, "Last Raid txt") & "\n" & "[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldLast) & " [" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirLast) & " [" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkLast) & " [" & GetTranslated(620,38, "T") & "]: " & $iTrophyLast)
+				_PushToPushBullet(@HOUR & ":" & @MIN &" - " &$iOrigPushBullet& " - Last Raid - [S]"& _NumberFormat($SearchCount) &"\n[G]" & _NumberFormat(int($iGoldLast/1000+$iGoldLastBonus/1000)) & "k [E]" & _NumberFormat(int($iElixirLast/1000+$iElixirLastBonus/1000)) & "k [DE]" & _NumberFormat($iDarkLast+$iDarkLastBonus) & " [T]" & _NumberFormat($iTrophyLast))
 				If _Sleep($iDelayPushMsg1) Then Return
 				SetLog("Pushbullet: Last Raid Text has been sent!", $COLOR_GREEN)
 			EndIf
@@ -293,7 +304,10 @@ Func PushMsgToPushBullet($Message, $Source = "")
 		Case "AnotherDevice"
 			If $PushBulletEnabled = 1 And $pAnotherDevice = 1 Then _PushToPushBullet($iOrigPushBullet & " | 3. " & GetTranslated(620,65, "Another Device has connected") & "\n" & GetTranslated(620,66, "Another Device has connected, waiting") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603,8, "seconds"))
 		Case "TakeBreak"
-			If $PushBulletEnabled = 1 And $pTakeAbreak = 1 Then _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,67, "Chief, we need some rest!") & "\n" & GetTranslated(620,68, "Village must take a break.."))
+			If $PushBulletEnabled = 1 And $pTakeAbreak = 1 AND $PersonalBreakNotified = False Then
+				_PushToPushBullet(@HOUR & ":" & @MIN &" - " & $iOrigPushBullet & " - Personal Break")
+				$PersonalBreakNotified = True
+			Endif
 		Case "CocError"
 			If $PushBulletEnabled = 1 And $pOOS = 1 Then _PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,69, "CoC Has Stopped Error") & ".....")
 		Case "Pause"
@@ -338,6 +352,27 @@ Func PushMsgToPushBullet($Message, $Source = "")
 					$ichkAlertPBCampFullTest = 1
 				EndIf
 			EndIf
+		Case "CurrentSearchCount"
+			If mod($searchcount,$SearchNotifyCountTXT) = 0 AND isarray($SearchNotifyCountMsgIden) THEN 
+				_DeleteMessageOfPushBullet($SearchNotifyCountMsgIden[0]) ;Delete old searching messages
+			ENDIF
+			Local $Time = @HOUR & ":" & @MIN
+			$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
+			$access_token = $PushBulletToken
+			$oHTTP.Open("Post", "https://api.pushbullet.com/v2/pushes", False)
+			$oHTTP.SetCredentials($access_token, "", 0)
+			$oHTTP.SetRequestHeader("Content-Type", "application/json")
+			Local $pPush = '{"type": "note", "body": "' & $Time &" - " &$iOrigPushBullet & " - Searching - [S]"& _NumberFormat($SearchCount) & '"}'
+			$oHTTP.Send($pPush)
+			$Result=$oHTTP.ResponseText
+			$SearchNotifyCountMsgIden = _StringBetween($Result, '"iden":"', '"', "", False) ;store pushbullet IDEN so the msg can be deleted later
+			;SetLog("Pushbullet IDEN = " & $SearchNotifyCountMsgIden[0]) ;debugging purposes
+		Case "AttackCountStats" ;Send stats every xxx attacks
+			Local $Time = @HOUR & ":" & @MIN
+			Local $time2 = _TicksToTime(Int(TimerDiff($sTimer) + $iTimePassed), $hour, $min, $sec)
+			Local $tempruntime = StringFormat("%02i:%02i:%02i", $hour, $min, $sec)
+			_PushToPushBullet($Time &" - " & $iOrigPushBullet & " - Stats Report" & "\nStart @ "& $StartTime & "\n[G]" & _NumberFormat(round($iGoldStart/1000000,2)) & "m [E]" & _NumberFormat(round($iElixirStart/1000000,2)) & "m [D]" & _NumberFormat(round($iDarkStart/1000,1)) & "k [T]" & $iTrophyStart & "\n\nCurrent @ " & $Time & "\n[G]" & _NumberFormat(round($iGoldCurrent/1000000,2)) & "m [E]" & _NumberFormat(round($iElixirCurrent/1000000,2)) & "m [D]" & _NumberFormat(round($iDarkCurrent/1000,1)) & "k [T]" & $iTrophyCurrent & "\n\nHourly Stats: (Runtime "& $tempruntime & ")\n[G]"& _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "k [E]" & _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "k [D]" & Round($iDarkTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000) & " [T]" & _NumberFormat(Round($iTrophyTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & "\n\nGems: " & $iGemAmount & ", Free Builders: " & $iFreeBuilderCount & "\n[Walls Upgraded] G: " & $iNbrOfWallsUppedGold & "/ E: " & $iNbrOfWallsUppedElixir & "\n\nAttacked: " & GUICtrlRead($lblresultvillagesattacked) & "/" & GUICtrlRead($lblresultvillagesskipped) & ", Army " &$CurCamp & "/" & $TotalCamp)
+		
 	EndSwitch
 EndFunc   ;==>PushMsgToPushBullet
 

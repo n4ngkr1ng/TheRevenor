@@ -1526,6 +1526,20 @@ EndIf
 	EndIf
 	GUICtrlSetData($PushBulletTokenValue, $PushBulletToken)
 	GUICtrlSetData($OrigPushBullet, $iOrigPushBullet)
+	
+	;Pushbullet Stuff
+	If $VillageStatIncrement = 1 Then
+		GUICtrlSetState($chkVillageStatIncrement, $GUI_CHECKED)
+	ElseIf $VillageStatIncrement = 0 Then
+		GUICtrlSetState($chkVillageStatIncrement, $GUI_UNCHECKED)
+	EndIf
+	GUICtrlSetData($txtVillageStatIncrement, $VillageStatIncrementTXT)
+	If $SearchNotifyCount = 1 Then
+		GUICtrlSetState($chkSearchNotifyCount, $GUI_CHECKED)
+	ElseIf $SearchNotifyCount = 0 Then
+		GUICtrlSetState($chkSearchNotifyCount, $GUI_UNCHECKED)
+	EndIf
+	GUICtrlSetData($txtSearchNotifyCount, $SearchNotifyCountTXT)
 
 	; apply upgrade buildings -------------------------------------------------------------------
 	;Lab
@@ -2265,6 +2279,11 @@ EndIf
 
 	cmbScriptNameDB()
 	cmbScriptNameAB()
+	; CSV Deployment Speed Mod
+	GUICtrlSetData($sldSelectedSpeedDB, $isldSelectedCSVSpeed[$DB])
+	GUICtrlSetData($sldSelectedSpeedAB, $isldSelectedCSVSpeed[$LB])
+	sldSelectedSpeedDB()
+	sldSelectedSpeedAB()
 	If $DevMode = 1 Then GUICtrlSetState($chkmakeIMGCSV, $GUI_SHOW)
     If $makeIMGCSV = 1 Then
 		GUICtrlSetState($chkmakeIMGCSV, $GUI_CHECKED)
@@ -2360,12 +2379,186 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeDBScript, _GUICtrlComboBox_FindStrin
 LoadABSnipeAttacks() ; recreate combo box values
 _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStringExact($cmbTHSnipeBeforeLBScript, $THSnipeBeforeLBScript))
 
+	; SmartZap Settings - Added by LunaEclipse
+	If $ichkSmartZap = 1 Then
+		GUICtrlSetState($chkSmartLightSpell, $GUI_CHECKED)
+		GUICtrlSetState($chkSmartZapDB, $GUI_ENABLE)
+		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_ENABLE)
+		GUICtrlSetState($txtMinDark, $GUI_ENABLE)
+	Else
+		GUICtrlSetState($chkSmartZapDB, $GUI_DISABLE)
+		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_DISABLE)
+		GUICtrlSetState($txtMinDark, $GUI_DISABLE)
+		GUICtrlSetState($chkSmartLightSpell, $GUI_UNCHECKED)
+	EndIf
+	If $ichkSmartZapDB = 1 Then
+		GUICtrlSetState($chkSmartZapDB, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkSmartZapDB, $GUI_UNCHECKED)
+	EndIf
+	If $ichkSmartZapSaveHeroes = 1 Then
+		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_UNCHECKED)
+	EndIf
+	GUICtrlSetData($txtMinDark, $itxtMinDE)
 
+	; Android Settings - Added by LunaEclipse
+	If _GUICtrlComboBox_FindStringExact($cmbAndroid, String($sAndroid)) <> -1 Then
+		_GUICtrlComboBox_SelectString($cmbAndroid, String($sAndroid))
+	Else
+		_GUICtrlComboBox_SetCurSel($cmbAndroid, 0)
+	EndIf
+	GUICtrlSetData($txtAndroidInstance, $sAndroidInstance)
+	If $ichkHideTaskBar = 1 Then
+		GUICtrlSetState($chkHideTaskBar, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkHideTaskBar, $GUI_UNCHECKED)
+	EndIf
+	modifyAndroid()
 
-
-
+	; Misc Battle Settings - Added by LunaEclipse
+	If $AndroidAdbClicksEnabled = 1 Then
+		GUICtrlSetState($chkFastADBClicks, $GUI_CHECKED)
+		$AndroidAdbClicksEnabled = True
+	Else
+		GUICtrlSetState($chkFastADBClicks, $GUI_UNCHECKED)
+		$AndroidAdbClicksEnabled = False
+	EndIf
 
 	; Reenabling window redraw
 	If $bRedrawAtExit Then SetRedrawBotWindow(True)
+	
+	;Profile Switch
+	If $ichkGoldSwitchMax = 1 Then
+		GUICtrlSetState($chkGoldSwitchMax, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkGoldSwitchMax, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbGoldMaxProfile, $icmbGoldMaxProfile)
+	GUICtrlSetData($txtMaxGoldAmount, $itxtMaxGoldAmount)
+	If $ichkGoldSwitchMin = 1 Then
+		GUICtrlSetState($chkGoldSwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkGoldSwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbGoldMinProfile, $icmbGoldMinProfile)
+	GUICtrlSetData($txtMinGoldAmount, $itxtMinGoldAmount)
+
+	If $ichkElixirSwitchMax = 1 Then
+		GUICtrlSetState($chkElixirSwitchMax, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkElixirSwitchMax, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbElixirMaxProfile, $icmbElixirMaxProfile)
+	GUICtrlSetData($txtMaxElixirAmount, $itxtMaxElixirAmount)
+	If $ichkElixirSwitchMin = 1 Then
+		GUICtrlSetState($chkElixirSwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkElixirSwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbElixirMinProfile, $icmbElixirMinProfile)
+	GUICtrlSetData($txtMinElixirAmount, $itxtMinElixirAmount)
+
+	If $ichkDESwitchMax = 1 Then
+		GUICtrlSetState($chkDESwitchMax, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDESwitchMax, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbDEMaxProfile, $icmbDEMaxProfile)
+	GUICtrlSetData($txtMaxDEAmount, $itxtMaxDEAmount)
+	If $ichkDESwitchMin = 1 Then
+		GUICtrlSetState($chkDESwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDESwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbDEMinProfile, $icmbDEMinProfile)
+	GUICtrlSetData($txtMinDEAmount, $itxtMinDEAmount)
+
+	If $ichkTrophySwitchMax = 1 Then
+		GUICtrlSetState($chkTrophySwitchMax, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkTrophySwitchMax, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbTrophyMaxProfile, $icmbTrophyMaxProfile)
+	GUICtrlSetData($txtMaxTrophyAmount, $itxtMaxTrophyAmount)
+	If $ichkTrophySwitchMin = 1 Then
+		GUICtrlSetState($chkTrophySwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkTrophySwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbTrophyMinProfile, $icmbTrophyMinProfile)
+	GUICtrlSetData($txtMinTrophyAmount, $itxtMinTrophyAmount)
+
+   ; mikemikemikecoc - Wait For Spells
+   If $iEnableSpellsWait[$DB] = 1 Then
+		 GUICtrlSetState($chkDBSpellsWait, $GUI_CHECKED)
+	  Else
+		 GUICtrlSetState($chkDBSpellsWait, $GUI_UNCHECKED)
+   EndIf
+   If $iEnableSpellsWait[$LB] = 1 Then
+		 GUICtrlSetState($chkABSpellsWait, $GUI_CHECKED)
+	  Else
+		 GUICtrlSetState($chkABSpellsWait, $GUI_UNCHECKED)
+   EndIf 
+
+	; Close When Training Settings
+	If $ichkCloseTraining = 1 Then
+		GUICtrlSetState($chkUseTrainingClose, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
+	EndIf
+	chkUseTrainingClose()
+	GUICtrlSetData($sldExtraTimeMin, $minTrainAddition)
+	GUICtrlSetData($sldExtraTimeMax, $maxTrainAddition)
+	sldExtraTimeMin()
+	sldExtraTimeMax()
+
+	If $LeaveCoCOpen = 1 Then
+		GUICtrlSetState($radLeaveCoCOpen, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($radLeaveCoCOpen, $GUI_UNCHECKED)
+	EndIf
+
+	If $CloseCoCGame = 1 Then
+		GUICtrlSetState($radCloseCoCGame, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($radCloseCoCGame, $GUI_UNCHECKED)
+	EndIf
+
+	If $RandomCoCOpen = 1 Then
+		GUICtrlSetState($radRandomCoCOpen, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($radRandomCoCOpen, $GUI_UNCHECKED)
+	EndIf
+
+	If $RandomCloseTraining = 1 Then
+		GUICtrlSetState($chkRandomStayORClose, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkRandomStayORClose, $GUI_UNCHECKED)
+	EndIf
+
+	; Daily Settings
+	If $ichkLimitAttacks = 1 Then
+		GUICtrlSetState($chkUseAttackLimit, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkUseAttackLimit, $GUI_UNCHECKED)
+	EndIf
+	chkUseAttackLimit()
+	GUICtrlSetData($sldAttacksMin, $rangeAttacksStart)
+	GUICtrlSetData($sldAttacksMax, $rangeAttacksEnd)
+	sldAttacksMin()
+	sldAttacksMax()
+
+	; Simulate Sleep Settings
+	If $ichkCloseNight = 1 Then
+		GUICtrlSetState($chkUseSleep, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkUseSleep, $GUI_UNCHECKED)
+	EndIf
+	chkUseSleep()
+	_GUICtrlComboBox_SetCurSel($cmbStartSleep, $sleepStart)
+	_GUICtrlComboBox_SetCurSel($cmbEndSleep, $sleepEnd)
+	calculateSleepTime($sleepStart, $sleepEnd)
 
 EndFunc   ;==>applyConfig

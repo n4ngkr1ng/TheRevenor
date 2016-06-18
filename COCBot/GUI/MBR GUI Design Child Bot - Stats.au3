@@ -525,6 +525,25 @@ $hGUI_STATS_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600,40,"Attacks"))
 		$lblNbrOfDetectedDrills[$TB] = GUICtrlCreateLabel("0", $x + 54, $y - 2, 18, 17, $SS_RIGHT)
 			GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 73, $y - 4, 16, 16)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
+	
+	; MOD Smart Zap
+	$x = $xStart
+	$y = $yStart + 270
+	$grpStatsSZ = GUICtrlCreateGroup("Smart Zap Attack", $x - 20, $y - 20, 111, 55)
+			GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x - 15, $y - 4, 16, 16)
+			GUICtrlCreateLabel("Zap" & ":", $x +3, $y - 2, -1, 17)
+			$lblLightningUsedStat = GUICtrlCreateLabel("0", $x + 2, $y - 2, 80, 17, $SS_RIGHT)
+			GUICtrlSetColor(-1, 0x2AA69D)
+			$txtTip = "Number of used spells"
+			GUICtrlSetTip(-1, $txtTip)
+		$y += 17
+			GUICtrlCreateIcon($pIconLib, $eIcnDark, $x - 15, $y - 4, 16, 16)
+			GUICtrlCreateLabel(GetTranslated(632,74, -1) & ":", $x + 3, $y - 2, -1, 17)
+			$lblSmartZapStat = GUICtrlCreateLabel("0", $x + 2, $y - 2, 80, 17, $SS_RIGHT)
+			GUICtrlSetColor(-1, 0x2AA69D)
+			$txtTip = "Number of dark elixir zapped during the attack with lightning."
+			GUICtrlSetTip(-1, $txtTip)
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 ;--> TAB Attacks
 GUICtrlCreateTabItem("")

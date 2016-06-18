@@ -1104,8 +1104,4 @@ $hGUI_DONATE_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600,13,"Schedule Don
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")
 
-
-
-
-
 ;GUISetState()

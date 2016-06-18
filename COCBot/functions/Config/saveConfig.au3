@@ -388,6 +388,22 @@ Func saveConfig() ;Saves the controls settings to the config
 		$pTakeAbreak = 0
 	EndIf
 
+	;pushbullet stuff
+	If GUICtrlRead($chkVillageStatIncrement) = $GUI_CHECKED Then
+		IniWrite($config, "pushbullet", "VillageStatIncrement", 1)
+	Else
+		IniWrite($config, "pushbullet", "VillageStatIncrement", 0)
+	EndIf
+	IniWrite($config, "pushbullet", "VillageStatIncrementTXT", GUICtrlRead($txtVillageStatIncrement))
+
+	If GUICtrlRead($chkSearchNotifyCount) = $GUI_CHECKED Then
+		IniWrite($config, "pushbullet", "SearchNotifyCount", 1)
+	Else
+		IniWrite($config, "pushbullet", "SearchNotifyCount", 0)
+	EndIf
+	IniWrite($config, "pushbullet", "SearchNotifyCountTXT", GUICtrlRead($txtSearchNotifyCount))
+	;End Pushbullet Stuff
+	
 	; save upgrade buildings GUI -> Variables ------------------------------------------------------------------
 
 	If GUICtrlRead($chkLab) = $GUI_CHECKED Then
@@ -2156,6 +2172,10 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "attack", "ScriptDB", $scmbDBScriptName)
 
 	IniWriteS($config, "attack", "ScriptAB", $scmbABScriptName)
+	
+	; CSV Deployment Speed Mod
+	IniWriteS($config, "attack", "CSVSpeedDB", $isldSelectedCSVSpeed[$DB])
+	IniWriteS($config, "attack", "CSVSpeedAB", $isldSelectedCSVSpeed[$LB])
 
 	;MilkingAttack Options
 	IniWriteS($config, "MilkingAttack", "LocateMine", $MilkFarmLocateMine)
@@ -2234,7 +2254,175 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "android", "adb.clicks.enabled", ($AndroidAdbClicksEnabled ? "1" : "0"))
 	IniWriteS($config, "android", "adb.clicks.troop.deploy.size", $AndroidAdbClicksTroopDeploySize)
 
+	; SmartZap Settings - Added by LunaEclipse
+	If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
+		IniWrite($config, "SmartZap", "UseSmartZap", 1)
+	Else
+		IniWrite($config, "SmartZap", "UseSmartZap", 0)
+	EndIf
+	If GUICtrlRead($chkSmartZapDB) = $GUI_CHECKED Then
+		IniWrite($config, "SmartZap", "ZapDBOnly", 1)
+	Else
+		IniWrite($config, "SmartZap", "ZapDBOnly", 0)
+	EndIf
+    If GUICtrlRead($chkSmartZapSaveHeroes) = $GUI_CHECKED Then
+        IniWrite($config, "SmartZap", "THSnipeSaveHeroes", 1)
+    Else
+        IniWrite($config, "SmartZap", "THSnipeSaveHeroes", 0)
+    EndIf
+	IniWrite($config, "SmartZap", "MinDE", GUICtrlRead($txtMinDark))
+
+	; Android Settings - Added by LunaEclipse
+	IniWrite($config, "Android", "Emulator", GUICtrlRead($cmbAndroid))
+	IniWrite($config, "Android", "Instance", GUICtrlRead($txtAndroidInstance))
+	If GUICtrlRead($chkHideTaskBar) = $GUI_CHECKED Then
+		IniWrite($config, "Android", "HideTaskBarIcon", 1)
+	Else
+		IniWrite($config, "Android", "HideTaskBarIcon", 0)
+	EndIf
+
+	; Misc Battle Settings - Added by LunaEclipse
+	If GUICtrlRead($chkFastADBClicks) = $GUI_CHECKED Then
+		IniWrite($config, "Fast Clicks", "UseADBFastClicks", 1)
+	Else
+		IniWrite($config, "Fast Clicks", "UseADBFastClicks", 0)
+	EndIf
+	
 	If $hFile <> -1 Then FileClose($hFile)
+	
+	; mikemikemikecoc - Wait For Spells
+	If GUICtrlRead($chkDBSpellsWait) = $GUI_CHECKED Then
+		IniWriteS($config, "search", "ChkDBSpellsWait", 1)
+	Else
+		IniWriteS($config, "search", "ChkDBSpellsWait", 0)
+	EndIf
+
+	If GUICtrlRead($chkABSpellsWait) = $GUI_CHECKED Then
+		IniWriteS($config, "search", "ChkABSpellsWait", 1)
+	Else
+		IniWriteS($config, "search", "ChkABSpellsWait", 0)
+	EndIf
+
+
+	; Close When Training Settings
+	If GUICtrlRead($chkUseTrainingClose) = $GUI_CHECKED Then
+		IniWrite($config, "Close When Training", "Enabled", 1)
+	Else
+		IniWrite($config, "Close When Training", "Enabled", 0)
+	EndIf
+	IniWrite($config, "Close When Training", "AdditionMin", GUICtrlRead($sldExtraTimeMin))
+	IniWrite($config, "Close When Training", "AdditionMax", GUICtrlRead($sldExtraTimeMax))
+
+	If GUICtrlRead($radLeaveCoCOpen) = $GUI_CHECKED Then
+		IniWrite($config, "Leave CoC Open", "Enabled", 1)
+	Else
+		IniWrite($config, "Leave CoC Open", "Enabled", 0)
+	EndIf
+
+	If GUICtrlRead($radCloseCoCGame) = $GUI_CHECKED Then
+		IniWrite($config, "Close CoC Game", "Enabled", 1)
+	Else
+		IniWrite($config, "Close CoC Game", "Enabled", 0)
+	EndIf
+
+	If GUICtrlRead($radRandomCoCOpen) = $GUI_CHECKED Then
+		IniWrite($config, "Random Leave-Close", "Enabled", 1)
+	Else
+		IniWrite($config, "Random Leave-Close", "Enabled", 0)
+	EndIf
+
+	If GUICtrlRead($chkRandomStayORClose) = $GUI_CHECKED Then
+		IniWrite($config, "Random Stay-Close Game", "Enabled", 1)
+	Else
+		IniWrite($config, "Random Stay-Close Game", "Enabled", 0)
+	EndIf
+
+	; Daily Attack Settings
+	If GUICtrlRead($chkUseAttackLimit) = $GUI_CHECKED Then
+		IniWrite($config, "Daily Attacks", "Enabled", 1)
+	Else
+		IniWrite($config, "Daily Attacks", "Enabled", 0)
+	EndIf
+	IniWrite($config, "Daily Attacks", "RangeStart", $rangeAttacksStart)
+	IniWrite($config, "Daily Attacks", "RangeEnd", $rangeAttacksEnd)
+	IniWrite($config, "Daily Attacks", "AttackLimit", $dailyAttackLimit)
+	IniWrite($config, "Daily Attacks", "Attacks", $dailyAttacks)
+
+	; Simulate Sleep Settings
+	If GUICtrlRead($chkUseSleep) = $GUI_CHECKED Then
+		IniWrite($config, "Simulate Sleep", "Enabled", 1)
+	Else
+		IniWrite($config, "Simulate Sleep", "Enabled", 0)
+	EndIf
+	IniWrite($config, "Simulate Sleep", "StartHour", $sleepStart)
+	IniWrite($config, "Simulate Sleep", "EndHour", $sleepEnd)
+	IniWrite($config, "Simulate Sleep", "SleepStart", $nextSleepStart)
+	IniWrite($config, "Simulate Sleep", "SleepEnd", $nextSleepEnd)
+
+	; Profile Switch Settings
+	If GUICtrlRead($chkGoldSwitchMax) = $GUI_CHECKED Then
+		IniWrite($config, "profiles", "chkGoldSwitchMax", 1)
+	Else
+		IniWrite($config, "profiles", "chkGoldSwitchMax", 0)
+	EndIf
+	IniWrite($config, "profiles", "cmbGoldMaxProfile", _GUICtrlComboBox_GetCurSel($cmbGoldMaxProfile))
+	IniWrite($config, "profiles", "txtMaxGoldAmount", GUICtrlRead($txtMaxGoldAmount))
+
+	If GUICtrlRead($chkGoldSwitchMin) = $GUI_CHECKED Then
+		IniWrite($config, "profiles", "chkGoldSwitchMin", 1)
+	Else
+		IniWrite($config, "profiles", "chkGoldSwitchMin", 0)
+	EndIf
+	IniWrite($config, "profiles", "cmbGoldMinProfile", _GUICtrlComboBox_GetCurSel($cmbGoldMinProfile))
+	IniWrite($config, "profiles", "txtMinGoldAmount", GUICtrlRead($txtMinGoldAmount))
+
+	If GUICtrlRead($chkElixirSwitchMax) = $GUI_CHECKED Then
+		IniWrite($config, "profiles", "chkElixirSwitchMax", 1)
+	Else
+		IniWrite($config, "profiles", "chkElixirSwitchMax", 0)
+	EndIf
+	IniWrite($config, "profiles", "cmbElixirMaxProfile", _GUICtrlComboBox_GetCurSel($cmbElixirMaxProfile))
+	IniWrite($config, "profiles", "txtMaxElixirAmount", GUICtrlRead($txtMaxElixirAmount))
+
+	If GUICtrlRead($chkElixirSwitchMin) = $GUI_CHECKED Then
+		IniWrite($config, "profiles", "chkElixirSwitchMin", 1)
+	Else
+		IniWrite($config, "profiles", "chkElixirSwitchMin", 0)
+	EndIf
+	IniWrite($config, "profiles", "cmbElixirMinProfile", _GUICtrlComboBox_GetCurSel($cmbElixirMinProfile))
+	IniWrite($config, "profiles", "txtMinElixirAmount", GUICtrlRead($txtMinElixirAmount))
+
+	If GUICtrlRead($chkDESwitchMax) = $GUI_CHECKED Then
+		IniWrite($config, "profiles", "chkDESwitchMax", 1)
+	Else
+		IniWrite($config, "profiles", "chkDESwitchMax", 0)
+	EndIf
+	IniWrite($config, "profiles", "cmbDEMaxProfile", _GUICtrlComboBox_GetCurSel($cmbDEMaxProfile))
+	IniWrite($config, "profiles", "txtMaxDEAmount", GUICtrlRead($txtMaxDEAmount))
+
+	If GUICtrlRead($chkDESwitchMin) = $GUI_CHECKED Then
+		IniWrite($config, "profiles", "chkDESwitchMin", 1)
+	Else
+		IniWrite($config, "profiles", "chkDESwitchMin", 0)
+	EndIf
+	IniWrite($config, "profiles", "cmbDEMinProfile", _GUICtrlComboBox_GetCurSel($cmbDEMinProfile))
+	IniWrite($config, "profiles", "txtMinDEAmount", GUICtrlRead($txtMinDEAmount))
+
+	If GUICtrlRead($chkTrophySwitchMax) = $GUI_CHECKED Then
+		IniWrite($config, "profiles", "chkTrophySwitchMax", 1)
+	Else
+		IniWrite($config, "profiles", "chkTrophySwitchMax", 0)
+	EndIf
+	IniWrite($config, "profiles", "cmbTrophyMaxProfile", _GUICtrlComboBox_GetCurSel($cmbTrophyMaxProfile))
+	IniWrite($config, "profiles", "txtMaxTrophyAmount", GUICtrlRead($txtMaxTrophyAmount))
+
+	If GUICtrlRead($chkTrophySwitchMin) = $GUI_CHECKED Then
+		IniWrite($config, "profiles", "chkTrophySwitchMin", 1)
+	Else
+		IniWrite($config, "profiles", "chkTrophySwitchMin", 0)
+	EndIf
+	IniWrite($config, "profiles", "cmbTrophyMinProfile", _GUICtrlComboBox_GetCurSel($cmbTrophyMinProfile))
+	IniWrite($config, "profiles", "txtMinTrophyAmount", GUICtrlRead($txtMinTrophyAmount))
 
 EndFunc   ;==>saveConfig
 

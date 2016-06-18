@@ -68,7 +68,14 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 
 	If $Is_SearchLimit = True Then $Is_SearchLimit = False
 
-
+	;mikemikemikecoc - Wait For Spells
+	For $i = 0 To $iModeCount - 2 ;check if DB and LB are active or not
+		If IsSearchModeActive($i) = False Then
+			Setlog("Search conditions not satisfied for " & $sModeText[$i] & ", skipping mode:", $COLOR_BLUE)
+			Setlog(" - wait troops, heroes and/or spells according to search settings", $COLOR_BLUE)
+		EndIf
+	Next
+	
 	While 1 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;### Main Search Loop ###;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		If $debugVillageSearchImages = 1 Then DebugImageSave("villagesearch")
 		$logwrited = False
@@ -267,7 +274,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		If $noMatchTxt <> "" Then
 			;SetLog(_PadStringCenter(" " & StringMid($noMatchTxt, 3) & " ", 50, "~"), $COLOR_PURPLE)
 			SetLog($GetResourcesTXT, $COLOR_BLACK, "Lucida Console", 7.5)
-			SetLog("      " & StringMid($noMatchTxt, 3), $COLOR_BLACK, "Lucida Console", 7.5)
+			SetLog("      " & StringMid($noMatchTxt, 3), $COLOR_ORANGE, "Lucida Console", 7.5)
 			$logwrited = True
 		EndIf
 

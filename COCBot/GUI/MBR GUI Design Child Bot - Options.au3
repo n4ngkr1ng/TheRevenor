@@ -13,10 +13,10 @@
 ; Example .......: No
 ; ===============================================================================================================================
 $hGUI_BotOptions = GUICreate("", $_GUI_MAIN_WIDTH - 28, $_GUI_MAIN_HEIGHT - 255 - 28, 5, 25, BitOR($WS_CHILD, $WS_TABSTOP), -1, $hGUI_BOT)
-;GUISetBkColor($COLOR_WHITE, $hGUI_BotOptions)
+GUISetBkColor($COLOR_WHITE, $hGUI_BotOptions)
 
 GUISwitch($hGUI_BotOptions)
-Local $x = 20, $y = 95
+Local $x = 20, $y = 25 ;95
 $grpOnLoadBot = GUICtrlCreateGroup(GetTranslated(636,2, "When Bot Loads"), $x - 20, $y - 20, 210, 100)
 	$y -= 4
 	$chkVersion = GUICtrlCreateCheckbox(GetTranslated(636,3, "Check for Updates"), $x, $y, -1, -1)
@@ -99,7 +99,7 @@ $grpOnStartBot = GUICtrlCreateGroup(GetTranslated(636,12, "When Bot Starts"), $x
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	$x = 20
-	$y += 50
+	$y += 60 ;50
 $grpVSDelay = GUICtrlCreateGroup(GetTranslated(636,75, "Village Search Delay"), $x - 20, $y - 20, 210, 72)
 	$txtTip = GetTranslated(636,76, "Use this slider to change the time to wait between Next clicks when searching for a Village to Attack.") & @CRLF & GetTranslated(636,77, "This might compensate for Out of Sync errors on some PC's.") & @CRLF & GetTranslated(636,78, "NO GUARANTEES! This will not always have the same results!")
 	$lblVSDelay0 = GUICtrlCreateLabel(GetTranslated(603,9, -1), $x-14, $y-2, 19, 15, $SS_RIGHT)
@@ -162,7 +162,7 @@ $grpTiming = GUICtrlCreateGroup(GetTranslated(636,30, "Timing"), $x - 20, $y - 2
 		_GUICtrlSlider_SetTipSide(-1, $TBTS_BOTTOM)
 		_GUICtrlSlider_SetTicFreq(-100, 100)
 		GUICtrlSetLimit(-1, 500, 1) ; change max/min value
-		GUICtrlSetData(-1, 10) ; default value
+		GUICtrlSetData(-1, 25) ; default value
 		GUICtrlSetOnEvent(-1, "sldTrainITDelay")
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 #CS

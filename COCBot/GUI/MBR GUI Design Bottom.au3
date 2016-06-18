@@ -146,4 +146,3 @@ $grpVillage = GUICtrlCreateGroup(GetTranslated(603,32, "Village"), $x - 20, $y -
 		GUICtrlSetState(-1, $GUI_HIDE)
 
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-

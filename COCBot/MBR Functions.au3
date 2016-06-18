@@ -99,6 +99,8 @@
 #include "functions\Attack\Troops\SelectDropTroop.au3"
 #include "functions\Attack\Troops\SetSleep.au3"
 
+#include "functions\BotInfo\runningBots.au3"
+
 #include "functions\CreateArmy\_TrainMoveBtn.au3"
 #include "functions\CreateArmy\BarracksStatus.au3"
 #include "functions\CreateArmy\CheckFullArmy.au3"
@@ -115,6 +117,7 @@
 #include "functions\CreateArmy\Train.au3"
 #include "functions\CreateArmy\TrainIt.au3"
 
+#include "functions\CreateArmy\GetRemainTimeTrainning.au3"
 
 #include "functions\Image Search\ImageSearch.au3"
 #include "functions\Image Search\checkDeadBase.au3"
@@ -137,6 +140,7 @@
 #include "functions\Android\AndroidMenuShortcuts.au3"
 #include "functions\Android\Close_OpenCoC.au3"
 #include "functions\Android\ZoomOut.au3"
+#include "functions\Android\BlueStacks1Shortcuts.au3"
 #include "functions\Android\checkAndroidTimeLag.au3"
 #include "functions\Android\OpenBlueStacks.au3"
 #include "functions\Android\CloseBlueStacks.au3"
@@ -187,6 +191,7 @@
 #include "functions\Other\KillProcess.au3"
 #include "functions\Other\LaunchConsole.au3"
 #include "functions\Other\ADB.au3"
+#include "functions\Other\JSON.au3"
 
 #include "functions\Pixels\_CaptureRegion.au3"
 #include "functions\Pixels\_ColorCheck.au3"
@@ -197,6 +202,8 @@
 #include "functions\Pixels\_MultiPixelSearch.au3"
 #include "functions\Pixels\boolPixelSearch.au3"
 #include "functions\Pixels\isInsideDiamond.au3"
+
+#include "functions\Psychic Octopus\psychicOctopus.au3"
 
 #include "functions\Read Text\BuildingInfo.au3"
 #include "functions\Read Text\getOcr.au3"
@@ -250,3 +257,18 @@
 #include "functions\Village\UpgradeHeroes.au3"
 #include "functions\Village\ClanLevel.au3"
 #include "functions\Village\StarBonus.au3"
+
+#include "functions\Village\ProfileSwitch.au3"
+
+
+; Attack files - Added by LunaEclipse
+#include "functions\Attack\attackFunctions.au3"
+#include "functions\Attack\unitInfo.au3"
+
+; SmartZap files - Added by LunaEclipse
+#include "functions\SmartZap\drillSearch.au3"
+#include "functions\SmartZap\smartZap.au3"
+
+; Android files - Added by LunaEclipse
+#include "functions\Android\modifyAndroid.au3"
+#include "functions\Android\taskbarIcon.au3"
