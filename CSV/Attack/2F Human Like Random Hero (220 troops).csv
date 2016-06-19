@@ -18,45 +18,37 @@ NOTE  |Version 1.3 Fair Play
 SIDE  |           |           |           |           |           |           |           |BOTTOM-RIGHT|
 
       |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|____________|MAKE VECTORS FOR BARBS AND ARCHS
-MAKE  |A          |FRONT-RIGHT|16         |3          |INT-EXT    |2          |2          |            |
-MAKE  |B          |RIGHT-FRONT|16         |3          |INT-EXT    |2          |2          |            |
-MAKE  |C          |LEFT-BACK  |16         |3          |INT-EXT    |2          |2          |            |
-MAKE  |D          |BACK-LEFT  |16         |3          |INT-EXT    |2          |2          |            |
-MAKE  |E          |FRONT-LEFT |16         |3          |EXT-INT    |2          |2          |            |
-MAKE  |F          |RIGHT-BACK |16         |3          |EXT-INT    |2          |2          |            |
-MAKE  |G          |LEFT-FRONT |16         |3          |EXT-INT    |2          |2          |            |
-MAKE  |H          |BACK-RIGHT |16         |3          |EXT-INT    |2          |2          |            |
+MAKE  |A          |FRONT-RIGHT|16         |10         |INT-EXT    |2          |2          |            |
+MAKE  |B          |RIGHT-FRONT|16         |10         |INT-EXT    |2          |2          |            |
+MAKE  |C          |LEFT-BACK  |16         |10         |INT-EXT    |2          |2          |            |
+MAKE  |D          |BACK-LEFT  |16         |10         |INT-EXT    |2          |2          |            |
+MAKE  |E          |FRONT-LEFT |16         |10         |EXT-INT    |2          |2          |            |
+MAKE  |F          |RIGHT-BACK |16         |10         |EXT-INT    |2          |2          |            |
+MAKE  |G          |LEFT-FRONT |16         |10         |EXT-INT    |2          |2          |            |
+MAKE  |H          |BACK-RIGHT |16         |10         |EXT-INT    |2          |2          |            |
       |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|____________|MAKE VECTORS TO DROP KING, QUEEN and CASTLE
 MAKE  |Q          |RANDOM     |70         |1          |INT-EXT    |2          |2          |            |random side to drop king, at 1 tile from redarea	  
 MAKE  |R          |RANDOM     |70         |2          |INT-EXT    |2          |2          |            |random side to drop queen and castle, at 2 tiles from redarea
 
       |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________|SEQUENCE 1 LAUNCH BARBS THEN ARCH
-DROP  |E-G        |3-16       |14         |barb       |30         |120-170    |0          |            | DONW SIDES BARBS PART 1
-DROP  |A-C        |1-14       |14         |barb       |30         |120-170    |800-100    |            | DONW SIDES BARBS PART 2
+DROP  |E-G        |3-16       |14         |barb       |30         |30-70      |0          |            | DONW SIDES BARBS PART 1
+DROP  |A-C        |1-14       |14         |barb       |30         |30-70      |1000       |            | DONW SIDES BARBS PART 2
 
-WAIT  |500        |           |           |           |           |           |           |            | Add a wait time
-
-DROP  |E-G        |3-16       |14         |arch       |30         |120-170    |0          |            | DOWN SIDES ARCHS PART 1
-DROP  |A-C        |1-14       |14         |arch       |30         |120-170    |2000       |            | DOWN SIDES ARCHS PART 2
-
-WAIT  |800        |           |           |           |           |           |           |            | Add a wait time
+DROP  |E-G        |3-16       |14         |arch       |30         |30-70      |0          |            | DOWN SIDES ARCHS PART 1
+DROP  |A-C        |1-14       |14         |arch       |30         |30-70      |2000       |            | DOWN SIDES ARCHS PART 2
 
       |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________|SEQUENCE 2 LAUNCH BARBS THEN ARCH
-DROP  |F-H        |3-16       |14         |barb       |30         |120-170    |0          |            | UP SIDES BARBS PART 1
-DROP  |B-D        |1-14       |14         |barb       |30         |120-170    |800-1000   |            | UP SIDES BARBS PART 2
+DROP  |F-H        |3-16       |14         |barb       |30         |30-70      |0          |            | UP SIDES BARBS PART 1
+DROP  |B-D        |1-14       |14         |barb       |30         |30-70      |1000       |            | UP SIDES BARBS PART 2
 
-WAIT  |500        |           |           |           |           |           |           |            | Add a wait time
-
-DROP  |F-H        |3-16       |14         |arch       |30         |120-170    |0          |            | UP SIDES ARCHS PART 1
-DROP  |B-D        |1-14       |14         |arch       |30         |120-170    |500        |            | UP SIDES ARCHS PART 2
+DROP  |F-H        |3-16       |14         |arch       |30         |30-70      |0          |            | UP SIDES ARCHS PART 1
+DROP  |B-D        |1-14       |14         |arch       |30         |30-70      |500        |            | UP SIDES ARCHS PART 2
 
       |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________|SEQUENCE 3 LAUNCH BARBS THEN ARCH IF REMAINING
-DROP  |E-G        |3-16       |14         |barb       |30         |120-170    |0          |            | DONW SIDES BARBS PART 1
-DROP  |A-C        |1-14       |14         |arch       |30         |120-170    |0          |            | DOWN SIDES ARCHS PART 2
-
-WAIT  |800        |           |           |           |           |           |           |            | Add a wait time
+DROP  |E-G        |3-16       |14         |barb       |30         |30-70      |0          |            | DONW SIDES BARBS PART 1
+DROP  |A-C        |1-14       |14         |arch       |30         |30-70      |0          |            | DOWN SIDES ARCHS PART 2
 
       |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________|SEQUENCE 5 DROP HEROES AND CC 
-DROP  |R          |3          |1          |castle     |500        |0          |500        |            |LAUNCE CASTLE
-DROP  |Q          |3          |1          |king       |500        |0          |500        |            |LAUNCE KING
-DROP  |R          |3          |1          |queen      |0          |0          |800        |            |LAUNCE QUEEN
+DROP  |R          |3          |1          |castle     |500        |30-70      |500        |            |LAUNCE CASTLE
+DROP  |Q          |3          |1          |king       |500        |30-70      |500        |            |LAUNCE KING
+DROP  |R          |3          |1          |queen      |0          |30-70      |800        |            |LAUNCE QUEEN
