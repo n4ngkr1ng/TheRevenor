@@ -71,11 +71,11 @@ SplashStep("Loading Village tab...")
 #include "GUI\MBR GUI Design Child Village.au3"
 SplashStep("Loading Attack tab...")
 #include "GUI\MBR GUI Design Child Attack.au3"
+SplashStep("Loading Bot tab...")
+#include "GUI\MBR GUI Design Child Bot.au3"
 ;Mod
 SplashStep("Loading MOD tab...")
 #include "GUI\MBR GUI Design Child Mod.au3"
-SplashStep("Loading Bot tab...")
-#include "GUI\MBR GUI Design Child Bot.au3"
 
 ;GUISetState()
 GUISwitch($frmBot)
@@ -83,8 +83,8 @@ $tabMain = GUICtrlCreateTab(5, 85, $_GUI_MAIN_WIDTH - 9, $_GUI_MAIN_HEIGHT - 225
 $tabGeneral = GUICtrlCreateTabItem(GetTranslated(600,1, "Log"))
 $tabVillage = GUICtrlCreateTabItem(GetTranslated(600,2, "Village")) ; Village
 $tabAttack = GUICtrlCreateTabItem(GetTranslated(600,3,"Attack Plan"))
-$tabMod = GUICtrlCreateTabItem("MOD")
 $tabBot = GUICtrlCreateTabItem(GetTranslated(600,4,"Bot"))
+$tabMod = GUICtrlCreateTabItem("MOD")
 
 ;~ -------------------------------------------------------------
 ;~ About Us Tab

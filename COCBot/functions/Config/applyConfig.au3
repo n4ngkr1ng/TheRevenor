@@ -2408,6 +2408,21 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	EndIf
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
 
+	;Multy Farming Settings -------------------------------------------------------------------
+	If $ichkSwitchDonate = 1 Then
+		GUICtrlSetState($chkSwitchDonate, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkSwitchDonate, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkMultyFarming = 1 Then
+		GUICtrlSetState($chkMultyFarming, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkMultyFarming, $GUI_UNCHECKED)
+	EndIf
+		GUICtrlSetData($Account, $iAccount)
+	MultiFarming()
+	
 	; Android Settings - Added by LunaEclipse
 	If _GUICtrlComboBox_FindStringExact($cmbAndroid, String($sAndroid)) <> -1 Then
 		_GUICtrlComboBox_SelectString($cmbAndroid, String($sAndroid))

@@ -1068,6 +1068,11 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
         $ichkSmartZapSaveHeroes = IniRead($config, "SmartZap", "THSnipeSaveHeroes", "1")
 		$itxtMinDE = IniRead($config, "SmartZap", "MinDE", "250")
 
+		;Multy Farming Settings ------------------------------------------------------------------
+		$ichkSwitchDonate = IniRead($config, "Multy", "SwitchDonate", "0")
+		$ichkMultyFarming = IniRead($config, "Multy", "MultyFarming", "0")
+		$iAccount = IniRead($config, "Multy", "Account", "2")
+		
 		; Android Settings - Added by LunaEclipse
 		$sAndroid = IniRead($config, "Android", "Emulator", "<No Emulators>")
 		$sAndroidInstance = IniRead($config, "Android", "Instance", "")
