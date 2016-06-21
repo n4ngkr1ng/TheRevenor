@@ -96,8 +96,7 @@ Func MultiFarming()
 	GUICtrlSetState($btnmultyAcc2, $GUI_DISABLE)
 	GUICtrlSetState($btnmultyAcc3, $GUI_DISABLE)
 	GUICtrlSetState($btnmultyAcc4, $GUI_DISABLE)
-	GUICtrlSetState($btnmultyAcc5, $GUI_DISABLE)
-	GUICtrlSetState($btnmultyAcc6, $GUI_DISABLE)
+	
 	If  FileExists(@ScriptDir & "\images\Multyfarming\Accmain.bmp") AND FileExists(@ScriptDir & "\images\Multyfarming\main.bmp") Then
 		GUICtrlSetState($btnmultyAcc1, $GUI_ENABLE)
 	EndIf
@@ -109,12 +108,6 @@ Func MultiFarming()
 	EndIf
 	If  FileExists(@ScriptDir & "\images\Multyfarming\AccFourth.bmp") AND FileExists(@ScriptDir & "\images\Multyfarming\Fourth.bmp") Then
 		GUICtrlSetState($btnmultyAcc4, $GUI_ENABLE)
-	EndIf
-	If  FileExists(@ScriptDir & "\images\Multyfarming\AccFifth.bmp") AND FileExists(@ScriptDir & "\images\Multyfarming\Fifth.bmp") Then
-		GUICtrlSetState($btnmultyAcc5, $GUI_ENABLE)
-	EndIf
-	If  FileExists(@ScriptDir & "\images\Multyfarming\AccSixth.bmp") AND FileExists(@ScriptDir & "\images\Multyfarming\Sixth.bmp") Then
-		GUICtrlSetState($btnmultyAcc6, $GUI_ENABLE)
 	EndIf
 	; IceCube (Multy-Farming Revamp v1.6)
 EndFunc   ;==>MultiFarming
@@ -129,14 +122,14 @@ EndFunc
 Func btnmultyDetectAcc()
 	If $RunState Then Return
 	LockGUI()
-	SetLog("Multy-farming Account detection requested ...", $COLOR_BLUE)
+	SetLog("Multy-farming Account Detection Requested ...", $COLOR_BLUE)
 	SetLog("DO NOT STOP OR PAUSE BOT", $COLOR_RED)
 	$RunState = True
 	waitMainScreen()
 	if IsMainPage()  Then
 		DetectAccount()
 	Else
-		SetLog("Multy-farming Account detection canceled", $COLOR_RED)
+		SetLog("Multy-farming Account Detection Canceled", $COLOR_RED)
 	EndIf
 	$RunState = False
 	UnLockGUI()
@@ -145,7 +138,7 @@ EndFunc
 Func btnmultyAcc1()
 	If $RunState Then Return
 	LockGUI()
-	SetLog("Multy-farming Main Account switch requested ...", $COLOR_BLUE)
+	SetLog("Multy-farming Main Account Switch Requested ...", $COLOR_BLUE)
 	SetLog("DO NOT STOP OR PAUSE BOT", $COLOR_RED)
 		$RunState = True
 	waitMainScreen()
@@ -155,9 +148,9 @@ Func btnmultyAcc1()
 		SwitchAccount("Main")
 		checkMainScreen()	
 		DetectAccount()
-		SetLog("Multy-farming Main Account switch completed", $COLOR_BLUE)
+		SetLog("Multy-farming Main Account Switch Completed", $COLOR_BLUE)
 	Else
-		SetLog("Multy-farming Account switch canceled", $COLOR_RED)
+		SetLog("Multy-farming Account Switch Canceled", $COLOR_RED)
 	EndIf
 	$RunState = False
 	UnLockGUI()
@@ -166,20 +159,20 @@ EndFunc
 Func btnmultyAcc2()
 	If $RunState Then Return
 	LockGUI()
-	SetLog("Multy-farming Second Account switch requested ...", $COLOR_BLUE)
+	SetLog("Multy-farming Second Account Switch Requested ...", $COLOR_BLUE)
 	SetLog("DO NOT STOP OR PAUSE BOT", $COLOR_RED)
 		$RunState = True
 	waitMainScreen()
-	SetLog("Multy-farming Second Account switch in progress ...", $COLOR_BLUE)
+	SetLog("Multy-farming Second Account Switch In Progress ...", $COLOR_BLUE)
 	if IsMainPage() AND DetectCurrentAccount("Second") Then
 		checkMainScreen()
 		$iSwCount = 0
 		SwitchAccount("Second")
 		checkMainScreen()
 		DetectAccount()
-		SetLog("Multy-farming Second Account switch completed", $COLOR_BLUE)
+		SetLog("Multy-farming Second Account Switch Completed", $COLOR_BLUE)
 	Else
-		SetLog("Multy-farming Account switch canceled", $COLOR_RED)
+		SetLog("Multy-farming Account Switch Canceled", $COLOR_RED)
 	EndIf
 	$RunState = False
 	UnLockGUI()
@@ -188,20 +181,20 @@ EndFunc
 Func btnmultyAcc3()
 	If $RunState Then Return
 	LockGUI()
-	SetLog("Multy-farming Third Account switch requested ...", $COLOR_BLUE)
+	SetLog("Multy-farming Third Account Switch Requested ...", $COLOR_BLUE)
 	SetLog("DO NOT STOP OR PAUSE BOT", $COLOR_RED)
 		$RunState = True
 	waitMainScreen()
-	SetLog("Multy-farming Third Account switch in progress ...", $COLOR_BLUE)
+	SetLog("Multy-farming Third Account Switch In Progress ...", $COLOR_BLUE)
 	if IsMainPage() AND DetectCurrentAccount("Third") Then
 		checkMainScreen()
 		$iSwCount = 0
 		SwitchAccount("Third")
 		checkMainScreen()
 		DetectAccount()
-		SetLog("Multy-farming Third Account switch completed", $COLOR_BLUE)
+		SetLog("Multy-farming Third Account Switch Completed", $COLOR_BLUE)
 	Else
-		SetLog("Multy-farming Account switch canceled", $COLOR_RED)
+		SetLog("Multy-farming Account Switch Canceled", $COLOR_RED)
 	EndIf
 	$RunState = False
 	UnLockGUI()
@@ -210,64 +203,20 @@ EndFunc
 Func btnmultyAcc4()
 	If $RunState Then Return
 	LockGUI()
-	SetLog("Multy-farming Fourth Account switch requested ...", $COLOR_BLUE)
+	SetLog("Multy-farming Fourth Account Switch Requested ...", $COLOR_BLUE)
 	SetLog("DO NOT STOP OR PAUSE BOT", $COLOR_RED)
 		$RunState = True
 	waitMainScreen()
-	SetLog("Multy-farming Fourth Account switch in progress ...", $COLOR_BLUE)
+	SetLog("Multy-farming Fourth Account Switch In Progress ...", $COLOR_BLUE)
 	if IsMainPage() AND DetectCurrentAccount("Fourth") Then
 		checkMainScreen()
 		$iSwCount = 0
 		SwitchAccount("Fourth")
 		checkMainScreen()
 		DetectAccount()
-		SetLog("Multy-farming Fourth Account switch completed", $COLOR_BLUE)
+		SetLog("Multy-farming Fourth Account Switch Completed", $COLOR_BLUE)
 	Else
-		SetLog("Multy-farming Account switch canceled", $COLOR_RED)
-	EndIf
-	$RunState = False
-	UnLockGUI()
-EndFunc
-;Fifth Account
-Func btnmultyAcc5()
-	If $RunState Then Return
-	LockGUI()
-	SetLog("Multy-farming Fifth Account switch requested ...", $COLOR_BLUE)
-	SetLog("DO NOT STOP OR PAUSE BOT", $COLOR_RED)
-		$RunState = True
-	waitMainScreen()
-	SetLog("Multy-farming Fifth Account switch in progress ...", $COLOR_BLUE)
-	if IsMainPage() AND DetectCurrentAccount("Fifth") Then
-		checkMainScreen()
-		$iSwCount = 0
-		SwitchAccount("Fifth")
-		checkMainScreen()
-		DetectAccount()
-		SetLog("Multy-farming Fifth Account switch completed", $COLOR_BLUE)
-	Else
-		SetLog("Multy-farming Account switch canceled", $COLOR_RED)
-	EndIf
-	$RunState = False
-	UnLockGUI()
-EndFunc
-;Sixth Account
-Func btnmultyAcc6()
-	If $RunState Then Return
-	LockGUI()
-	SetLog("Multy-farming Sixth Account switch requested ...", $COLOR_BLUE)
-	SetLog("DO NOT STOP OR PAUSE BOT", $COLOR_RED)
-		$RunState = True
-	waitMainScreen()
-	SetLog("Multy-farming Sixth Account switch in progress ...", $COLOR_BLUE)
-	if IsMainPage() AND DetectCurrentAccount("Sixth") Then
-		checkMainScreen()
-		$iSwCount = 0
-		SwitchAccount("Sixth")
-		checkMainScreen()
-		DetectAccount()
-		SetLog("Multy-farming Sixth Account switch completed", $COLOR_BLUE)
-	Else
-		SetLog("Multy-farming account switch canceled", $COLOR_RED)
+		SetLog("Multy-farming Account Switch Canceled", $COLOR_RED)
 	EndIf
 	$RunState = False
 	UnLockGUI()

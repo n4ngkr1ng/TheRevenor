@@ -4,8 +4,8 @@
 ; Syntax ........:
 ; Parameters ....:
 ; Return values .:
-; Author ........: Lakereng 
-; Modified ......: TheRevenor(2016)
+; Author ........: Lakereng (2016)
+; Modified ......: TheRvenor (2016)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -31,13 +31,11 @@ if  Not FileExists(@ScriptDir & "\images\Multyfarming\main.bmp") Then
 Elseif  Not FileExists(@ScriptDir & "\images\Multyfarming\Second.bmp") Then
 	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Second.bmp")
 Elseif  Not FileExists(@ScriptDir & "\images\Multyfarming\Third.bmp") And ($iAccount = "3" Or $iAccount = "4") Then
+
 	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Third.bmp")
-Elseif  Not FileExists(@ScriptDir & "\images\Multyfarming\Fourth.bmp") Then
+Elseif  Not FileExists(@ScriptDir & "\images\Multyfarming\Fourth.bmp") And $iAccount = "4" Then
+
 	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Fourth.bmp")
-Elseif  Not FileExists(@ScriptDir & "\images\Multyfarming\Fifth.bmp") And ($iAccount = "5" Or $iAccount = "6") Then
-	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Fifth.bmp")
-Elseif  Not FileExists(@ScriptDir & "\images\Multyfarming\Sixth.bmp") And $iAccount = "6" Then
-	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Sixth.bmp")
 EndIf
 
 if FileExists(@ScriptDir & "\images\Multyfarming\temp.bmp") Then
@@ -52,35 +50,25 @@ $bm3 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Second.bmp
 $bm2 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\temp.bmp")
 $bm4 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Third.bmp")
 $bm5 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Fourth.bmp")
-$bm6 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Fifth.bmp")
-$bm7 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Sixth.bmp")
 
 	If CompareBitmaps($bm1, $bm2) Then
-		SetLog("Main Account Detected...", $COLOR_GREEN)
+		SetLog("Main account Detected...", $COLOR_GREEN)
 		_GUICtrlComboBox_SetCurSel($cmbProfile, 0)
 		cmbProfile()
 	ElseIf CompareBitmaps($bm3, $bm2) Then
-		SetLog("Second Account Detected...", $COLOR_GREEN)
+		SetLog("Second account Detected...", $COLOR_GREEN)
 		_GUICtrlComboBox_SetCurSel($cmbProfile, 1)
 		cmbProfile()
 	ElseIf ($iAccount = "3" Or $iAccount = "4") And CompareBitmaps($bm4, $bm2) Then
-		SetLog("Third Account Detected...", $COLOR_GREEN)
+		SetLog("Third account Detected...", $COLOR_GREEN)
 		_GUICtrlComboBox_SetCurSel($cmbProfile, 2)
 		cmbProfile()
 	ElseIf $iAccount = "4" And CompareBitmaps($bm5, $bm2) Then
-		SetLog("Fourth Account Detected...", $COLOR_GREEN)
+		SetLog("Fourth account Detected...", $COLOR_GREEN)
 		_GUICtrlComboBox_SetCurSel($cmbProfile, 3)
 		cmbProfile()
-	ElseIf ($iAccount = "5" Or $iAccount = "6") And CompareBitmaps($bm6, $bm2) Then
-		SetLog("Fifth Account Detected...", $COLOR_GREEN)
-		_GUICtrlComboBox_SetCurSel($cmbProfile, 4)
-		cmbProfile()
-	ElseIf $iAccount = "6" And CompareBitmaps($bm7, $bm2) Then
-		SetLog("Sixth Account Detected...", $COLOR_GREEN)
-		_GUICtrlComboBox_SetCurSel($cmbProfile, 5)
-		cmbProfile()
 	Else
-		SetLog("Temporary Account Detected...", $COLOR_Red)
+		SetLog("Temporary account Detected...", $COLOR_Red)
 	EndIf
 
 _GDIPlus_ImageDispose($bm1)
@@ -88,9 +76,7 @@ _GDIPlus_ImageDispose($bm2)
 _GDIPlus_ImageDispose($bm3)
 _GDIPlus_ImageDispose($bm4)
 _GDIPlus_ImageDispose($bm5)
-_GDIPlus_ImageDispose($bm6)
-_GDIPlus_ImageDispose($bm7)
-		
+
 EndFunc
 
 
@@ -123,9 +109,9 @@ Func MakeAccount()
 	Local $iLoopCount = 0
 	waitMainScreen()
 	Click(830, 590) ;Click Switch
-	Sleep(1000)
+	Sleep(2000) ;1000
 	Click(437, 399 + $midOffsetY) ;Click  Disconn
-	Sleep(1000)
+	Sleep(500) ;1000
 	Click(437, 399 + $midOffsetY) ;Click  Connect
 	While 1
 		Sleep(1000)
@@ -178,32 +164,7 @@ Func MakeAccount()
 		_GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\AccFourth.bmp")
 	EndIf
 	Sleep(1500)
-	If Not FileExists(@ScriptDir & "\images\Multyfarming\AccFifth.bmp") And ($iAccount = "5" Or $iAccount = "6") Then
-
-		Local $hBMP_Cropped = _GDIPlus_BitmapCloneArea($hBitmap, 155, 532,  200, 18)
-		Local $hHBMP_Cropped = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBMP_Cropped)
-		_GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\AccFifth.bmp")
-	EndIf
-	Sleep(1500)
-	If Not FileExists(@ScriptDir & "\images\Multyfarming\AccSixth.bmp") And $iAccount = "6" Then
-
-		Local $hBMP_Cropped = _GDIPlus_BitmapCloneArea($hBitmap, 155, 569,  200, 18)
-		Local $hHBMP_Cropped = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBMP_Cropped)
-		_GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\AccSixth.bmp")
-	EndIf
-	Sleep(1500)
-	
-	If Not FileExists(@ScriptDir & "\images\Multyfarming\Ok.bmp") And $iAccount = "6" Then
-		Local $hBMP_Cropped = _GDIPlus_BitmapCloneArea($hBitmap, 532, 671,  70, 18)
-		Local $hHBMP_Cropped = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBMP_Cropped)
-		_GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Ok.bmp")
-		
-	ElseIf Not FileExists(@ScriptDir & "\images\Multyfarming\Ok.bmp") And $iAccount = "5" Then
-		Local $hBMP_Cropped = _GDIPlus_BitmapCloneArea($hBitmap, 532, 625,  70, 18)
-		Local $hHBMP_Cropped = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBMP_Cropped)
-		_GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Ok.bmp")
-		
-	ElseIf Not FileExists(@ScriptDir & "\images\Multyfarming\Ok.bmp") And $iAccount = "4" Then
+	If Not FileExists(@ScriptDir & "\images\Multyfarming\Ok.bmp") And $iAccount = "4" Then
 		Local $hBMP_Cropped = _GDIPlus_BitmapCloneArea($hBitmap, 532, 579,  70, 18)
 		Local $hHBMP_Cropped = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBMP_Cropped)
 		_GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Ok.bmp")
@@ -252,68 +213,38 @@ EndFunc
 	$bm2 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\temp.bmp")
 	$bm4 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Third.bmp")
 	$bm5 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Fourth.bmp")
-	$bm6 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Fifth.bmp")
-	$bm7 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Sixth.bmp")
 
 	If $CheckAccountID = "Main" AND CompareBitmaps($bm1, $bm2) Then
-		SetLog("Main Account Detected. No switch is required.", $COLOR_RED)
+		SetLog("Main account Detected. No switch is required.", $COLOR_RED)
 		_GDIPlus_ImageDispose($bm1)
 		_GDIPlus_ImageDispose($bm2)
 		_GDIPlus_ImageDispose($bm3)
 		_GDIPlus_ImageDispose($bm4)
 		_GDIPlus_ImageDispose($bm5)
-		_GDIPlus_ImageDispose($bm6)
-		_GDIPlus_ImageDispose($bm7)
 		Return False
 	ElseIf $CheckAccountID = "Second" AND CompareBitmaps($bm3, $bm2) Then
-		SetLog("Second Account Detected. No switch is required.", $COLOR_RED)
+		SetLog("Second account Detected. No switch is required.", $COLOR_RED)
 		_GDIPlus_ImageDispose($bm1)
 		_GDIPlus_ImageDispose($bm2)
 		_GDIPlus_ImageDispose($bm3)
 		_GDIPlus_ImageDispose($bm4)
 		_GDIPlus_ImageDispose($bm5)
-		_GDIPlus_ImageDispose($bm6)
-		_GDIPlus_ImageDispose($bm7)
 		Return False
 	ElseIf $CheckAccountID = "Third" AND ($iAccount = "3" Or $iAccount = "4") And CompareBitmaps($bm4, $bm2) Then
-		SetLog("Third Account Detected. No switch is required.", $COLOR_RED)
+		SetLog("Third account Detected. No switch is required.", $COLOR_RED)
 		_GDIPlus_ImageDispose($bm1)
 		_GDIPlus_ImageDispose($bm2)
 		_GDIPlus_ImageDispose($bm3)
 		_GDIPlus_ImageDispose($bm4)
 		_GDIPlus_ImageDispose($bm5)
-		_GDIPlus_ImageDispose($bm6)
-		_GDIPlus_ImageDispose($bm7)
 		Return False
 	ElseIf $CheckAccountID = "Fourth" AND $iAccount = "4" And CompareBitmaps($bm5, $bm2) Then
-		SetLog("Fourth Account Detected. No switch is required.", $COLOR_RED)
+		SetLog("Fourth account Detected. No switch is required.", $COLOR_RED)
 		_GDIPlus_ImageDispose($bm1)
 		_GDIPlus_ImageDispose($bm2)
 		_GDIPlus_ImageDispose($bm3)
 		_GDIPlus_ImageDispose($bm4)
 		_GDIPlus_ImageDispose($bm5)
-		_GDIPlus_ImageDispose($bm6)
-		_GDIPlus_ImageDispose($bm7)
-		Return False
-	ElseIf $CheckAccountID = "Fifth" AND ($iAccount = "5" Or $iAccount = "6") And CompareBitmaps($bm6, $bm2) Then
-		SetLog("Fifth Account Detected. No switch is required.", $COLOR_RED)
-		_GDIPlus_ImageDispose($bm1)
-		_GDIPlus_ImageDispose($bm2)
-		_GDIPlus_ImageDispose($bm3)
-		_GDIPlus_ImageDispose($bm4)
-		_GDIPlus_ImageDispose($bm5)
-		_GDIPlus_ImageDispose($bm6)
-		_GDIPlus_ImageDispose($bm7)
-		Return False
-	ElseIf $CheckAccountID = "Sixth" AND $iAccount = "6" And CompareBitmaps($bm7, $bm2) Then
-		SetLog("Sixth Account Detected. No switch is required.", $COLOR_RED)
-		_GDIPlus_ImageDispose($bm1)
-		_GDIPlus_ImageDispose($bm2)
-		_GDIPlus_ImageDispose($bm3)
-		_GDIPlus_ImageDispose($bm4)
-		_GDIPlus_ImageDispose($bm5)
-		_GDIPlus_ImageDispose($bm6)
-		_GDIPlus_ImageDispose($bm7)
 		Return False
 	EndIf
 
@@ -322,8 +253,6 @@ EndFunc
 	_GDIPlus_ImageDispose($bm3)
 	_GDIPlus_ImageDispose($bm4)
 	_GDIPlus_ImageDispose($bm5)
-	_GDIPlus_ImageDispose($bm6)
-	_GDIPlus_ImageDispose($bm7)
 
 	Return True
 EndFunc  ;==>DetectCurrentAccount

@@ -4,8 +4,8 @@
 ; Syntax ........:
 ; Parameters ....:
 ; Return values .:
-; Author ........:
-; Modified ......: Lakereng (2016) And Extreme DE Side MOD
+; Author ........: Lakereng (2016)
+; Modified ......: TheRevenor
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -21,10 +21,9 @@ Func SwitchAccount($bAccount)
 		Return False
 	EndIf
 	checkMainScreen()
-	;Send("{CapsLock on}")
 	Send("{CapsLock off}")
 	Click(830, 590) ;Click Switch
-	If _Sleep(1000) Then Return
+	If _Sleep(2000) Then Return ;1000
 
 	SelectAccount($bAccount)
 	If $RunState = False Then Return
@@ -38,6 +37,7 @@ Func SwitchAccount($bAccount)
 		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0);load pixel
 		If IsArray($Message) Then
 			SetLog("Load " & $bAccount & " Account", $COLOR_blue)
+			If _Sleep(2000) Then Return ;Noting
 			Click(512, 433) ;Click Load Button
 			If _Sleep(1000) Then Return
 
@@ -50,7 +50,6 @@ Func SwitchAccount($bAccount)
 				SetLog("Insert CONFIRM To Text Box ", $COLOR_blue)
 				If _Sleep(1500) Then Return
 				ControlSend($Title, "", "", "{LSHIFT DOWN}{C DOWN}{C UP}{O DOWN}{O UP}{N DOWN}{N UP}{F DOWN}{F UP}{I DOWN}{I UP}{R DOWN}{R UP}{M DOWN}{M UP}{LSHIFT UP}") ;Enter  Confirm  txt
-				;ControlSend($Title, "", "", "{CONFIRM}")
 				If _Sleep(2000) Then Return
 				Click(521, 198) ;Click Confirm
 			Else
@@ -70,7 +69,7 @@ EndFunc
 Func SelectAccount($bAccount)
 	Local $iLoopCount = 0
 	Click(437, 399 + $midOffsetY) ;Click  Disconn
-	If _Sleep(1000) Then Return
+	If _Sleep(500) Then Return ;1000
 	Click(437, 399 + $midOffsetY) ;Click  Connect
 	$iSwCount += 1
 	If $iSwCount > 5 Then
@@ -118,6 +117,7 @@ Func LoadAccount($bAccount)
 		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0);load pixel
 		If IsArray($Message) Then
 			SetLog("Loading Account In Progress...", $COLOR_blue)
+			If _Sleep(2000) Then Return ;Noting
 			Click(512, 433) ;Click Load Button
 			If _Sleep(1000) Then Return
 
