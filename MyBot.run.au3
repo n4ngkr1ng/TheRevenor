@@ -49,7 +49,7 @@ EndIf
 
 Global $sGitHubModOwner = "TheRevenor"
 Global $sGitHubModRepo = "MyBot-v6.1.3-MyMod"
-Global $sGitHubModLatestReleaseTag = "v1.2.1"
+Global $sGitHubModLatestReleaseTag = "v1.3"
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016" ; Website
 
 $sBotVersion = "v6.1.3" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()

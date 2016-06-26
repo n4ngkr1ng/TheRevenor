@@ -1483,7 +1483,7 @@ Global $ichkSwitchDonate
 Global $ichkMultyFarming
 Global $iAccount, $OkLoc, $AccountLoc
 Global $iconfirm
-Global $bAccount[4] = ["Main", "Second", "Third", "Fourth"]
+Global $bAccount[6] = ["Main", "Second", "Third", "Fourth", "Fifth", "Sixth"]
 
 ; SmartZap GUI variables - Added by LunaEclipse
 Global $ichkSmartZap = 1

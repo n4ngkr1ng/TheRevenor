@@ -5,7 +5,7 @@
 ; Parameters ....:
 ; Return values .:
 ; Author ........: Lakereng (2016)
-; Modified ......: TheRevenor
+; Modified ......: TheRevenor (2016)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -34,10 +34,10 @@ Func SwitchAccount($bAccount)
 	$fullArmy = False
 	Local $iLoopCount = 0
 	While 1
-		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0);load pixel
+		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0) ;load pixel 
 		If IsArray($Message) Then
 			SetLog("Load " & $bAccount & " Account", $COLOR_blue)
-			If _Sleep(2000) Then Return ;Noting
+			If _Sleep(1800) Then Return ;Not
 			Click(512, 433) ;Click Load Button
 			If _Sleep(1000) Then Return
 
@@ -51,9 +51,9 @@ Func SwitchAccount($bAccount)
 				If _Sleep(1500) Then Return
 				ControlSend($Title, "", "", "{LSHIFT DOWN}{C DOWN}{C UP}{O DOWN}{O UP}{N DOWN}{N UP}{F DOWN}{F UP}{I DOWN}{I UP}{R DOWN}{R UP}{M DOWN}{M UP}{LSHIFT UP}") ;Enter  Confirm  txt
 				If _Sleep(2000) Then Return
-				Click(521, 198) ;Click Confirm
+				Click(521, 200) ;Click Confirm
 			Else
-				Click(521, 198) ;Click Confirm
+				Click(521, 200) ;Click Confirm
 			EndIf
 			ExitLoop
 		EndIf
@@ -72,7 +72,7 @@ Func SelectAccount($bAccount)
 	If _Sleep(500) Then Return ;1000
 	Click(437, 399 + $midOffsetY) ;Click  Connect
 	$iSwCount += 1
-	If $iSwCount > 5 Then
+	If $iSwCount > 7 Then
 		SetLog(" Exit Now ...Cancel change account")
 		SetLog("PLease make sure image create From png", $COLOR_RED)
 		Click(437, 399 + $midOffsetY) ;Click  Disconn
@@ -84,9 +84,11 @@ Func SelectAccount($bAccount)
 	EndIf
 		If _Sleep(5000) Then Return
 	While 1
-		Local $Message = _PixelSearch(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0x689F38, 6), 0)
-		Local $Message1 = _PixelSearch(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0xF5F5F5, 6), 0)
+		Local $Message = _PixelSearch(230, 235 + $midOffsetY, 232, 455 + $midOffsetY, Hex(0xF5F5F5, 6), 0) ;(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0x689F38, 6), 0)
+		Local $Message1 = _PixelSearch(230, 235 + $midOffsetY, 232, 455 + $midOffsetY, Hex(0xF5F5F5, 6), 0) ;(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0xF5F5F5, 6), 0)
 		If IsArray($Message) Then
+			SetLog("Searching " & $bAccount & " Account...", $COLOR_blue)
+			If _Sleep(1500) Then Return
 			CheckAccount($bAccount)
 			CheckOK()
 			ExitLoop
@@ -114,10 +116,10 @@ Func LoadAccount($bAccount)
 	Local $iLoopCount = 0
 
 	While 1
-		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0);load pixel
+		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0) ;load pixel 
 		If IsArray($Message) Then
 			SetLog("Loading Account In Progress...", $COLOR_blue)
-			If _Sleep(2000) Then Return ;Noting
+			If _Sleep(1800) Then Return ;Not
 			Click(512, 433) ;Click Load Button
 			If _Sleep(1000) Then Return
 
@@ -131,9 +133,9 @@ Func LoadAccount($bAccount)
 				If _Sleep(1500) Then Return
 				ControlSend($Title, "", "", "{LSHIFT DOWN}{C DOWN}{C UP}{O DOWN}{O UP}{N DOWN}{N UP}{F DOWN}{F UP}{I DOWN}{I UP}{R DOWN}{R UP}{M DOWN}{M UP}{LSHIFT UP}") ;Enter  Confirm  txt
 				If _Sleep(2000) Then Return
-				Click(521, 198) ;Click Confirm
+				Click(521, 200) ;Click Confirm
 			Else
-				Click(521, 198) ;Click Confirm
+				Click(521, 200) ;Click Confirm
 			EndIf
 			ExitLoop
 		EndIf
@@ -190,7 +192,7 @@ Func CheckAccount($bAccount)
 			$AccountY = 0
 			$AccountLoc = _ImageSearch($AccImg, 1, $AccountX, $AccountY, $AccountTol)
 			If $AccountLoc = 1 Then
-				SetLog("Found " & $bAccount & " Account", $COLOR_GREEN)
+				SetLog("Found " & $bAccount & " Account...", $COLOR_GREEN)
 				If $DebugSetLog = 1 Then SetLog("Found " & $bAccount & " Account (" & $AccountX & "," & $AccountY & ") tolerance:" & $AccountTol, $COLOR_PURPLE)
 				Click($AccountX, $AccountY,1,0,"#0120")
 				If _Sleep(500) Then Return
