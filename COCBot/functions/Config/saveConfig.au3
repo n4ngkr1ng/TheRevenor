@@ -1729,6 +1729,13 @@ Func saveConfig() ;Saves the controls settings to the config
 	;atk their king
 	;attk their queen
 
+	; Donate Stats ==========================================================================
+	If GUICtrlRead($chkDStats) = $GUI_CHECKED Then
+		IniWrite($config, "donate", "chkDStats", 1)
+	Else
+		IniWrite($config, "donate", "chkDStats", 0)
+	EndIf
+	
 	;Donate Settings-------------------------------------------------------------------------
 
 ;~ 	IniWriteS($config, "donate", "chkRequest", $iChkRequest)

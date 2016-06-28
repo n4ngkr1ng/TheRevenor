@@ -33,7 +33,7 @@ Global $aTxtBlacklistControlsSpell[3] = [$txtBlacklistPoisonSpells, $txtBlacklis
 Global $aLblBtnControls[17] = [$lblBtnBarbarians, $lblBtnArchers, $lblBtnGiants, $lblBtnGoblins, $lblBtnWallBreakers, $lblBtnBalloons, $lblBtnWizards, $lblBtnHealers, $lblBtnDragons, $lblBtnPekkas, $lblBtnMinions, $lblBtnHogRiders, $lblBtnValkyries, $lblBtnGolems, $lblBtnWitches, $lblBtnLavaHounds, $lblBtnCustom]
 Global $aLblBtnControlsSpell[3] = [$lblBtnPoisonSpells, $lblBtnEarthQuakeSpells, $lblBtnHasteSpells]
 
-Global $aMainTabItems[8] = [$tabMain, $tabGeneral, $tabVillage, $tabAttack, $tabBot, $tabMod, $tabAboutUs]
+Global $aMainTabItems[8] = [$tabMain, $tabGeneral, $tabVillage, $tabAttack, $tabBot, $tabMOD, $tabAboutUs]
 
 Global $aTabControlsVillage[6] = [$hGUI_VILLAGE_TAB, $hGUI_VILLAGE_TAB_ITEM1, $hGUI_VILLAGE_TAB_ITEM2, $hGUI_VILLAGE_TAB_ITEM3, $hGUI_VILLAGE_TAB_ITEM4, $hGUI_VILLAGE_TAB_ITEM5]
 Global $aTabControlsDonate[4] = [$hGUI_DONATE_TAB, $hGUI_DONATE_TAB_ITEM1, $hGUI_DONATE_TAB_ITEM2, $hGUI_DONATE_TAB_ITEM3]
@@ -49,8 +49,8 @@ Global $aTabControlsTHSnipe[4] = [$hGUI_THSNIPE_TAB, $hGUI_THSNIPE_TAB_ITEM1, $h
 Global $aTabControlsAttackOptions[5] = [$hGUI_AttackOption_TAB, $hGUI_AttackOption_TAB_ITEM1, $hGUI_AttackOption_TAB_ITEM2, $hGUI_AttackOption_TAB_ITEM3,  $hGUI_AttackOption_TAB_ITEM4]
 Global $aTabControlsStrategies[3] = [$hGUI_STRATEGIES_TAB, $hGUI_STRATEGIES_TAB_ITEM1, $hGUI_STRATEGIES_TAB_ITEM2]
 
-Global $aTabControlsMod[3] = [$hGUI_MOD_TAB, $hGUI_MOD_TAB_ITEM1, $hGUI_MOD_TAB_ITEM2]
 Global $aTabControlsBot[4] = [$hGUI_BOT_TAB, $hGUI_BOT_TAB_ITEM1, $hGUI_BOT_TAB_ITEM2, $hGUI_BOT_TAB_ITEM3]
+Global $aTabControlsMOD[4] = [$hGUI_MOD_TAB, $hGUI_MOD_TAB_ITEM1, $hGUI_MOD_TAB_ITEM2, $hGUI_MOD_TAB_ITEM3]
 Global $aTabControlsStats[4] = [$hGUI_STATS_TAB, $hGUI_STATS_TAB_ITEM1, $hGUI_STATS_TAB_ITEM2, $hGUI_STATS_TAB_ITEM3]
 
 Global $aDebugControlItems[10] = [$chkDebugClick, $chkDebugSetlog, $chkDebugOcr, $chkDebugImageSave, $chkdebugBuildingPos, $chkdebugTrain, $chkdebugOCRDonate,$btnTestTrain, $btnTestDonateCC, $btnTestAttackBar]
@@ -70,7 +70,7 @@ Func IsTab($controlID)
 			_ArraySearch($aTabControlsAttackOptions, $controlID) <> -1 Or _
 			_ArraySearch($aTabControlsStrategies, $controlID) <> -1 Or _
 			_ArraySearch($aTabControlsBot, $controlID) <> -1 Or _
-			_ArraySearch($aTabControlsMod, $controlID) <> -1 Or _
+			_ArraySearch($aTabControlsMOD, $controlID) <> -1 Or _
 			_ArraySearch($aTabControlsStats, $controlID) <> -1 Then
 		Return True
 	EndIf
@@ -116,7 +116,7 @@ AtkLogHead()
 #include "GUI\MBR GUI Control Bot Options.au3"
 #include "GUI\MBR GUI Control Preset.au3"
 #include "GUI\MBR GUI Control Child Misc.au3"
-;Mod
+;MOD
 #include "GUI\MBR GUI Control Tab DocOc.au3"
 #include "GUI\MBR GUI Control Tab Profiles.au3"
 #include "GUI\MBR GUI Control Tab Mod Option.au3"
@@ -155,7 +155,7 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 				Case $hGUI_BOT_TAB
 					tabBot()
 				Case $hGUI_MOD_TAB
-					tabMod()
+					tabMOD()
 			EndSwitch
 		Case $WM_COMMAND ; 273
 			CheckRedrawBotWindow()
@@ -457,13 +457,13 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $hGUI_MOD)
 				tabBot()
 				
-			Case $tabidx = 4 ; Mod Option
+			Case $tabidx = 4 ; MOD Option
 				GUISetState(@SW_HIDE, $hGUI_LOG)
 				GUISetState(@SW_HIDE, $hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $hGUI_BOT)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_MOD)
-				tabMod()
+				tabMOD()
 				
 			Case ELSE
 				GUISetState(@SW_HIDE, $hGUI_LOG)
@@ -640,23 +640,31 @@ Func tabBot()
 		EndSelect
 EndFunc   ;==>tabBot
 
-Func tabMod()
+Func tabMOD()
 	$tabidx = GUICtrlRead($hGUI_MOD_TAB)
 		Select
 			Case $tabidx = 0 ; Profile Tab
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_Profiles)
 				GUISetState(@SW_HIDE, $hGUI_ModDocOc)
 				GUISetState(@SW_HIDE, $hGUI_ModOption)
+				GUISetState(@SW_HIDE, $hGUI_DonateStats)
 			Case $tabidx = 1 ; Doc Oc Tab
 				GUISetState(@SW_HIDE, $hGUI_Profiles)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_ModDocOc)
 				GUISetState(@SW_HIDE, $hGUI_ModOption)
+				GUISetState(@SW_HIDE, $hGUI_DonateStats)
 			Case $tabidx = 2 ; Mod Option Tab
 				GUISetState(@SW_HIDE, $hGUI_Profiles)
 				GUISetState(@SW_HIDE, $hGUI_ModDocOc)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_ModOption)
+				GUISetState(@SW_HIDE, $hGUI_DonateStats)
+			Case $tabidx = 3 ; Donate Stats Tab
+				GUISetState(@SW_HIDE, $hGUI_Profiles)
+				GUISetState(@SW_HIDE, $hGUI_ModDocOc)
+				GUISetState(@SW_HIDE, $hGUI_ModOption)
+				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_DonateStats)
 		EndSelect
-EndFunc   ;==>tabMod
+EndFunc   ;==>tabMOD
 
 Func tabDeadbase()
 	$tabidx = GUICtrlRead($hGUI_DEADBASE_TAB)

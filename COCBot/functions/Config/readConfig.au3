@@ -186,11 +186,10 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 
 		IniReadS($fulltroop, $config, "troop", "fullTroop", "100")
 
-		IniReadS($isldTrainITDelay, $config, "other", "TrainITDelay", "20")
+		IniReadS($isldTrainITDelay, $config, "other", "TrainITDelay", "40")
 		
 		$ichkCloseTraining = IniRead($config, "troop", "CloseWhenTraining", "1")
 		$ichkCloseNight = IniRead($config, "troop", "CloseAtNight", "1")
-		IniReadS($isldTrainITDelay, $config, "other", "TrainITDelay", "40")
 
 		;Army training - Spells Creation  -----------------------------------------------------
 		Local $tempQtaSpell
@@ -723,6 +722,9 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		;InireadS(xxxx,$config, "attack", "xxxx", "0")
 
 
+		; Donate Stats ==========================================================================
+		$ichkDStats = IniRead($config, "donate", "chkDStats", "1")
+		
 		;Donate Settings-------------------------------------------------------------------------
 		$sTxtRequest = IniRead($config, "donate", "txtRequest", "")
 		;InireadS(xxxx,$config, "attack", "xxxx", "0")
@@ -1038,6 +1040,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$AndroidAdbClickGroup = Int(IniRead($config, "android", "adb.click.group", $AndroidAdbClickGroup))
 		$AndroidAdbClicksEnabled = IniRead($config, "android", "adb.clicks.enabled", ($AndroidAdbClicksEnabled ? "1" : "0")) = "1"
 		$AndroidAdbClicksTroopDeploySize = Int(IniRead($config, "android", "adb.clicks.troop.deploy.size", $AndroidAdbClicksTroopDeploySize))
+		$NoFocusTampering = IniRead($config, "android", "no.focus.tampering", ($NoFocusTampering ? "1" : "0")) = "1"
 		
 		;mikemikemikecoc - Wait For Spells
 		IniReadS($iEnableSpellsWait[$DB], $config, "search", "ChkDBSpellsWait", "0")
@@ -1090,7 +1093,6 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 
 		; Misc Battle Settings - Added by LunaEclipse
 		$AndroidAdbClicksEnabled = IniRead($config, "Fast Clicks", "UseADBFastClicks", "0")
-		$NoFocusTampering = IniRead($config, "android", "no.focus.tampering", ($NoFocusTampering ? "1" : "0")) = "1"
 
 	Else
 		Return False

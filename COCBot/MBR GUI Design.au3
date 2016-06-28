@@ -73,7 +73,7 @@ SplashStep("Loading Attack tab...")
 #include "GUI\MBR GUI Design Child Attack.au3"
 SplashStep("Loading Bot tab...")
 #include "GUI\MBR GUI Design Child Bot.au3"
-;Mod
+;MOD
 SplashStep("Loading MOD tab...")
 #include "GUI\MBR GUI Design Child Mod.au3"
 
@@ -84,7 +84,7 @@ $tabGeneral = GUICtrlCreateTabItem(GetTranslated(600,1, "Log"))
 $tabVillage = GUICtrlCreateTabItem(GetTranslated(600,2, "Village")) ; Village
 $tabAttack = GUICtrlCreateTabItem(GetTranslated(600,3,"Attack Plan"))
 $tabBot = GUICtrlCreateTabItem(GetTranslated(600,4,"Bot"))
-$tabMod = GUICtrlCreateTabItem("MOD")
+$tabMOD = GUICtrlCreateTabItem("MOD")
 
 ;~ -------------------------------------------------------------
 ;~ About Us Tab
@@ -162,6 +162,7 @@ Bind_ImageList($hGUI_ACTIVEBASE_TAB)
 Bind_ImageList($hGUI_AttackOption_TAB)
 Bind_ImageList($hGUI_THSNIPE_TAB)
 Bind_ImageList($hGUI_BOT_TAB)
+Bind_ImageList($hGUI_MOD_TAB)
 Bind_ImageList($hGUI_STRATEGIES_TAB)
 Bind_ImageList($hGUI_STATS_TAB)
 #EndRegion ; Bind Icon images to all Tabs in all GUI windows (main and children)

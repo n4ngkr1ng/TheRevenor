@@ -2510,6 +2510,13 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	_GUICtrlComboBox_SetCurSel($cmbTrophyMinProfile, $icmbTrophyMinProfile)
 	GUICtrlSetData($txtMinTrophyAmount, $itxtMinTrophyAmount)
 
+	; Donate Stats ====================================================================
+	If $ichkDStats = 1 Then
+		GUICtrlSetState($chkDStats, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDStats, $GUI_UNCHECKED)
+	EndIf
+	
    ; mikemikemikecoc - Wait For Spells
    If $iEnableSpellsWait[$DB] = 1 Then
 		 GUICtrlSetState($chkDBSpellsWait, $GUI_CHECKED)

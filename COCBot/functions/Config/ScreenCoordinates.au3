@@ -31,9 +31,6 @@ Global $aFindMatchButton2[4] = [195, 480 + $bottomOffsetY, 0xD84D00, 10] ; Find 
 Global $aIsAttackShield[4] = [250, 415 + $midOffsetY, 0xE8E8E0, 10] ; Attack window, white shield verification window
 Global $aAway[2] = [1, 40] ; Away click, moved from 1,1 to prevent scroll window from top
 Global $aRemoveShldButton[4] = [470, 18, 0xA80408, 10] ; Legacy - Main Screen, Red pixel lower part of Minus sign to remove shield, used to validate latest COC installed
-Global $aNoShield[4] = [448, 20, 0x43484B, 10] ; Main Screen, charcoal pixel center of shield when no shield is present
-Global $aHaveShield[4] = [455, 19, 0xF0F8FB, 15] ; Main Screen, Silver pixel center of shield
-Global $aHavePerGuard[4] = [455, 19, 0x12120E, 15] ; Main Screen, black pixel in sword outline center of shield
 Global $aNoShield[4] = [448, 20, 0x43484B, 15] ; Main Screen, charcoal pixel center of shield when no shield is present
 Global $aHaveShield[4] = [455, 19, 0xF0F8FB, 15] ; Main Screen, Silver pixel top center of shield
 Global $aHavePerGuard[4] = [455, 19, 0x12120E, 15] ; Main Screen, black pixel in sword outline top center of shield
@@ -114,25 +111,6 @@ Global $aWonThreeStarAtkRprt[4] = [534, 180 + $midOffsetY, 0xC8CAC7, 30] ; Cente
 	;Global $DropTrophiesStartPoint = [34, 310]
 #ce
 
-Global $TrainBarb[4] = [166, 310 + $midOffsetY, 0xFFB620, 40]
-Global $TrainArch[4] = [245, 315 + $midOffsetY, 0x882852, 40]
-Global $TrainGiant[4]= [370, 310 + $midOffsetY, 0xFFCE94, 40]
-Global $TrainGobl[4] = [482, 310 + $midOffsetY, 0xA9F36B, 40]
-Global $TrainWall[4] = [557, 310 + $midOffsetY, 0x786C8A, 40]
-Global $TrainBall[4] = [682, 310 + $midOffsetY, 0x7C1C10, 40]
-
-Global $TrainWiza[4] = [183, 446 + $midOffsetY, 0xE3937C, 40]
-Global $TrainHeal[4] = [263, 459 + $midOffsetY, 0xD67244, 40]
-Global $TrainDrag[4] = [383, 459 + $midOffsetY, 0x493153, 40]
-Global $TrainPekk[4] = [474, 459 + $midOffsetY, 0x395671, 40]
-
-Global $TrainMini[4] = [220, 310 + $midOffsetY, 0x182340, 40] ;  Done
-Global $TrainHogs[4] = [301, 310 + $midOffsetY, 0x72D0E8, 40] ;  Done 71D0E8
-Global $TrainValk[4] = [404, 310 + $midOffsetY, 0xC04710, 40] ;  Done A33D08
-Global $TrainGole[4] = [546, 310 + $midOffsetY, 0xDEC3A8, 40] ;  Done D8C0A5
-Global $TrainWitc[4] = [646, 324 + $midOffsetY, 0x3D3C65, 40] ;  Fix V4.0.1?  383865
-
-Global $TrainLava[4] = [220, 459 + $midOffsetY, 0x4F4F40, 40] ;  Done  4A4D3F
 ;	pixel color: location information								BS 850MB (Reg GFX), BS 500MB (Med GFX) : location
 Global $TrainBarb[4] = [166, 310 + $midOffsetY, 0xFFB620, 40] ; FFB620, FFB620
 Global $TrainArch[4] = [245, 315 + $midOffsetY, 0x882852, 40] ; 882857, 882852

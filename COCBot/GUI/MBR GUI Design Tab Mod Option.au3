@@ -175,5 +175,7 @@ Local $x = 20, $y = 150
 			GUICtrlSetOnEvent(-1, "chkFastADBClicks")
 	;GUICtrlCreateGroup("", -99, -99, 1, 1)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
-Global $LastControlToHideMod = GUICtrlCreateDummy()
-Global $iPrevState[$LastControlToHideMod + 1]
+	
+Global $LastControlToHideMOD = GUICtrlCreateDummy()
+Global $iPrevState[$LastControlToHideMOD + 1]
+	

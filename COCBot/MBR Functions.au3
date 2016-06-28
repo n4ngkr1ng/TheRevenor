@@ -137,11 +137,6 @@
 #include "functions\Main Screen\RemoveGhostTrayIcons.au3"
 #include "functions\Main Screen\waitMainScreen.au3"
 
-;Multi Farming - Added by lakereng
-#include "functions\Mod\Multy\SwitchDonate.au3"
-#include "functions\Mod\Multy\SwitchAccount.au3"
-#include "functions\Mod\Multy\DetectAccount.au3"
-
 ; Android support for MEmu, Droid4X, Nox, BlueStacks...
 #include "functions\Android\AndroidMenuShortcuts.au3"
 #include "functions\Android\Close_OpenCoC.au3"
@@ -269,6 +264,12 @@
 
 ; Check Collector Outside
 #include "functions\Village\AreCollectorsOutside.au3"
+
+;Multy Farming - Added by TheRevenor
+#include "functions\Mod\Multy\MultyFarmingRevenor.au3"
+
+; DonateStats - Added by Cutidudz
+#include "functions\Mod\DonateStats\DonateStats.au3"
 
 ; Attack files - Added by LunaEclipse
 #include "functions\Attack\attackFunctions.au3"

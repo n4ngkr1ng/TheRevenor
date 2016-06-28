@@ -184,7 +184,7 @@ Func btnStart()
 			$iPrevState[$i] = GUICtrlGetState($i)
  			GUICtrlSetState($i, $GUI_DISABLE)
 		Next
-		For $i = $FirstControlToHideMod To $LastControlToHideMod ; Save state of all controls on tabs
+		For $i = $FirstControlToHideMOD To $LastControlToHideMOD ; Save state of all controls on tabs
 			$iPrevState[$i] = GUICtrlGetState($i)
  			GUICtrlSetState($i, $GUI_DISABLE)
 		Next
@@ -275,7 +275,7 @@ Func btnStop()
 			If $i = $divider Then ContinueLoop ; exclude divider
 			GUICtrlSetState($i, $iPrevState[$i])
 		Next
-		For $i = $FirstControlToHideMod To $LastControlToHideMod ; Restore previous state of controls
+		For $i = $FirstControlToHideMOD To $LastControlToHideMOD ; Restore previous state of controls
 			GUICtrlSetState($i, $iPrevState[$i])
 		Next
 		$GUIControl_Disabled = False
@@ -349,10 +349,9 @@ Func btnHide()
 	If @error <> 0 Then Return SetError(0, 0, 0)
 
 	If $Hide = False Then
-		GUICtrlSetData($btnHide, GetTranslated(602, 25, "Show"))
+		GUICtrlSetData($btnHide, GetTranslated(602, 26, "Show"))
 		; Hide the taskbar icon now as Bluestacks has been moved off the screen
 		hideTaskBarIcon($HWnD)
-		GUICtrlSetData($btnHide, GetTranslated(602, 26, "Show"))
 		Local $a = WinGetPos($HWnD)
 		$botPos[0] = $a[0]
 		$botPos[1] = $a[1]
