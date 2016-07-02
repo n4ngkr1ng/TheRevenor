@@ -48,6 +48,39 @@ Func txtMinDark()
 EndFunc   ;==>txtMinDark
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: MBR GUI Controls Tab Mod Option
+; Description ...: Extreme Zap
+; Syntax ........:
+; Parameters ....: None
+; Return values .: None
+; Author ........: TheRevenor(July, 2016)
+; Modified ......: None
+; Remarks .......: This file is part of MyBot, MyBot.run. Copyright 2016
+;                  MyBot is distributed under the terms of the GNU GPL
+; Related .......:
+; Link ..........: https://github.com/MyBotRun/MyBot/wiki
+; Example .......: No
+; ===============================================================================================================================
+
+Func ExtLightSpell()
+	If GUICtrlRead($chkExtLightSpell) = $GUI_CHECKED Then
+		GUICtrlSetState($txtMinDark, $GUI_ENABLE)
+		$ichkExtLightSpell = 1
+	Else
+		GUICtrlSetState($txtMinDark, $GUI_DISABLE)
+		$ichkExtLightSpell = 0
+	EndIf
+ EndFunc   ;==>GUILightSpell
+
+Func DrillZapTH()
+    If GUICtrlRead($chkDrillZapTH) = 1 Then
+	  smartZap()
+   ElseIf GUICtrlRead($chkDrillZapTH) = 0 Then
+	  Return False
+   EndIf
+EndFunc
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: MBR GUI Controls Tab Android
 ; Description ...: This file Includes GUI Design
 ; Syntax ........:
@@ -83,13 +116,13 @@ Func txtAndroidInstance()
 	modifyAndroid()
 EndFunc   ;==>$txtAndroidInstance
 
-Func HideTaskbar()
-	If GUICtrlRead($chkHideTaskBar) = $GUI_CHECKED Then
-		$ichkHideTaskBar = 1
-	Else
-		$ichkHideTaskBar = 0
-	EndIf
-EndFunc   ;==>HideTaskbar
+;Func HideTaskbar()
+;	If GUICtrlRead($chkHideTaskBar) = $GUI_CHECKED Then
+;		$ichkHideTaskBar = 1
+;	Else
+;		$ichkHideTaskBar = 0
+;	EndIf
+;EndFunc   ;==>HideTaskbar
 
 
 Func chkFastADBClicks()

@@ -1485,6 +1485,9 @@ Global $iAccount, $OkLoc, $AccountLoc
 Global $iconfirm
 Global $bAccount[6] = ["Main", "Second", "Third", "Fourth", "Fifth", "Sixth"]
 
+; ExtremeZap - by TheRevenor
+Global $ichkExtLightSpell = 1
+
 ; SmartZap GUI variables - Added by LunaEclipse
 Global $ichkSmartZap = 1
 Global $ichkSmartZapDB = 1
@@ -1493,6 +1496,7 @@ Global $itxtMinDE = 250
 
 ; SmartZap stats - Added by LunaEclipse
 Global $smartZapGain = 0
+Global $ExtremeZapGain = 0
 Global $numLSpellsUsed = 0
 
 ; SmartZap Array to hold Total Amount of DE available from Drill at each level (1-6) - Added by LunaEclipse
@@ -1516,7 +1520,7 @@ Global Const $drillLevelSteal[6] = [59, _
 ; Android Settings - Added by LunaEclipse
 Global $sAndroid = "<No Emulators>"
 Global $sAndroidInstance = ""
-Global $ichkHideTaskBar = 0
+;Global $ichkHideTaskBar = 0
 
 #region Check Collectors Outside
 ; collectors outside filter

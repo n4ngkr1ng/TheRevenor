@@ -2303,6 +2303,14 @@ Func saveConfig() ;Saves the controls settings to the config
         IniWrite($config, "SmartZap", "THSnipeSaveHeroes", 0)
     EndIf
 	IniWrite($config, "SmartZap", "MinDE", GUICtrlRead($txtMinDark))
+	
+	;ExtremeZap - Added by TheRvenor
+	If GUICtrlRead($chkExtLightSpell) = $GUI_CHECKED Then
+		IniWrite($config, "MOD", "ExtLightSpell", "1")
+	Else
+		IniWrite($config, "MOD", "ExtLightSpell", "0")
+	EndIf
+	IniWrite($config, "MOD", "MinDE", GUICtrlRead($txtMinDark))
 
 	;Multy Farming Setting --------------------------------------------------------------------------
 	If GUICtrlRead($chkSwitchDonate) = $GUI_CHECKED Then
@@ -2321,11 +2329,11 @@ Func saveConfig() ;Saves the controls settings to the config
 	; Android Settings - Added by LunaEclipse
 	IniWrite($config, "Android", "Emulator", GUICtrlRead($cmbAndroid))
 	IniWrite($config, "Android", "Instance", GUICtrlRead($txtAndroidInstance))
-	If GUICtrlRead($chkHideTaskBar) = $GUI_CHECKED Then
-		IniWrite($config, "Android", "HideTaskBarIcon", 1)
-	Else
-		IniWrite($config, "Android", "HideTaskBarIcon", 0)
-	EndIf
+	;If GUICtrlRead($chkHideTaskBar) = $GUI_CHECKED Then
+	;	IniWrite($config, "Android", "HideTaskBarIcon", 1)
+	;Else
+	;	IniWrite($config, "Android", "HideTaskBarIcon", 0)
+	;EndIf
 
 	; Misc Battle Settings - Added by LunaEclipse
 	If GUICtrlRead($chkFastADBClicks) = $GUI_CHECKED Then

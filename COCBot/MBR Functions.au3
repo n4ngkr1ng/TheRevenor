@@ -205,7 +205,6 @@
 #include "functions\Pixels\boolPixelSearch.au3"
 #include "functions\Pixels\isInsideDiamond.au3"
 
-#include "functions\Psychic Octopus\psychicOctopus.au3"
 
 #include "functions\Read Text\BuildingInfo.au3"
 #include "functions\Read Text\getOcr.au3"
@@ -262,10 +261,13 @@
 
 #include "functions\Village\ProfileSwitch.au3"
 
+; Doc Octopus - by ProMac
+#include "functions\Mod\Psychic Octopus\psychicOctopus.au3"
+
 ; Check Collector Outside
 #include "functions\Village\AreCollectorsOutside.au3"
 
-;Multy Farming - Added by TheRevenor
+; Multy Farming - Added by TheRevenor
 #include "functions\Mod\Multy\MultyFarmingRevenor.au3"
 
 ; DonateStats - Added by Cutidudz
@@ -275,11 +277,14 @@
 #include "functions\Attack\attackFunctions.au3"
 #include "functions\Attack\unitInfo.au3"
 
+; ExtremeZap - Added by TheRevenor
+#include "functions\Mod\SmartZap\ExtremeZap.au3"
+
 ; SmartZap files - Added by LunaEclipse
-#include "functions\SmartZap\drillSearch.au3"
-#include "functions\SmartZap\smartZap.au3"
+#include "functions\Mod\SmartZap\drillSearch.au3"
+#include "functions\Mod\SmartZap\smartZap.au3"
 
 ; Android files - Added by LunaEclipse
 #include "functions\Android\modifyAndroid.au3"
-#include "functions\Android\taskbarIcon.au3"
+;#include "functions\Android\taskbarIcon.au3"
 ;-----------------------;

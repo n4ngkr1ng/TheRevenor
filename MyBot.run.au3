@@ -48,11 +48,11 @@ EndIf
 #include "COCBot\functions\Config\ScreenCoordinates.au3"
 
 Global $sGitHubModOwner = "TheRevenor"
-Global $sGitHubModRepo = "MyBot-v6.1.3-MyMod"
-Global $sGitHubModLatestReleaseTag = "v1.3.1"
+Global $sGitHubModRepo = "MyBot-v6.1.4-MyMod"
+Global $sGitHubModLatestReleaseTag = "v1.4"
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016" ; Website
 
-$sBotVersion = "v6.1.3" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
+$sBotVersion = "v6.1.4" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sModversion = $sGitHubModLatestReleaseTag
 $sBotTitle = "My Bot " & $sBotVersion & " MOD TheRevenor " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
@@ -437,7 +437,7 @@ EndIf
 			If _Sleep($iDelayRunBot5) Then Return
 			If $Restart = True Then ContinueLoop
 		EndIf
-		;Multy-Farming-------------------------------------------------------------
+		;Multy-Farming ==============================================================================================================
 		If $ichkMultyFarming = 1 Then
 			SetLog("Multy-Farming Mode Active...", $COLOR_RED)
 			SetLog("Please don't PAUSE/STOP BOT during profile change", $COLOR_RED)
@@ -454,16 +454,24 @@ EndIf
 					SwitchAccount("Third")
 				ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 					SwitchAccount("Fourth")
+				ElseIf IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Fifth")
+				ElseIf IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Sixth")
 				Else
 					SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
 				EndIF
 
 			ElseIf $sCurrProfile = "[02] Second" Then
-				If $iAccount = "3" Or $iAccount = "4" Then
+				If $iAccount = "3" Or $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6" Then
 					If IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 						SwitchAccount("Third")
 					ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 						SwitchAccount("Fourth")
+					ElseIf IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fifth")
+					ElseIf IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Sixth")
 					ElseIf IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 						SwitchAccount("Main")
 					Else
@@ -476,9 +484,13 @@ EndIf
 				EndIf
 
 			ElseIf $sCurrProfile = "[03] Third" Then
-				If $iAccount = "4" Then
+				If $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6" Then
 					If IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 						SwitchAccount("Fourth")
+					ElseIf IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fifth")
+					ElseIf IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Sixth")
 					ElseIf IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 						SwitchAccount("Main")
 					ElseIf IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
@@ -490,21 +502,68 @@ EndIf
 				ElseIf $iAccount = "3" Then
 					If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 						SwitchAccount("Main")
-					EndIF
+					EndIf
 
 				EndIf
 			ElseIf $sCurrProfile = "[04] Fourth" Then
+				If $iAccount = "5" Or $iAccount = "6" Then
+					If IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fifth")
+					ElseIf IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Sixth")
+					ElseIf IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					ElseIf IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Second")
+					ElseIf IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Third")
+					Else
+						SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
+					EndIf
+				ElseIf $iAccount = "4" Then
+					If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					EndIf
+				EndIf
+			ElseIf $sCurrProfile = "[05] Fifth" Then
+				If $iAccount = "6" Then
+					If IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Sixth")
+					ElseIf IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					ElseIf IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Second")
+					ElseIf IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Third")
+					ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fourth")
+					Else
+					
+						SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
+					EndIf
+
+				ElseIf $iAccount = "5" Then
+					If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					EndIf
+
+				EndIf
+			ElseIf $sCurrProfile = "[06] Sixth" Then
 				If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 					SwitchAccount("Main")
 				ElseIf IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 					SwitchAccount("Second")
 				ElseIf IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 					SwitchAccount("Third")
+				ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fourth")
+				ElseIf IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fifth")
 				Else
 					SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
 				EndIf
 			EndIf
-		;-----------------------------------------------------------------------------
+		;============================================================================================================================;
 		EndIf
 	WEnd
 EndFunc   ;==>runBot

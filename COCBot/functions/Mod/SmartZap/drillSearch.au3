@@ -113,7 +113,7 @@ EndFunc   ;==>getDrillArray
 
 Func drillSearch($listPixelByLevel = -1)
 	; Not using SmartZap so lets just exit now
-	If $ichkSmartZap <> 1 Then Return False
+	If ($ichkSmartZap Or $ichkExtLightSpell) <> 1 Then Return False
 
 	If Not IsArray($listPixelByLevel) Then $listPixelByLevel = getDrillArray()
 

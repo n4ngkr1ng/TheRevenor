@@ -2407,6 +2407,16 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_UNCHECKED)
 	EndIf
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
+	
+	; ExtremeZap - Added by TheRevenor
+	If $ichkExtLightSpell = 1 Then
+		GUICtrlSetState($chkExtLightSpell, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkExtLightSpell, $GUI_UNCHECKED)
+	EndIf
+	ExtLightSpell()
+	
+	GUICtrlSetData($txtMinDark, $itxtMinDE)
 
 	;Multy Farming Settings -------------------------------------------------------------------
 	If $ichkSwitchDonate = 1 Then
@@ -2430,11 +2440,11 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 		_GUICtrlComboBox_SetCurSel($cmbAndroid, 0)
 	EndIf
 	GUICtrlSetData($txtAndroidInstance, $sAndroidInstance)
-	If $ichkHideTaskBar = 1 Then
-		GUICtrlSetState($chkHideTaskBar, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkHideTaskBar, $GUI_UNCHECKED)
-	EndIf
+	;If $ichkHideTaskBar = 1 Then
+	;	GUICtrlSetState($chkHideTaskBar, $GUI_CHECKED)
+	;Else
+	;	GUICtrlSetState($chkHideTaskBar, $GUI_UNCHECKED)
+	;EndIf
 	modifyAndroid()
 
 	; Misc Battle Settings - Added by LunaEclipse
@@ -2579,7 +2589,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 
 	; Check Collectors Outside
 	If $ichkDBMeetCollOutside = 1 Then
-	GUICtrlSetState($chkDBMeetCollOutside, $GUI_CHECKED)
+		GUICtrlSetState($chkDBMeetCollOutside, $GUI_CHECKED)
 	Else
 		GUICtrlSetState($chkDBMeetCollOutside, $GUI_UNCHECKED)
 	EndIf

@@ -19,10 +19,10 @@ GUISwitch($hGUI_ModOption)
 ;$tabMOD = GUICtrlCreateTabItem("MOD")
 	; SmartZap Settings
 	Local $x = 20, $y = 25
-    $grpStatsMisc = GUICtrlCreateGroup("SmartZap", $x - 20, $y - 20, 438, 120)
+    $grpStatsMisc = GUICtrlCreateGroup("Smart Zap && Extreme Zap", $x - 20, $y - 20, 438, 148) ;120
 		GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x - 10, $y + 20, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x - 10, $y - 7, 24, 24)
-		$chkSmartLightSpell = GUICtrlCreateCheckbox("Use Lightning Spells to Zap Drills", $x + 20, $y - 5, -1, -1)
+		$chkSmartLightSpell = GUICtrlCreateCheckbox("Use Lightning Spells to SmartZap Drills", $x + 20, $y - 5, -1, -1)
 			$txtTip = "Check this to drop Lightning Spells on top of Dark Elixir Drills." & @CRLF & @CRLF & _
 					  "Remember to go to the tab 'troops' and put the maximum capacity " & @CRLF & _
 					  "of your spell factory and the number of spells so that the bot " & @CRLF & _
@@ -30,22 +30,29 @@ GUISwitch($hGUI_ModOption)
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkSmartLightSpell")
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
-		$chkSmartZapDB = GUICtrlCreateCheckbox("Only Zap Drills in Dead Bases", $x + 20, $y + 21, -1, -1)
+		$chkExtLightSpell = GUICtrlCreateCheckbox("Use ExtremeZap To Zap Dark Drill", $x + 20, $y + 21, -1, -1)
+			$txtTip = "Check this to drop Extreme lightning spells on Dark Elixir Drills," & @CRLF & @CRLF & _
+					  "__If You Do Not Like SmartZap, This Is The Right Choice.__"
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "ExtLightSpell")
+			GUICtrlSetState(-1, $GUI_UNCHECKED)
+		$chkSmartZapDB = GUICtrlCreateCheckbox("Only Zap Drills in Dead Bases", $x + 20, $y + 47, -1, -1)
 			$txtTip = "It is recommended you only zap drills in dead bases as most of the " & @CRLF & _
 					  "Dark Elixir in a live base will be in the storage."
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkSmartZapDB")
 			GUICtrlSetState(-1, $GUI_CHECKED)
 			GUICtrlSetState(-1, $GUI_DISABLE)
-		$lblSmartZap = GUICtrlCreateLabel("Min. amount of Dark Elixir:", $x + 0, $y + 48, 160, -1, $SS_RIGHT) ;-20
-		$txtMinDark = GUICtrlCreateInput("250", $x + 180, $y + 45, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER)) ;155
+		$lblSmartZap = GUICtrlCreateLabel("Min. amount of Dark Elixir:", $x + 0, $y + 74, 160, -1, $SS_RIGHT) ;-20
+		$txtMinDark = GUICtrlCreateInput("250", $x + 180, $y + 69, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER)) ;+ 45
 		    $txtTip = "The value here depends a lot on what level your Town Hall is, " & @CRLF & _
-					  "and what level drills you most often see."
+					  "and what level drills you most often see." & @CRLF & @CRLF & _
+					  "Input The Min Dark Elixir If You Want To Extreme Drill Zap"
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetLimit(-1, 4)
 			GUICtrlSetOnEvent(-1, "txtMinDark")
 			GUICtrlSetState(-1, $GUI_DISABLE)
-		$chkSmartZapSaveHeroes = GUICtrlCreateCheckbox("Don't Zap on Town Hall Snipe when Heroes Deployed", $x + 20, $y + 69, -1, -1)
+		$chkSmartZapSaveHeroes = GUICtrlCreateCheckbox("Don't Zap on Town Hall Snipe when Heroes Deployed", $x + 20, $y + 94, -1, -1) ;69
 			$txtTip = "This will stop SmartZap from zapping a base on a Town Hall Snipe " & @CRLF & _
 					  "if your heroes were deployed. " & @CRLF & @CRLF & _
 					  "This protects their health so they will be ready for battle sooner!"
@@ -85,7 +92,7 @@ GUISwitch($hGUI_ModOption)
 ; Example .......: No
 ; ===============================================================================================================================
 
-Local $x = 20, $y = 150
+Local $x = 20, $y = 177 ;150
 	$grpMultyFarming = GUICtrlCreateGroup( "Multy-Farming With Smart Switch", $x - 20, $y - 20, 438, 65)
 	;$x -= 10
 		$chkMultyFarming = GUICtrlCreateCheckbox(GetTranslated(17,1, "Multy-Farming"), $x - 10, $y -7, -1 , -1)
@@ -146,8 +153,8 @@ Local $x = 20, $y = 150
 ;===================================================================================================================;
 
 	; Android Settings
-	Local $x = 20, $y = 220
-	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 98)
+	Local $x = 20, $y = 247 ;220
+	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 73) ; $x - 20, $y - 20, 438, 98)
 		$cmbAndroid = GUICtrlCreateCombo("", $x - 10, $y - 5, 130, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			$txtTip = "Use this to select the Android Emulator to use with this profile."
 			GUICtrlSetTip(-1, $txtTip)
@@ -160,15 +167,15 @@ Local $x = 20, $y = 150
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "txtAndroidInstance")
 			GUICtrlSetState(-1, $GUI_DISABLE)
-		$chkHideTaskBar = GUICtrlCreateCheckbox("Hide Taskbar Icon", $x - 10, $y + 20, 120, -1)
-			$txtTip = "This will hide the android client from the taskbar when you press the Hide button"
-			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetOnEvent(-1, "HideTaskbar")
-		$lblHideTaskBar = GUICtrlCreateLabel("Warning: May cause erratic behaviour, uncheck if you have problems.", $x - 10, $y + 45, 340, 30, $SS_LEFT)
+		;$chkHideTaskBar = GUICtrlCreateCheckbox("Hide Taskbar Icon", $x - 10, $y + 20, 120, -1)
+		;	$txtTip = "This will hide the android client from the taskbar when you press the Hide button"
+		;	GUICtrlSetTip(-1, $txtTip)
+		;	GUICtrlSetOnEvent(-1, "HideTaskbar")
+		;$lblHideTaskBar = GUICtrlCreateLabel("Warning: May cause erratic behaviour, uncheck if you have problems.", $x - 10, $y + 45, 340, 30, $SS_LEFT)
 			; Misc Battle Settings
 	;Local $x = 35, $y = 450
 	;$grpDontEndBattle = GUICtrlCreateGroup("Miscellaneous Battle Settings", $x - 20, $y - 20, 440, 45)
-		$chkFastADBClicks = GUICtrlCreateCheckbox("Enable Fast ADB Clicks", $x + 120, $y + 20, -1, -1)
+		$chkFastADBClicks = GUICtrlCreateCheckbox("Enable Fast ADB Clicks", $x - 10, $y + 20, -1, -1) ; $x + 120, $y + 20, -1, -1)
 			$txtTip = "Tick this to enable faster ADB deployment of Troops for MEmu and Droid4x" & @CRLF & @CRLF & _ 
 				      "     WARNING:  This is experimental, if you have issues with deployment, disable it."
 			GUICtrlSetTip(-1, $txtTip)

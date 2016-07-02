@@ -603,7 +603,7 @@ Setlog ($debugOCRdonate,$color_purple)
 
 			$bDonate = True
 			
-			;DonateStats
+			;DonateStats=======================
 			$DonatedValue = $iDonSpellsQuantity
 
 			; Assign the donated quantity Spells to train : $Don $SpellName
@@ -656,7 +656,7 @@ Setlog ($debugOCRdonate,$color_purple)
 			$iSearch = _GUICtrlListView_FindInText($lvDonatedTroops, $DonateFile)
 			If $iSearch <> -1 Then
 				_GUICtrlListView_SetItem($lvDonatedTroops, $DonatedValue, $iSearch, $TroopCol)
-				SetLog("DonateStats: updated for " & $DonateFile & " with " & $DonatedValue & " " & NameOfTroop($Type, 1), $COLOR_GREEN)
+				SetLog("DonateStats: Updated for " & $DonateFile & " with " & $DonatedValue & " " & NameOfTroop($Type, 1), $COLOR_GREEN)
 			Else
 				SetLog("DonateStats: Unable to locate existing image in DonateStats, update failed.", $COLOR_RED)
 			EndIf
@@ -667,7 +667,7 @@ Setlog ($debugOCRdonate,$color_purple)
 		If $iSearch <> -1 Then
 			Local $GetLastValue = _GUICtrlListView_GetItemText($lvDonatedTroops, 0, $TroopCol)
 			_GUICtrlListView_SetItem($lvDonatedTroops, $DonatedValue + $GetLastValue, 0, $TroopCol)
-			SetLog("DonateStats: Totals updated with:" & $DonatedValue + $GetLastValue, $COLOR_GREEN)
+			SetLog("Totals Donation Updated: " & $DonatedValue + $GetLastValue & " Troops", $COLOR_BLUE)
 		Else
 			SetLog("DonateStats: There were errors, donated '" & NameOfTroop($Type, 1) & "' counts/totals skipped.", $COLOR_RED)
 		EndIf
@@ -708,8 +708,8 @@ Func DonateWindow($Open = True)
 		;===================================== DonateStats =====================================;
 		FileDelete($dirTemp & "*.bmp")
 
-		$iPosY = $DonatePixel[1] - 52
-		_CaptureRegion(5, $iPosY, 170, $iPosY + 25, True)
+		$iPosY = $DonatePixel[1] - 53
+		_CaptureRegion(20, $iPosY, 150, $iPosY + 20, True) ;5 170  25
 
 		Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
 		Local $Time = @HOUR & "." & @MIN & "." & @SEC
@@ -748,7 +748,7 @@ Func DonateWindow($Open = True)
 
 			Else
 				If @error = 1 Then
-					SetLog("DonateStats: No existing images to compare. Adding new clan member donate counts.")
+					SetLog("Clan Castle troops are full Or No existing images to compare", $COLOR_ORANGE)
 				EndIf
 			EndIf
 
@@ -1229,4 +1229,3 @@ Func DetectSlotTroop($Type)
 ;	EndIf
 
 EndFunc   ;==>DetectSlotTroop
-

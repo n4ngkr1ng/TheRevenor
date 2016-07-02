@@ -33,7 +33,7 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 			WEnd
 			
 			; Check to see if we should zap the DE Drills - Added by LunaEclipse
-			If IsAttackPage() Then smartZap()
+			If IsAttackPage() Then (smartZap() Or ExtremeZap())
 			
 			;If Heroes were not activated: Hero Ability activation before End of Battle to restore health
 			If ($checkKPower = True Or $checkQPower = True) And $iActivateKQCondition = "Auto" Then

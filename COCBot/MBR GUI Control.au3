@@ -50,7 +50,7 @@ Global $aTabControlsAttackOptions[5] = [$hGUI_AttackOption_TAB, $hGUI_AttackOpti
 Global $aTabControlsStrategies[3] = [$hGUI_STRATEGIES_TAB, $hGUI_STRATEGIES_TAB_ITEM1, $hGUI_STRATEGIES_TAB_ITEM2]
 
 Global $aTabControlsBot[4] = [$hGUI_BOT_TAB, $hGUI_BOT_TAB_ITEM1, $hGUI_BOT_TAB_ITEM2, $hGUI_BOT_TAB_ITEM3]
-Global $aTabControlsMOD[4] = [$hGUI_MOD_TAB, $hGUI_MOD_TAB_ITEM1, $hGUI_MOD_TAB_ITEM2, $hGUI_MOD_TAB_ITEM3]
+Global $aTabControlsMOD[5] = [$hGUI_MOD_TAB, $hGUI_MOD_TAB_ITEM1, $hGUI_MOD_TAB_ITEM2, $hGUI_MOD_TAB_ITEM3, $hGUI_MOD_TAB_ITEM4]
 Global $aTabControlsStats[4] = [$hGUI_STATS_TAB, $hGUI_STATS_TAB_ITEM1, $hGUI_STATS_TAB_ITEM2, $hGUI_STATS_TAB_ITEM3]
 
 Global $aDebugControlItems[10] = [$chkDebugClick, $chkDebugSetlog, $chkDebugOcr, $chkDebugImageSave, $chkdebugBuildingPos, $chkdebugTrain, $chkdebugOCRDonate,$btnTestTrain, $btnTestDonateCC, $btnTestAttackBar]

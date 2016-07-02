@@ -33,7 +33,8 @@ Func BrewSpells()
 		If isSpellFactory() Then
 			If $iLightningSpellComp > 0 Then ; Lightning Spells
 				Local $iTempLightningSpell = Number(getBarracksTroopQuantity(175 + 107 * 0, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				;If $bFullSpell = True Then ;if spell factory full
+				If $bFullSpell = True And $fullArmy = True Then ;if spell factory full
 					If $iTempLightningSpell = $iLightningSpellComp Then ; check if replacement spells trained,
 						$iLightningSpell = 0
 					Else

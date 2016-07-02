@@ -5,14 +5,14 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: zengzeng
-; Modified ......: MMHK (Jun-2016)
+; Modified ......: TheRevenor (2016)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-#cs
+
 Global $chkLvl6Enabled
 Global $chkLvl7Enabled
 Global $chkLvl8Enabled
@@ -27,11 +27,8 @@ Global $cmbLvl9Fill
 Global $cmbLvl10Fill
 Global $cmbLvl11Fill
 Global $cmbLvl12Fill
-#ce
-Global $chkLvl6Enabled, $chkLvl7Enabled, $chkLvl8Enabled, $chkLvl9Enabled, $chkLvl10Enabled, $chkLvl11Enabled, $chkLvl12Enabled
-Global $cmbLvl6Fill, $cmbLvl7Fill, $cmbLvl8Fill, $cmbLvl9Fill, $cmbLvl10Fill, $cmbLvl11Fill, $cmbLvl12Fill
 Global $toleranceOffset
-#cs
+
 Func checkCollectors($log = False, $showLabel = True)
 	Local $anyCollectorsEnabled = 0
 	For $i = 6 To 12
@@ -53,7 +50,7 @@ Func checkCollectors($log = False, $showLabel = True)
 		Return True
 	EndIf
 EndFunc
-#ce
+
 Func chkLvl6()
 	If GUICtrlRead($chkLvl6) = $GUI_CHECKED Then
 		$chkLvl6Enabled = "1"
@@ -184,14 +181,14 @@ Func sldCollectorTolerance()
 	$toleranceOffset = GUICtrlRead($sldCollectorTolerance)
 EndFunc   ;==>sldCollectorTolerance
 
-; MOD ; MMHK ; fix no collectors are selected warning error
+; fix no collectors are selected warning error
 Func allUnChecked()
 	Local $someChecked = BitOR($chkLvl6Enabled, $chkLvl7Enabled, $chkLvl8Enabled, $chkLvl9Enabled, $chkLvl10Enabled, $chkLvl11Enabled, $chkLvl12Enabled)
 	If $someChecked Then return False
 	Return True
 EndFunc   ;==>allUnChecked
 
-; MOD ; MMHK ; Check Collectors Outside
+; Check Collectors Outside
 Func chkDBMeetCollOutside()
 	If GUICtrlRead($chkDBMeetCollOutside) = $GUI_CHECKED Then
 		_GUICtrlEdit_SetReadOnly($txtDBMinCollOutsidePercent, False)

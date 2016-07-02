@@ -1080,6 +1080,10 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$ichkSmartZapDB = IniRead($config, "SmartZap", "ZapDBOnly", "1")
         $ichkSmartZapSaveHeroes = IniRead($config, "SmartZap", "THSnipeSaveHeroes", "1")
 		$itxtMinDE = IniRead($config, "SmartZap", "MinDE", "250")
+		
+		; ExtremeZap - Added by TheRevenor
+		$ichkExtLightSpell = IniRead($config, "MOD", "ExtLightSpell", "0")
+		$itxtMinDE = IniRead($config, "MOD", "MinDE", "250")
 
 		;Multy Farming Settings ------------------------------------------------------------------
 		$ichkSwitchDonate = IniRead($config, "Multy", "SwitchDonate", "0")
@@ -1089,7 +1093,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		; Android Settings - Added by LunaEclipse
 		$sAndroid = IniRead($config, "Android", "Emulator", "<No Emulators>")
 		$sAndroidInstance = IniRead($config, "Android", "Instance", "")
-		$ichkHideTaskBar = IniRead($config, "Android", "HideTaskBarIcon", "0")
+		;$ichkHideTaskBar = IniRead($config, "Android", "HideTaskBarIcon", "0")
 
 		; Misc Battle Settings - Added by LunaEclipse
 		$AndroidAdbClicksEnabled = IniRead($config, "Fast Clicks", "UseADBFastClicks", "0")
