@@ -120,8 +120,8 @@ Func ExtremeZap()
 				SetLog("ExtremeZap: " & $strikeGain & ". Adjusting amount left in this drill.", $COLOR_PURPLE)
 			EndIf
 
-			$ExtremeZapGain += $strikeGain
-			SetLog("DE from last zap: " & $strikeGain & ", Total DE from ExtremeZap: " & $ExtremeZapGain, $COLOR_FUCHSIA)
+			$SmartZapGain += $strikeGain
+			SetLog("DE from last zap: " & $strikeGain & ", Total DE from ExtremeZap: " & $SmartZapGain, $COLOR_FUCHSIA)
 
 		; Resort the array
 		_ArraySort($aDarkDrills, 1, 0, 0, 3)

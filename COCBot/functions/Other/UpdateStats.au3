@@ -310,13 +310,6 @@ Func UpdateStats()
 		GUICtrlSetData($lblSmartZapStat, _NumberFormat($smartZapGain, True))
 		$iOldSmartZapGain = $smartZapGain
 	EndIf
-	
-	 ;ExtremeZap DE Gain - Added by TheRevenor
-	If $iOldSmartZapGain <> $ExtremeZapGain Then
-		GUICtrlSetData($lblSmartZap, _NumberFormat($ExtremeZapGain, True))
-		GUICtrlSetData($lblSmartZapStat, _NumberFormat($ExtremeZapGain, True))
-		$iOldSmartZapGain = $ExtremeZapGain
-	EndIf
 
 	; SmartZap Spells Used - Added by LunaEclipse
 	If $iOldNumLTSpellsUsed <> $numLSpellsUsed Then

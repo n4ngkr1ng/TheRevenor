@@ -2386,11 +2386,13 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 
 	; SmartZap Settings - Added by LunaEclipse
 	If $ichkSmartZap = 1 Then
+		GUICtrlSetState($chkExtLightSpell, $GUI_DISABLE)
 		GUICtrlSetState($chkSmartLightSpell, $GUI_CHECKED)
 		GUICtrlSetState($chkSmartZapDB, $GUI_ENABLE)
 		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_ENABLE)
 		GUICtrlSetState($txtMinDark, $GUI_ENABLE)
 	Else
+		GUICtrlSetState($chkExtLightSpell, $GUI_ENABLE)
 		GUICtrlSetState($chkSmartZapDB, $GUI_DISABLE)
 		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_DISABLE)
 		GUICtrlSetState($txtMinDark, $GUI_DISABLE)
@@ -2410,8 +2412,10 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	
 	; ExtremeZap - Added by TheRevenor
 	If $ichkExtLightSpell = 1 Then
+		GUICtrlSetState($chkSmartLightSpell, $GUI_DISABLE)
 		GUICtrlSetState($chkExtLightSpell, $GUI_CHECKED)
 	Else
+		GUICtrlSetState($chkSmartLightSpell, $GUI_ENABLE)
 		GUICtrlSetState($chkExtLightSpell, $GUI_UNCHECKED)
 	EndIf
 	ExtLightSpell()

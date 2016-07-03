@@ -15,11 +15,13 @@
 
 Func chkSmartLightSpell()
     If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
+		GUICtrlSetState($chkExtLightSpell, $GUI_DISABLE)
         GUICtrlSetState($chkSmartZapDB, $GUI_ENABLE)
         GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_ENABLE)
         GUICtrlSetState($txtMinDark, $GUI_ENABLE)
         $ichkSmartZap = 1
     Else
+		GUICtrlSetState($chkExtLightSpell, $GUI_ENABLE)
         GUICtrlSetState($chkSmartZapDB, $GUI_DISABLE)
         GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_DISABLE)
         GUICtrlSetState($txtMinDark, $GUI_DISABLE)
@@ -65,20 +67,22 @@ EndFunc   ;==>txtMinDark
 Func ExtLightSpell()
 	If GUICtrlRead($chkExtLightSpell) = $GUI_CHECKED Then
 		GUICtrlSetState($txtMinDark, $GUI_ENABLE)
+		GUICtrlSetState($chkSmartLightSpell, $GUI_DISABLE)
 		$ichkExtLightSpell = 1
 	Else
+		GUICtrlSetState($chkSmartLightSpell, $GUI_ENABLE)
 		GUICtrlSetState($txtMinDark, $GUI_DISABLE)
 		$ichkExtLightSpell = 0
 	EndIf
  EndFunc   ;==>GUILightSpell
 
-Func DrillZapTH()
-    If GUICtrlRead($chkDrillZapTH) = 1 Then
-	  smartZap()
-   ElseIf GUICtrlRead($chkDrillZapTH) = 0 Then
-	  Return False
-   EndIf
-EndFunc
+;Func DrillZapTH()
+;    If GUICtrlRead($chkDrillZapTH) = 1 Then
+;	  smartZap()
+;   ElseIf GUICtrlRead($chkDrillZapTH) = 0 Then
+;	  Return False
+;  EndIf
+;EndFunc
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: MBR GUI Controls Tab Android
