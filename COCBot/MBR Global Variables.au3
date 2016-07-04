@@ -1555,3 +1555,32 @@ $iCSVSpeeds[9] = 2.25
 $iCSVSpeeds[10] = 2.5
 $iCSVSpeeds[11] = 2.75
 $iCSVSpeeds[12] = 3
+
+
+;[Chalicucu] Switch COC account 
+Global $nTotalCOCAcc	; up to 8		;Number of Google+ accounts on emulator
+Global $CoCAccNo
+Global $profile = $sProfilePath & "\profile.ini"
+$nTotalCOCAcc = Int(Iniread($profile, "switchcocacc", "totalacc", "0"))
+If $nTotalCOCAcc = 0 Then
+	SetLog("---------------Switch CoC Accounts ---------------", $COLOR_RED)
+	SetLog("Set up your total google account first!", $COLOR_RED)
+	SetLog("------------------------------------------------------", $COLOR_RED)
+	$nTotalCOCAcc = 8
+EndIf
+Global $ichkSwitchAcc = Int(IniRead($profile, "switchcocacc" , "Enable" ,"1"))
+Global $nCurCOCAcc = 1     ;Chalicucu Current COC account index : 1 of 3 acc
+Global $nCurStep = -1
+Global $anCOCAccIdx[$CoCAccNo]		; = [1, 3, 2]       ; 1->3->2->1	; Account walking step
+Global $anBotProfileIdx[$nTotalCOCAcc]; = [1, 2, 3]		;	bot profile index correspond to COC account
+;InitOrder()
+;Training progress for accounts
+Global $AccDonBarb[$nTotalCOCAcc], $AccDonArch[$nTotalCOCAcc], $AccDonGiant[$nTotalCOCAcc], $AccDonGobl[$nTotalCOCAcc], $AccDonWall[$nTotalCOCAcc], $AccDonBall[$nTotalCOCAcc], $AccDonWiza[$nTotalCOCAcc], $AccDonHeal[$nTotalCOCAcc]
+Global $AccDonMini[$nTotalCOCAcc], $AccDonHogs[$nTotalCOCAcc], $AccDonValk[$nTotalCOCAcc], $AccDonGole[$nTotalCOCAcc], $AccDonWitc[$nTotalCOCAcc], $AccDonLava[$nTotalCOCAcc], $AccDonDrag[$nTotalCOCAcc], $AccDonPekk[$nTotalCOCAcc]
+Global $AccBarbComp[$nTotalCOCAcc], $AccArchComp[$nTotalCOCAcc], $AccGoblComp[$nTotalCOCAcc], $AccGiantComp[$nTotalCOCAcc], $AccWallComp[$nTotalCOCAcc], $AccWizaComp[$nTotalCOCAcc], $AccMiniComp[$nTotalCOCAcc], $AccHogsComp[$nTotalCOCAcc]
+Global $AccDragComp[$nTotalCOCAcc], $AccBallComp[$nTotalCOCAcc], $AccPekkComp[$nTotalCOCAcc], $AccHealComp [$nTotalCOCAcc], $AccValkComp[$nTotalCOCAcc], $AccGoleComp[$nTotalCOCAcc], $AccWitcComp[$nTotalCOCAcc], $AccLavaComp[$nTotalCOCAcc]
+Global $AccCurBarb[$nTotalCOCAcc],  $AccCurArch[$nTotalCOCAcc],  $AccCurGiant[$nTotalCOCAcc], $AccCurGobl[$nTotalCOCAcc],  $AccCurWall[$nTotalCOCAcc],  $AccCurBall[$nTotalCOCAcc],  $AccCurWiza[$nTotalCOCAcc],  $AccCurHeal[$nTotalCOCAcc]
+Global $AccCurMini[$nTotalCOCAcc],  $AccCurHogs[$nTotalCOCAcc],  $AccCurValk[$nTotalCOCAcc], $AccCurGole[$nTotalCOCAcc],  $AccCurWitc[$nTotalCOCAcc],  $AccCurLava[$nTotalCOCAcc],  $AccCurDrag[$nTotalCOCAcc],  $AccCurPekk[$nTotalCOCAcc]
+Global $AccFirstStart[$nTotalCOCAcc]
+Global $AccTotalTrainedTroops[$nTotalCOCAcc]
+Global $AccRelaxTogether = Iniread($profile, "switchcocacc", "AttackRelax", 1)
