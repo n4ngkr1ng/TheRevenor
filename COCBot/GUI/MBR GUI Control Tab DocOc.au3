@@ -55,11 +55,13 @@ Func chkUseTrainingClose()
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
 		$ichkCloseTraining = 1
+		GUICtrlSetState($chkSwitchAcc, $GUI_DISABLE)
 	Else
 		For $i = $lblExtraTimeMin To $chkRandomStayORClose
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
 		$ichkCloseTraining = 0
+		GUICtrlSetState($chkSwitchAcc, $GUI_ENABLE)
 	EndIf
 EndFunc   ;==>chkUseTrainingClose
 

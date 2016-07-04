@@ -18,8 +18,8 @@ GUISetBkColor($COLOR_WHITE, $hGUI_ModOption)
 GUISwitch($hGUI_ModOption)
 ;$tabMOD = GUICtrlCreateTabItem("MOD")
 	; SmartZap Settings
-	Local $x = 20, $y = 25
-    $grpStatsMisc = GUICtrlCreateGroup("Smart Zap && Extreme Zap", $x - 20, $y - 20, 438, 148) ;120
+	Local $x = 20, $y = 23
+    $grpStatsMisc = GUICtrlCreateGroup("Smart Zap && Extreme Zap", $x - 20, $y - 20, 438, 138) ;120
 		GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x - 10, $y + 20, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x - 10, $y - 7, 24, 24)
 		$chkSmartLightSpell = GUICtrlCreateCheckbox("Use Lightning Spells to SmartZap Drills", $x + 20, $y - 5, -1, -1)
@@ -92,8 +92,8 @@ GUISwitch($hGUI_ModOption)
 ; Example .......: No
 ; ===============================================================================================================================
 
-Local $x = 20, $y = 177 ;150
-	$grpMultyFarming = GUICtrlCreateGroup( "Multy-Farming With Smart Switch", $x - 20, $y - 20, 438, 65)
+Local $x = 20, $y = 162 ;150
+	$grpMultyFarming = GUICtrlCreateGroup( "Multy-Farming With Smart Switch", $x - 20, $y - 20, 438, 62)
 	;$x -= 10
 		$chkMultyFarming = GUICtrlCreateCheckbox(GetTranslated(17,1, "Multy-Farming"), $x - 10, $y -7, -1 , -1)
 			$txtTip = GetTranslated(17,3, "Will switch account and attack, then switch back")
@@ -118,17 +118,17 @@ Local $x = 20, $y = 177 ;150
 			$txtTip = GetTranslated(17,22, "Switch to Main Account")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "btnmultyAcc1")
-			GUICtrlSetState(-1, $GUI_DISABLE)			
+			GUICtrlSetState(-1, $GUI_DISABLE)
 		$btnmultyAcc2 = GUICtrlCreateButton("#2", $x + 200, $y +15, 20, 18)
 			$txtTip = GetTranslated(17,23, "Switch to Second Account")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "btnmultyAcc2")
-			GUICtrlSetState(-1, $GUI_DISABLE)	
+			GUICtrlSetState(-1, $GUI_DISABLE)
 		$btnmultyAcc3 = GUICtrlCreateButton("#3", $x + 230, $y +15, 20, 18)
 			$txtTip = GetTranslated(17,24, "Switch to Third Account")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "btnmultyAcc3")
-			GUICtrlSetState(-1, $GUI_DISABLE)	
+			GUICtrlSetState(-1, $GUI_DISABLE)
 		$btnmultyAcc4 = GUICtrlCreateButton("#4", $x + 260, $y +15, 20, 18)
 			$txtTip = GetTranslated(17,25, "Switch to Fourth Account")
 			GUICtrlSetTip(-1, $txtTip)
@@ -138,7 +138,7 @@ Local $x = 20, $y = 177 ;150
 			$txtTip = GetTranslated(17,26, "Switch to Fifth Account")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "btnmultyAcc5")
-			GUICtrlSetState(-1, $GUI_DISABLE)	
+			GUICtrlSetState(-1, $GUI_DISABLE)
 		$btnmultyAcc6 = GUICtrlCreateButton("#6", $x + 320, $y +15, 20, 18)
 			$txtTip = GetTranslated(17,27, "Switch to Sixth Account")
 			GUICtrlSetTip(-1, $txtTip)
@@ -148,41 +148,13 @@ Local $x = 20, $y = 177 ;150
 			$txtTip = GetTranslated(17,28, "Detect Current Account")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "btnmultyDetectAcc")
-			GUICtrlSetState(-1, $GUI_ENABLE)				
+			GUICtrlSetState(-1, $GUI_ENABLE)
 					GUICtrlCreateGroup("", -99, -99, 1, 1)
 ;===================================================================================================================;
 
-	; Chalicucu & demen: switch CoC Acc GUI
-	Local $x = 20, $y = 293
-	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 92)
-			$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x, $y, -1, -1)
-			$txtTip = "Switch to another account & profile when camp is less than 85%" & @CRLF & _
-			          "This function supports maximum 8 CoC accounts & 3 Bot profiles" & @CRLF & _
-			          "Make sure to align the accounts with profiles in listing order"
-			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
-			GUICtrlSetState(-1, $GUI_CHECKED)
-			$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y + 4, 130, 20)
-			$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 238, $y, 20, 20,  BitOR($SS_CENTER, $ES_AUTOHSCROLL))
-			GUICtrlSetLimit(-1, 1)
-			GUICtrlSetTip(-1,"Number of Google Accounts on emulator. Supporting maximum 8 Accounts.")
-			$lbAccBottingOrder = GUICtrlCreateLabel("CoC Accounts botting order:", $x, $y + 30, 135, 20)
-			$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 138, $y + 26, 70, 20,  BitOR($SS_LEFT, $ES_AUTOHSCROLL))
-			GUICtrlSetTip(-1,"Input the desired order of switching CoC Accounts.")
-			$lbProfileIdxOrder = GUICtrlCreateLabel("BOT Profile Indexs order:", $x + 215, $y + 30, 130, 20)
-			$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 340, $y + 26, 70, 20,  BitOR($SS_LEFT, $ES_AUTOHSCROLL))
-			GUICtrlSetLimit(-1, 8)
-			GUICtrlSetTip(-1,"Input the order of Profiles to align with CoC Accounts order. Supporting maximum 8 Profiles")
-			$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x, $y + 50, -1, -1)
-			$txtTip = "If attack is not planned for current profile" & @CRLF & _
-			          "Then bot stop emulator and relax"
-			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetOnEvent(-1, "chkAccRelaxTogether")
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
-	
 	; Android Settings
-	Local $x = 20, $y = 247 ;220
-	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 73) ; $x - 20, $y - 20, 438, 98)
+	Local $x = 20, $y = 223 ;220
+	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 68) ; $x - 20, $y - 20, 438, 80)
 		$cmbAndroid = GUICtrlCreateCombo("", $x - 10, $y - 5, 130, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			$txtTip = "Use this to select the Android Emulator to use with this profile."
 			GUICtrlSetTip(-1, $txtTip)
@@ -204,13 +176,41 @@ Local $x = 20, $y = 177 ;150
 	;Local $x = 35, $y = 450
 	;$grpDontEndBattle = GUICtrlCreateGroup("Miscellaneous Battle Settings", $x - 20, $y - 20, 440, 45)
 		$chkFastADBClicks = GUICtrlCreateCheckbox("Enable Fast ADB Clicks", $x - 10, $y + 20, -1, -1) ; $x + 120, $y + 20, -1, -1)
-			$txtTip = "Tick this to enable faster ADB deployment of Troops for MEmu and Droid4x" & @CRLF & @CRLF & _ 
+			$txtTip = "Tick this to enable faster ADB deployment of Troops for MEmu and Droid4x" & @CRLF & @CRLF & _
 				      "     WARNING:  This is experimental, if you have issues with deployment, disable it."
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkFastADBClicks")
 	;GUICtrlCreateGroup("", -99, -99, 1, 1)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
-	
+
+	; Chalicucu & demen: switch CoC Acc GUI
+	Local $x = 20, $y = 294
+	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 90)
+			$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x - 10, $y, -1, -1)
+			$txtTip = "Switch to another account & profile when camp is less than 85%" & @CRLF & _
+			          "This function supports maximum 8 CoC accounts & 3 Bot profiles" & @CRLF & _
+			          "Make sure to align the accounts with profiles in listing order"
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
+			GUICtrlSetState(-1, $GUI_CHECKED)
+			$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y + 4, 130, 20)
+			$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 238, $y, 30, 30,  BitOR($SS_LEFT, $ES_AUTOHSCROLL))
+			GUICtrlSetLimit(-1, 1)
+			GUICtrlSetTip(-1,"Number of Google Accounts on emulator. Supporting maximum 8 Accounts.")
+			$lbAccBottingOrder = GUICtrlCreateLabel("CoC Accounts botting order:", $x - 10, $y + 30, 135, 20)
+			$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 138, $y + 26, 70, 20,  BitOR($SS_LEFT, $ES_AUTOHSCROLL))
+			GUICtrlSetTip(-1,"Input the desired order of switching CoC Accounts.")
+			$lbProfileIdxOrder = GUICtrlCreateLabel("BOT Profile Indexs order:", $x + 215, $y + 30, 130, 20)
+			$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 340, $y + 26, 70, 20,  BitOR($SS_LEFT, $ES_AUTOHSCROLL))
+			GUICtrlSetLimit(-1, 8)
+			GUICtrlSetTip(-1,"Input the order of Profiles to align with CoC Accounts order. Supporting maximum 8 Profiles")
+			$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x - 10, $y + 46, -1, -1)
+			$txtTip = "If attack is not planned for current profile" & @CRLF & _
+			          "Then bot stop emulator and relax"
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "chkAccRelaxTogether")
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
 Global $LastControlToHideMOD = GUICtrlCreateDummy()
 Global $iPrevState[$LastControlToHideMOD + 1]
-	
+

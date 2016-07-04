@@ -48,13 +48,13 @@ EndIf
 #include "COCBot\functions\Config\ScreenCoordinates.au3"
 
 Global $sGitHubModOwner = "TheRevenor"
-Global $sGitHubModRepo = "MyBot-v6.1.4-MyMod"
+Global $sGitHubModRepo = "MyBot-v6.1.4"
 Global $sGitHubModLatestReleaseTag = "v1.4.1"
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016" ; Website
 
 $sBotVersion = "v6.1.4" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sModversion = $sGitHubModLatestReleaseTag
-$sBotTitle = "My Bot " & $sBotVersion & " MOD TheRevenor " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
+$sBotTitle = "My Bot " & $sBotVersion & " MOD nangkring " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
 Global $sBotTitleDefault = $sBotTitle
 
@@ -275,19 +275,19 @@ EndIf
 		$Restart = False
 		$fullArmy = False
 		$CommandStop = -1
-			
-			; each loop ( after each attack ) will determinate if close while train or not 
-			If $RandomCloseTraining = 1 then 
+
+			; each loop ( after each attack ) will determinate if close while train or not
+			If $RandomCloseTraining = 1 then
 				if $debugSetlog = 1 then Setlog("You chose the Random Close Or Leave train...", $COLOR_RED)
 				$RandomCloseTraining2 = Random(0,1,1)
-				If $RandomCloseTraining2 = 1 then $LeaveOrClose +=1 
-				If $LeaveOrClose = 3 then 
+				If $RandomCloseTraining2 = 1 then $LeaveOrClose +=1
+				If $LeaveOrClose = 3 then
 					$RandomCloseTraining2 = 0
-					$LeaveOrClose = 0 
-				EndIf 
+					$LeaveOrClose = 0
+				EndIf
 				if $debugSetlog = 1 then Setlog("$RandomCloseTraining2: " & $RandomCloseTraining2)
 			EndIf
-			
+
 		If _Sleep($iDelayRunBot1) Then Return
 		If GotoAttack() = False Then    ;Chalicucu not start emulator. relax
             		If $ichkSwitchAcc=1 And $AccRelaxTogether = 1 Then
@@ -559,7 +559,7 @@ EndIf
 					ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
 						SwitchAccount("Fourth")
 					Else
-					
+
 						SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
 					EndIf
 
@@ -592,7 +592,7 @@ EndFunc   ;==>runBot
 Func Idle() ;Sequence that runs until Full Army
 	Local $TimeIdle = 0 ;In Seconds
 	;If $debugsetlog = 1 Then SetLog("Func Idle ", $COLOR_PURPLE)
-	
+
 	;mikemikemikecoc - Wait For Spells
 	While $fullArmy = False Or $bFullArmyHero = False Or $bFullArmySpells = False Or $CommandStop = 0       ;Chalicucu add CommandStop
 		If checkSleep() And $RunState And $ichkCloseNight = 1 Then
@@ -618,21 +618,23 @@ Func Idle() ;Sequence that runs until Full Army
 
 		If $RequestScreenshot = 1 Then PushMsg("RequestScreenshot")
 		If _Sleep($iDelayIdle1) Then Return
-		If $ichkSwitchAcc =1 And ((($CurCamp/$TotalCamp)*100) < 85 Or $CommandStop = 0) Then    ;Chalicucu
-                		RequestCC()
+		If $CommandStop = -1 Or ($ichkSwitchAcc=1 And $CommandStop = 0) Then 	;Chalicucu
+            SetLog("====== Waiting for full army ======", $COLOR_GREEN)
+            If $ichkSwitchAcc =1 And ((($CurCamp/$TotalCamp)*100) < 85 Or $CommandStop = 0) Then    ;Chalicucu
+			    RequestCC()
 				SetLog("====== Switching COC account ======", $COLOR_GREEN)
 				SwitchCOCAcc()      ;Chalicucu switch COC acc
 				BotCommand()
 				_RunFunction("DonateCC,Train")
                 		If $CommandStop <> 0 And ($CurCamp/$TotalCamp)*100 < 96 Then		;new village camp
-                    			CloseCOC()
-                    			SetLog("====== Sleeping 2 minutes ======", $COLOR_GREEN)
-                    			If _Sleep(120000) Then Return
-                    				OpenCOC()
-                			Else
-                    				If _Sleep(2000) Then Return
-                			EndIf
-				Return	1
+							 CloseCOC()
+							 SetLog("====== Sleeping 2 minutes ======", $COLOR_GREEN)
+							 If _Sleep(120000) Then Return
+								 OpenCOC()
+							Else
+									If _Sleep(2000) Then Return
+							EndIf
+						Return	1
             		Else
                 		If _Sleep(30000) Then Return
             		EndIf
