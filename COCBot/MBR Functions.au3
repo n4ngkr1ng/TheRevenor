@@ -288,3 +288,4 @@
 #include "functions\Android\modifyAndroid.au3"
 ;#include "functions\Android\taskbarIcon.au3"
 ;-----------------------;
+#include "functions\Village\SwitchCOCAcc.au3"		; Chalicucu Switch COC account
