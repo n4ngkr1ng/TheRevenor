@@ -79,6 +79,12 @@ Func _RemoteControlPushBullet()
 						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,22,"LASTRAID") & GetTranslated(620,10, " - send the last raid loot screenshot of <Village Name>")
 						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,23,"LASTRAIDTXT") & GetTranslated(620,11, " - send the last raid loot values of <Village Name>")
 						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,24,"SCREENSHOT") & GetTranslated(620,12, " - send a screenshot of <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,31,"ACC <Target1><~><Target8>") & GetTranslated(620,37, " - reorder COC accounts")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,32,"PRO <Pro1><~><Pro8>") & GetTranslated(620,38, " - reorder bot profiles")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,33,"GETORDER") & GetTranslated(620,39, " - get current CoC account and bot profile")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,34,"STOPSTART") & GetTranslated(620,40, " - stop then start bot again")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,35,"ALLPRO <Pro1><~><Pro8>") & GetTranslated(620,41, " - set up profiles correspond to all exists accounts")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,36,"MAP <Pro1>-<Pro2>") & GetTranslated(620,42, " - set up profile for only one account")
 						$txtHelp &= '\n'
 						$txtHelp &= '\n' & GetTranslated(620,25, "Examples:")
 						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620,18,"PAUSE")
@@ -157,7 +163,44 @@ Func _RemoteControlPushBullet()
 						Else
 							_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,48, "Request to Stop") & "..." & "\n" & GetTranslated(620,50, "Your bot is currently stopped, no action was taken"))
 						EndIf
-					Case Else ;
+					Case Else  ; Chalicucu
+						Local $lsNewOrd
+						If StringLeft($body[$x], 7) = "BOT ACC" Then			;Chalicucu order switch COC Account
+							$lsNewOrd = ReorderAcc(StringMid($body[$x], 9))
+							_PushToPushBullet("Reordered COC account: " & $lsNewOrd & " (" & AccGetStep() & ")")
+							_DeleteMessageOfPushBullet($iden[$x])
+						ElseIf StringLeft($body[$x], 7) = "BOT PRO" Then		;Chalicucu order switch bot profile
+							$lsNewOrd = ReorderCurPro(StringMid($body[$x], 9))
+							_PushToPushBullet("Reordered bot profile: " & $lsNewOrd )
+							_DeleteMessageOfPushBullet($iden[$x])
+						ElseIf StringLeft($body[$x], 10) = "BOT ALLPRO" Then		;Chalicucu order switch bot profile
+							$lsNewOrd = ReorderAllPro(StringMid($body[$x], 12))
+							_PushToPushBullet("Reordered bot profile for all acc: " & $lsNewOrd )
+							_DeleteMessageOfPushBullet($iden[$x])
+						ElseIf StringLeft($body[$x], 7) = "BOT MAP" Then		;Chalicucu Mapping Account & Profile
+							MapAccPro(StringMid($body[$x], 9))
+							_PushToPushBullet("Mapping success: " & StringMid($body[$x], 9) )
+							_DeleteMessageOfPushBullet($iden[$x])
+						ElseIf $body[$x] = "BOT GETORDER" Then				;Chalicucu inquiry acc order
+							SetLog("Get order: [" & $body[$x] & "]", $COLOR_RED)
+							; $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
+							_PushToPushBullet("Ordered COC acc: " & AccGetOrder() & " (" & AccGetStep() _
+												& ")\nCurrent:  " & $nCurCOCAcc _
+												& "\nBot profile: " & ProGetOrderName())
+							_DeleteMessageOfPushBullet($iden[$x])
+						ElseIf $body[$x] = "BOT HIDE" Then				;Chalicucu Hide emulator
+							myHide()
+							SetLog("Receive hide emulator", $COLOR_RED)
+							_PushToPushBullet("Received hide emulator")
+							_DeleteMessageOfPushBullet($iden[$x])
+						ElseIf $body[$x] = "BOT STOPSTART" Then				;Chalicucu Stop then start again
+							btnStop()
+							btnStart()
+							SetLog("Receive STOPSTART", $COLOR_RED)
+							_PushToPushBullet("Received STOPSTART")
+							_DeleteMessageOfPushBullet($iden[$x])
+						EndIf
+						
 						Local $lenstr = StringLen(GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "")
 						Local $teststr = StringLeft($body[$x], $lenstr)
 						If $teststr = (GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "") Then
