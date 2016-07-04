@@ -152,6 +152,34 @@ Local $x = 20, $y = 177 ;150
 					GUICtrlCreateGroup("", -99, -99, 1, 1)
 ;===================================================================================================================;
 
+	; Chalicucu & demen: switch CoC Acc GUI
+	Local $x = 20, $y = 293
+	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 92)
+			$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x, $y, -1, -1)
+			$txtTip = "Switch to another account & profile when camp is less than 85%" & @CRLF & _
+			          "This function supports maximum 8 CoC accounts & 3 Bot profiles" & @CRLF & _
+			          "Make sure to align the accounts with profiles in listing order"
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
+			GUICtrlSetState(-1, $GUI_CHECKED)
+			$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y + 4, 130, 20)
+			$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 238, $y, 20, 20,  BitOR($SS_CENTER, $ES_AUTOHSCROLL))
+			GUICtrlSetLimit(-1, 1)
+			GUICtrlSetTip(-1,"Number of Google Accounts on emulator. Supporting maximum 8 Accounts.")
+			$lbAccBottingOrder = GUICtrlCreateLabel("CoC Accounts botting order:", $x, $y + 30, 135, 20)
+			$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 138, $y + 26, 70, 20,  BitOR($SS_LEFT, $ES_AUTOHSCROLL))
+			GUICtrlSetTip(-1,"Input the desired order of switching CoC Accounts.")
+			$lbProfileIdxOrder = GUICtrlCreateLabel("BOT Profile Indexs order:", $x + 215, $y + 30, 130, 20)
+			$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 340, $y + 26, 70, 20,  BitOR($SS_LEFT, $ES_AUTOHSCROLL))
+			GUICtrlSetLimit(-1, 8)
+			GUICtrlSetTip(-1,"Input the order of Profiles to align with CoC Accounts order. Supporting maximum 8 Profiles")
+			$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x, $y + 50, -1, -1)
+			$txtTip = "If attack is not planned for current profile" & @CRLF & _
+			          "Then bot stop emulator and relax"
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "chkAccRelaxTogether")
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+	
 	; Android Settings
 	Local $x = 20, $y = 247 ;220
 	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 73) ; $x - 20, $y - 20, 438, 98)
