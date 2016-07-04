@@ -142,7 +142,13 @@ $hGUI_NOTIFY_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600,19,"Instructions
 				GetTranslated(620,1, -1) & " <" & GetTranslated(619,16, -1) & "> " & GetTranslated(620,21,"LOG") & GetTranslated(620,9, " - send the current log file of <Village Name>") & @CRLF & _
 				GetTranslated(620,1, -1) & " <" & GetTranslated(619,16, -1) & "> " & GetTranslated(620,22,"LASTRAID") & GetTranslated(620,10, " - send the last raid loot screenshot of <Village Name>") & @CRLF & _
 				GetTranslated(620,1, -1) & " <" & GetTranslated(619,16, -1) & "> " & GetTranslated(620,23,"LASTRAIDTXT") & GetTranslated(620,11, " - send the last raid loot values of <Village Name>") & @CRLF & _
-				GetTranslated(620,1, -1) & " <" & GetTranslated(619,16, -1) & "> " & GetTranslated(620,24,"SCREENSHOT") & GetTranslated(620,12, " - send a screenshot of <Village Name>"), $x, $y - 5, -1, -1, $SS_LEFT)
+				GetTranslated(620,1, -1) & " <" & GetTranslated(619,16, -1) & "> " & GetTranslated(620,24,"SCREENSHOT") & GetTranslated(620,12, " - send a screenshot of <Village Name>") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(620,31,"ACC <Target1><~><Target8>") & GetTranslated(620,37, " - reorder COC accounts") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(620,32,"PRO <Pro1><~><Pro8>") & GetTranslated(620,38, " - reorder bot profiles") & @CRLF & _
+			    	GetTranslated(620,1, -1) & " " & GetTranslated(620,33,"GETORDER") & GetTranslated(620,39, " - get current CoC account and bot profile") & @CRLF & _
+			    	GetTranslated(620,1, -1) & " " & GetTranslated(620,34,"STOPSTART") & GetTranslated(620,40, " - stop then start bot again") & @CRLF & _
+			    	GetTranslated(620,1, -1) & " " & GetTranslated(620,35,"ALLPRO <Pro1><~><Pro8>") & GetTranslated(620,41, " - set up profiles correspond to all exists accounts") & @CRLF & _
+			    	GetTranslated(620,1, -1) & " " & GetTranslated(620,36,"MAP <Pro1>-<Pro2>") & GetTranslated(620,42, " - set up profile for only one account"), $x, $y - 5, -1, -1, $SS_LEFT)
     GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")
 
