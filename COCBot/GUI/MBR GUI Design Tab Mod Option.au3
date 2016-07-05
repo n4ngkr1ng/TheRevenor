@@ -153,7 +153,7 @@ Local $x = 20, $y = 162 ;150
 ;===================================================================================================================;
 
 	; Android Settings
-	Local $x = 20, $y = 223 ;220
+	Local $x = 20, $y = 225 ;222
 	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 68) ; $x - 20, $y - 20, 438, 80)
 		$cmbAndroid = GUICtrlCreateCombo("", $x - 10, $y - 5, 130, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			$txtTip = "Use this to select the Android Emulator to use with this profile."
