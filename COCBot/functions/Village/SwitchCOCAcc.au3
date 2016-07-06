@@ -30,9 +30,27 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 	Local $nPreCOCAcc = $nCurCOCAcc
 	$nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
 	#ce
-	MinRemainTrainAcc()
-	$nCurCOCAcc = $nNextCoCAcc
-	checkMainScreen()
+
+
+	If $FirstSwitch Then
+	    SetLog("First matching account and profile", $COLOR_GREEN);
+	    SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
+	    SetLog("Ordered bot profile: " & ProGetOrderName(), $COLOR_GREEN);
+	    ;if $nCurCOCAcc = $anCOCAccIdx[$nCurCOCAcc - 1] And Not $FirstStart Then  ;Loopping 1 account, disable switching
+	    Local $lnNextStep = AccGetNext()
+	    If $nCurCOCAcc = $anCOCAccIdx[$lnNextStep] And Not $FirstStart Then  ;Loopping 1 account, disable switching
+		 SetLog("Target account is current one. Nothing to do..", $COLOR_GREEN)
+		 $nCurStep = $lnNextStep  ;but still move to next step
+		 $iGoldLast = ""
+		 $iElixirLast = ""
+		 Return
+	    EndIf
+	    Local $nPreCOCAcc = $nCurCOCAcc
+	    $nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
+	Else
+	    MinRemainTrainAcc()
+	    $nCurCOCAcc = $nNextCoCAcc
+	EndIf
 	
     Local Const $XConnect = 431
     Local Const $YConnect = 434
