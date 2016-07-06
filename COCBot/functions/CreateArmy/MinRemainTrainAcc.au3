@@ -13,7 +13,7 @@
 
 ;Global $nTotalCOCAcc 		; Total number of COC Accounts ($nTotalCOCAcc <= 8). This must be declared already
 
-Global $nActiveCoCAcc = 2
+Global $nActiveCoCAcc
    ; Number of active CoC accounts that you set for Botting.
    ; This number is <= $nTotalCOCAcc (<=8). For examble, if you want to bot Acc No. 2, 4 & 6 among the total 8 accounts, then $nActiveCoCAcc = 3
    ; This number can be set following the Input of Acc Order.
@@ -38,6 +38,8 @@ Func ResetTrainTimer() ; Run this function first and once to set the remain trai
 
    $aActiveCoCAcc = StringSplit(IniRead($Profile,"switchcocacc", "order", "1"), "", $STR_NOCOUNT)	; making an array of active acount number, by reading from profile.ini
    $nActiveCoCAcc = UBound($aActiveCoCAcc)
+   Setlog("Number of active CoC accounts is: " & $nActiveCoCAcc & " account(s).")
+   Setlog("Account botting order is: "& _ArrayToString($aActiveCoCAcc))
 
    ReDim $aTimerStart[$nTotalCOCAcc]
    ReDim $aTimerEnd[$nTotalCOCAcc]
@@ -86,10 +88,13 @@ Func MinRemainTrainAcc()
    Next ;	Remain train time of active accounts only
 
 
-   $nNextCoCAcc = $aActiveCoCAcc[_ArrayMinIndex($aRemainTrainTime)-1]  				; Index of Account has the shortest remain train time
+   Local $iMinIndex = _ArrayMinIndex($aRemainTrainTime)					; Index of the account that has the shortest remain train time (among the active accounts)
+   $nNextCoCAcc = $aActiveCoCAcc[$iMinIndex]  						; Number of Account has the shortest remain train time (among all account)
    Setlog("Account [" & $nNextCoCAcc & "] is suggest to be the next account for switching", $COLOR_PURPLE)
    $nMinRemainTrain = _ArrayMin($aRemainTrainTime)
 
-   Return $nMinRemainTrain
+   checkMainScreen()
+
+   Return $nNextCoCAcc-1
 
 EndFunc
