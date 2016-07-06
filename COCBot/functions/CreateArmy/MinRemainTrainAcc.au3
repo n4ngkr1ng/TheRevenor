@@ -61,7 +61,7 @@ Func MinRemainTrainAcc()
    ; Suggest the account with shortest training time as the next account for switching to
 
 
-   $aInitialRemainTrainTime[$nCurCOCAcc-1] = Round(RemainTrainTime(True,False),2) 	; remaintraintime of current account - in minutes
+   $aInitialRemainTrainTime[$nCurCOCAcc-1] = Round(getRemainingTraining(True,False),2) 	; remaintraintime of current account - in minutes
    $aTimerStart[$nCurCOCAcc-1] = TimerInit() 										; start counting elapse of training time of current account
 
    For $i = 0 to $nTotalCOCAcc - 1
