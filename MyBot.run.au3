@@ -225,6 +225,7 @@ SetDebugLog("MyBot.run launch time " & Round($iBotLaunchTime) & " ms.")
 ProcessSetPriority(@AutoItPID, $iBotProcessPriority)
 
 InitOrder()		;chalicucu init SwitchCOCAcc
+ResetTrainTimer()	;demen reset training time 
 
 ;AutoStart Bot if request
 AutoStart()
