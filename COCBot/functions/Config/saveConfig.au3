@@ -2477,6 +2477,21 @@ Func saveConfig() ;Saves the controls settings to the config
 	EndIf
 	IniWrite($config, "profiles", "cmbTrophyMinProfile", _GUICtrlComboBox_GetCurSel($cmbTrophyMinProfile))
 	IniWrite($config, "profiles", "txtMinTrophyAmount", GUICtrlRead($txtMinTrophyAmount))
+	
+	;Chalicucu Switch CoC Account
+	If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then
+		IniWrite($profile, "switchcocacc", "Enable", 1)
+	Else
+		IniWrite($profile, "switchcocacc", "Enable", 0)
+	EndIf
+	IniWrite($profile, "switchcocacc", "totalacc", GUICtrlRead($txtTotalCoCAcc))
+	IniWrite($profile, "switchcocacc", "order", GUICtrlRead($txtAccBottingOrder))
+	IniWrite($profile, "switchcocacc", "profile", GUICtrlRead($txtProfileIdxOrder))
+	If GUICtrlRead($chkAccRelax) = $GUI_CHECKED Then
+		IniWrite($profile, "switchcocacc", "AttackRelax", 1)
+	Else
+		IniWrite($profile, "switchcocacc", "AttackRelax", 0)
+	EndIf
 
 EndFunc   ;==>saveConfig
 
