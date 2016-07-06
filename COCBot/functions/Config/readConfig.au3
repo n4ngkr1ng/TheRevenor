@@ -1078,7 +1078,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		; SmartZap Settings - Added by LunaEclipse
 		$ichkSmartZap = IniRead($config, "SmartZap", "UseSmartZap", "1")
 		$ichkSmartZapDB = IniRead($config, "SmartZap", "ZapDBOnly", "1")
-        $ichkSmartZapSaveHeroes = IniRead($config, "SmartZap", "THSnipeSaveHeroes", "1")
+        	$ichkSmartZapSaveHeroes = IniRead($config, "SmartZap", "THSnipeSaveHeroes", "1")
 		$itxtMinDE = IniRead($config, "SmartZap", "MinDE", "250")
 		
 		; ExtremeZap - Added by TheRevenor
@@ -1089,6 +1089,11 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$ichkSwitchDonate = IniRead($config, "Multy", "SwitchDonate", "0")
 		$ichkMultyFarming = IniRead($config, "Multy", "MultyFarming", "0")
 		$iAccount = IniRead($config, "Multy", "Account", "2")
+		
+		; Switch CoC Account
+		$nTotalCOCAcc = IniRead($profile, "switchcocacc", "totalacc", "2")
+		$ichkSwitchAcc = IniRead($profile, "switchcocacc", "Enable", "0")
+		$AccRelaxTogether = IniRead($profile, "switchcocacc", "AttackRelax", "0")
 		
 		; Android Settings - Added by LunaEclipse
 		$sAndroid = IniRead($config, "Android", "Emulator", "<No Emulators>")
