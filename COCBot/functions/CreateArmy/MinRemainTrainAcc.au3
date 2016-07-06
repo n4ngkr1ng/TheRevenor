@@ -13,7 +13,7 @@
 
 ;Global $nTotalCOCAcc 		; Total number of COC Accounts ($nTotalCOCAcc <= 8). This must be declared already
 
-Global $nActiveCoCAcc = 1
+Global $nActiveCoCAcc = 2
    ; Number of active CoC accounts that you set for Botting.
    ; This number is <= $nTotalCOCAcc (<=8). For examble, if you want to bot Acc No. 2, 4 & 6 among the total 8 accounts, then $nActiveCoCAcc = 3
    ; This number can be set following the Input of Acc Order.
