@@ -15,23 +15,6 @@
 
 Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account 
 	If $FirstSwitch Then SetLog("First matching account and profile", $COLOR_GREEN);
-	#cs
-	SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
-	SetLog("Ordered bot profile: " & ProGetOrderName(), $COLOR_GREEN);
-	;if $nCurCOCAcc = $anCOCAccIdx[$nCurCOCAcc - 1] And Not $FirstStart Then		;Loopping 1 account, disable switching
-	Local $lnNextStep = AccGetNext()
-	if $nCurCOCAcc = $anCOCAccIdx[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
-		SetLog("Target account is current one. Nothing to do..", $COLOR_GREEN)
-		$nCurStep = $lnNextStep		;but still move to next step
-		$iGoldLast = ""
-		$iElixirLast = ""
-		Return
-	EndIf
-	Local $nPreCOCAcc = $nCurCOCAcc
-	$nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
-	#ce
-
-
 	If $FirstSwitch Then
 	    SetLog("First matching account and profile", $COLOR_GREEN);
 	    SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
@@ -64,41 +47,17 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
     If _Sleep(3000) Then Return
     Click($XConnect, $YConnect, 1, 0, "Click DisConnect")      ;Click DisConnect
     If _Sleep(8000) Then Return
-    
-    ;Click(383, 300 + 80*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
     ;need check acc clicked or not-------------------------
-	
 	Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
-
-    #CS Total three acc
-    If $nCurCOCAcc = 1 Then     ;switch 1st and 3rd account : 1->3->2->1
-        Click(383, 460, 1, 0, "Click Third Account")      ;Click Third Account
-        $nCurCOCAcc = 3
-        $TotalCamp = 220    ; Account TotalCamp
-        _GUICtrlComboBox_SetCurSel($cmbProfile,1-1)
-    ElseIf $nCurCOCAcc = 2 Then
-        Click(383, 300, 1, 0, "Click First Account")      ;Click First Account
-        $nCurCOCAcc = 1
-        $TotalCamp = 220    ; Account TotalCamp
-        _GUICtrlComboBox_SetCurSel($cmbProfile,4-1)
-    Else
-        Click(383, 380, 1, 0, "Click Second Account")      ;Click Second Account
-        $nCurCOCAcc = 2
-        $TotalCamp = 200    ; Account TotalCamp
-        _GUICtrlComboBox_SetCurSel($cmbProfile,2-1)
-    EndIf
-     #CE
-    	
     If _Sleep(8000) Then Return
     Local $idx = 0
     While 1
         If _ColorCheck(_GetPixelColor($XConnect, $YConnect, True), Hex($ColorConnect, 6), 20) Then       ;Blue
             Setlog("Still current account. Wait for next switching", $COLOR_RED)
             If $idx >= 2 Then
-				MatchProfile()
+		MatchProfile()
                 ClickP($aAway, 1, 0, "#0167") ;Click Away
                 If _Sleep(2000) Then Return
-                ;SwitchCOCAcc()     ;force switch
                 Return
             EndIf
 		ElseIf _ColorCheck(_GetPixelColor($XConnect, $YConnect, True), Hex(4291299336, 6), 20) Then       ;red
@@ -114,7 +73,6 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
         $idx = $idx + 1
         If _Sleep(1000) Then Return
     WEnd
-    ;If _Sleep(1000) Then Return
     $idx = 0
     While $idx <= 30
         If _ColorCheck(_GetPixelColor(443, 430, True), Hex(4284390935, 6), 20) Then 
@@ -123,11 +81,11 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
         Else
             Setlog("Wait!", $COLOR_RED)
             If _Sleep(1000) Then Return
-			$idx = $idx + 1
-			If $idx >= 31 Then 
-				ClickP($aAway, 1, 0, "#0167") ;Click Away
-				Return False
-			EndIf
+		$idx = $idx + 1
+		If $idx >= 31 Then 
+			ClickP($aAway, 1, 0, "#0167") ;Click Away
+			Return False
+		EndIf
         EndIf
     WEnd
     $idx = 0
@@ -137,17 +95,16 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
         $idx = $idx + 1
     WEnd
     If _Sleep(5000) Then Return
-    Click(353, 180, 1, 0, "Click Text box")      ;Click Text box
+	Click(353, 180, 1, 0, "Click Text box")      ;Click Text box
     If _Sleep(2000) Then Return
     If SendText("CONFIRM") = 0 Then
         Setlog("Error sending CONFIRM text", $COLOR_RED)
         Return
     EndIf
     If _Sleep(3000) Then Return
-    PureClick(463, 180, 1, 0, "Click CONFIRM")      ;Click CONFIRM
+    	PureClick(463, 180, 1, 0, "Click CONFIRM")      ;Click CONFIRM
     If _Sleep(3000) Then Return
-    ClickP($aAway, 1, 0, "#0167") ;Click Away
-	
+    	ClickP($aAway, 1, 0, "#0167") ;Click Away
 	$nCurStep = $lnNextStep
 	;init for new acc
 	Init4NewAcc($nPreCOCAcc)
