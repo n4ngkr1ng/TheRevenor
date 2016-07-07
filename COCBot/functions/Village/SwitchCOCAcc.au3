@@ -37,7 +37,7 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 	    SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
 	    SetLog("Ordered bot profile: " & ProGetOrderName(), $COLOR_GREEN);
 	    ;if $nCurCOCAcc = $anCOCAccIdx[$nCurCOCAcc - 1] And Not $FirstStart Then  ;Loopping 1 account, disable switching
-	    Local $lnNextStep = AccGetNext()
+	    $lnNextStep = AccGetNext()
 	    If $nCurCOCAcc = $anCOCAccIdx[$lnNextStep] And Not $FirstStart Then  ;Loopping 1 account, disable switching
 		 SetLog("Target account is current one. Nothing to do..", $COLOR_GREEN)
 		 $nCurStep = $lnNextStep  ;but still move to next step
