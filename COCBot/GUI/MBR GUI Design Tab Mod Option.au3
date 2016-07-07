@@ -194,7 +194,11 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
 			GUICtrlSetState(-1, $GUI_CHECKED)
 			$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y + 4, 130, 20)
+<<<<<<< HEAD
 			$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 240, $y, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+=======
+			$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 238, $y, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+>>>>>>> dde8dfb876a78594b5f7610d8e66c8346d53c9fe
 			GUICtrlSetLimit(-1, 1)
 			$txtTip = "Number of Google Accounts on emulator. Supporting maximum 8 Accounts."
 			GUICtrlSetTip(-1,$txtTip)
@@ -204,11 +208,18 @@ Local $x = 20, $y = 162 ;150
 			$txtTip = "Number of Google Accounts that you set for botting."
 			GUICtrlSetTip(-1,$txtTip)
 			$lbAccBottingOrder = GUICtrlCreateLabel("CoC Accounts botting order:", $x - 10, $y + 30, 135, 20)
+<<<<<<< HEAD
 			$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 138, $y + 28, 70, 21,  BitOR($GUI_SS_DEFAULT_INPUT,$SS_LEFT, $ES_AUTOHSCROLL))
 			$txtTip = "Input the desired order of switching CoC Accounts."
 			GUICtrlSetTip(-1,$txtTip)
 			$lbProfileIdxOrder = GUICtrlCreateLabel("BOT Profile Indexs order:", $x + 215, $y + 30, 130, 20)
 			$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 340, $y + 28, 70, 21,  BitOR($GUI_SS_DEFAULT_INPUT,$SS_LEFT, $ES_AUTOHSCROLL))
+=======
+			$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 138, $y + 26, 70, 20,  BitOR($GUI_SS_DEFAULT_INPUT,$SS_LEFT, $ES_AUTOHSCROLL))
+			GUICtrlSetTip(-1,"Input the desired order of switching CoC Accounts.")
+			$lbProfileIdxOrder = GUICtrlCreateLabel("BOT Profile Indexs order:", $x + 215, $y + 30, 130, 20)
+			$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 340, $y + 26, 70, 20,  BitOR($GUI_SS_DEFAULT_INPUT,$SS_LEFT, $ES_AUTOHSCROLL))
+>>>>>>> dde8dfb876a78594b5f7610d8e66c8346d53c9fe
 			GUICtrlSetLimit(-1, 8)
 			$txtTip = "Input the order of Profiles to align with CoC Accounts order. Supporting maximum 8 Profiles"
 			GUICtrlSetTip(-1,$txtTip)
