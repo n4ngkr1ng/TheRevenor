@@ -1130,7 +1130,6 @@ Global $bGForcePBTUpdate = False
 
 Global $iMakeScreenshotNow = False
 
-
 Global $lastversion = "" ;latest version from GIT
 Global $lastModversion = "" ;latest version from GIT
 Global $lastmessage = "" ;message for last version
@@ -1199,7 +1198,6 @@ Global $GoldStoragePos
 Global $ElixirStoragePos
 Global $darkelixirStoragePos
 
-
 ;Snipe While Train
 Global $isSnipeWhileTrain = False
 Global $SnipeChangedSettings = False
@@ -1214,7 +1212,6 @@ Global $iRestartSearchlimit = 25
 Global $Is_SearchLimit = False
 
 Global $canRequestCC = True
-
 
 ; Heroes upgrade
 Global $ichkUpgradeKing = 0
@@ -1438,7 +1435,6 @@ Global $SecondaryOutputFile = ""
 Global $quicklyfirststart = true
 Global $configLoaded = false
 
-
 Global $chkMakeIMGCSV
 
 ; Splash Variables - mikemikemikecoc
@@ -1514,8 +1510,6 @@ Global Const $drillLevelSteal[6] = [59, _
 								    251, _
 								    343, _
 								    479]
-
-
 									
 ; Android Settings - Added by LunaEclipse
 Global $sAndroid = "<No Emulators>"
@@ -1556,9 +1550,23 @@ $iCSVSpeeds[10] = 2.5
 $iCSVSpeeds[11] = 2.75
 $iCSVSpeeds[12] = 3
 
-
-;[Chalicucu] Switch COC account 
+;[Chalicucu] Switch COC account
 Global $nTotalCOCAcc	; up to 8		;Number of Google+ accounts on emulator
+Global $nActiveCoCAcc
+   ; Number of active CoC accounts that you set for Botting.
+   ; This number is <= $nTotalCOCAcc (<=8). For examble, if you want to bot Acc No. 2, 4 & 6 among the total 8 accounts, then $nActiveCoCAcc = 3
+   ; This number can be set following the Input of Acc Order.
+Global $aActiveCoCAcc
+   ; List of active CoC accounts.
+   ; For examble Acc No. 2, 4, 6 are active among the total 8 accounts, then $aActiveCoCAcc = [2,4,6].
+Global $aTimerStart[1] 				; Timer counter start as soon as the Bot read Remain Train Time of an account.
+Global $aTimerEnd[1]				; To count the elapse time from the Timer starts
+Global $aInitialRemainTrainTime[1]		; The remain train time of each account read at Army Overview Window
+Global $aUpdateRemainTrainTime[1]		; Update the remain train time of all accounts
+   ; These arrays shall be ReDim following the value of $nTotalCOCAcc
+Global $aRemainTrainTime[1]			; Remain train time of Active Accounts only. This Array shall be ReDim following the value of $nActiveCoCAcc
+Global $nNextCoCAcc				; The Account Number has shortest remain train time (among the active accounts)
+Global $nMinRemainTrain				; The minimum remain train time in minutes
 Global $CoCAccNo
 Global $profile = $sProfilePath & "\profile.ini"
 $nTotalCOCAcc = Int(Iniread($profile, "switchcocacc", "totalacc", "0"))
@@ -1569,13 +1577,12 @@ If $nTotalCOCAcc = 0 Then
 	$nTotalCOCAcc = 8
 EndIf
 Global $ichkSwitchAcc = Int(IniRead($profile, "switchcocacc" , "Enable" ,"1"))
-Global $nCurCOCAcc = 1     ;Chalicucu Current COC account index : 1 of 3 acc
+Global $nCurCOCAcc = 1     			;Chalicucu Current COC account index : 1 of 3 acc
 Global $nPreCOCAcc
 Global $lnNextStep
 Global $nCurStep = -1
-Global $anCOCAccIdx[$CoCAccNo]		; = [1, 3, 2]       ; 1->3->2->1	; Account walking step
-Global $anBotProfileIdx[$nTotalCOCAcc]; = [1, 2, 3]		;	bot profile index correspond to COC account
-;InitOrder()
+Global $anCOCAccIdx[$CoCAccNo]			; = [1, 3, 2]		; 1->3->2->1	; Account walking step
+Global $anBotProfileIdx[$nTotalCOCAcc]		; = [1, 2, 3]		; bot profile index correspond to COC account
 ;Training progress for accounts
 Global $AccDonBarb[$nTotalCOCAcc], $AccDonArch[$nTotalCOCAcc], $AccDonGiant[$nTotalCOCAcc], $AccDonGobl[$nTotalCOCAcc], $AccDonWall[$nTotalCOCAcc], $AccDonBall[$nTotalCOCAcc], $AccDonWiza[$nTotalCOCAcc], $AccDonHeal[$nTotalCOCAcc]
 Global $AccDonMini[$nTotalCOCAcc], $AccDonHogs[$nTotalCOCAcc], $AccDonValk[$nTotalCOCAcc], $AccDonGole[$nTotalCOCAcc], $AccDonWitc[$nTotalCOCAcc], $AccDonLava[$nTotalCOCAcc], $AccDonDrag[$nTotalCOCAcc], $AccDonPekk[$nTotalCOCAcc]
