@@ -403,7 +403,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	EndIf
 	IniWrite($config, "pushbullet", "SearchNotifyCountTXT", GUICtrlRead($txtSearchNotifyCount))
 	;End Pushbullet Stuff
-	
+
 	; save upgrade buildings GUI -> Variables ------------------------------------------------------------------
 
 	If GUICtrlRead($chkLab) = $GUI_CHECKED Then
@@ -1735,7 +1735,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "donate", "chkDStats", 0)
 	EndIf
-	
+
 	;Donate Settings-------------------------------------------------------------------------
 
 ;~ 	IniWriteS($config, "donate", "chkRequest", $iChkRequest)
@@ -2185,7 +2185,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "attack", "ScriptDB", $scmbDBScriptName)
 
 	IniWriteS($config, "attack", "ScriptAB", $scmbABScriptName)
-	
+
 	; CSV Deployment Speed Mod
 	IniWriteS($config, "attack", "CSVSpeedDB", $isldSelectedCSVSpeed[$DB])
 	IniWriteS($config, "attack", "CSVSpeedAB", $isldSelectedCSVSpeed[$LB])
@@ -2285,7 +2285,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWriteS($config, "search", "DBMeetCollOutside", 0)
 	EndIf
 	IniWriteS($config, "search", "DBMinCollOutsidePercent", GUICtrlRead($txtDBMinCollOutsidePercent))
-	
+
 	; SmartZap Settings - Added by LunaEclipse
 	If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
 		IniWrite($config, "SmartZap", "UseSmartZap", 1)
@@ -2303,7 +2303,7 @@ Func saveConfig() ;Saves the controls settings to the config
         IniWrite($config, "SmartZap", "THSnipeSaveHeroes", 0)
     EndIf
 	IniWrite($config, "SmartZap", "MinDE", GUICtrlRead($txtMinDark))
-	
+
 	;ExtremeZap - Added by TheRvenor
 	If GUICtrlRead($chkExtLightSpell) = $GUI_CHECKED Then
 		IniWrite($config, "MOD", "ExtLightSpell", "1")
@@ -2325,7 +2325,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "Multy", "MultyFarming", 0)
 	EndIf
 	IniWrite($config, "Multy", "Account", GUICtrlRead($Account))
-	
+
 	; Android Settings - Added by LunaEclipse
 	IniWrite($config, "Android", "Emulator", GUICtrlRead($cmbAndroid))
 	IniWrite($config, "Android", "Instance", GUICtrlRead($txtAndroidInstance))
@@ -2341,9 +2341,9 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "Fast Clicks", "UseADBFastClicks", 0)
 	EndIf
-	
+
 	If $hFile <> -1 Then FileClose($hFile)
-	
+
 	; mikemikemikecoc - Wait For Spells
 	If GUICtrlRead($chkDBSpellsWait) = $GUI_CHECKED Then
 		IniWriteS($config, "search", "ChkDBSpellsWait", 1)
@@ -2477,7 +2477,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	EndIf
 	IniWrite($config, "profiles", "cmbTrophyMinProfile", _GUICtrlComboBox_GetCurSel($cmbTrophyMinProfile))
 	IniWrite($config, "profiles", "txtMinTrophyAmount", GUICtrlRead($txtMinTrophyAmount))
-	
+
 	;Chalicucu Switch CoC Account
 	If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then
 		IniWrite($profile, "switchcocacc", "Enable", 1)
@@ -2485,6 +2485,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($profile, "switchcocacc", "Enable", 0)
 	EndIf
 	IniWrite($profile, "switchcocacc", "totalacc", GUICtrlRead($txtTotalCoCAcc))
+	IniWrite($profile, "switchcocacc", "activeacc", GUICtrlRead($txtActiveCoCAcc))
 	IniWrite($profile, "switchcocacc", "order", GUICtrlRead($txtAccBottingOrder))
 	IniWrite($profile, "switchcocacc", "profile", GUICtrlRead($txtProfileIdxOrder))
 	If GUICtrlRead($chkAccRelax) = $GUI_CHECKED Then

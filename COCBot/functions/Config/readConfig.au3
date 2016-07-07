@@ -88,7 +88,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 	If FileExists($config) Then
 
 		SetDebugLog("Read Config " & $config)
-		
+
 		;Pushbullet Stuff
 		$VillageStatIncrement = IniRead($config, "pushbullet", "VillageStatIncrement", "0")
 		$VillageStatIncrementTXT = IniRead($config, "pushbullet", "VillageStatIncrementTXT", "5")
@@ -187,7 +187,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		IniReadS($fulltroop, $config, "troop", "fullTroop", "100")
 
 		IniReadS($isldTrainITDelay, $config, "other", "TrainITDelay", "40")
-		
+
 		$ichkCloseTraining = IniRead($config, "troop", "CloseWhenTraining", "1")
 		$ichkCloseNight = IniRead($config, "troop", "CloseAtNight", "1")
 
@@ -440,7 +440,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 
 		IniReadS($scmbDBScriptName, $config, "attack", "ScriptDB", "Barch four fingers")
 		IniReadS($scmbABScriptName, $config, "attack", "ScriptAB", "Barch four fingers")
-		
+
 		; CSV Deployment Speed Mod
 		IniReadS($isldSelectedCSVSpeed[$DB], $config, "attack", "CSVSpeedDB", 3)
 		IniReadS($isldSelectedCSVSpeed[$LB], $config, "attack", "CSVSpeedAB", 3)
@@ -724,7 +724,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 
 		; Donate Stats ==========================================================================
 		$ichkDStats = IniRead($config, "donate", "chkDStats", "1")
-		
+
 		;Donate Settings-------------------------------------------------------------------------
 		$sTxtRequest = IniRead($config, "donate", "txtRequest", "")
 		;InireadS(xxxx,$config, "attack", "xxxx", "0")
@@ -1041,7 +1041,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$AndroidAdbClicksEnabled = IniRead($config, "android", "adb.clicks.enabled", ($AndroidAdbClicksEnabled ? "1" : "0")) = "1"
 		$AndroidAdbClicksTroopDeploySize = Int(IniRead($config, "android", "adb.clicks.troop.deploy.size", $AndroidAdbClicksTroopDeploySize))
 		$NoFocusTampering = IniRead($config, "android", "no.focus.tampering", ($NoFocusTampering ? "1" : "0")) = "1"
-		
+
 		;mikemikemikecoc - Wait For Spells
 		IniReadS($iEnableSpellsWait[$DB], $config, "search", "ChkDBSpellsWait", "0")
 		IniReadS($iEnableSpellsWait[$LB], $config, "search", "ChkABSpellsWait", "0")
@@ -1074,13 +1074,13 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		; Check Collectors Outside
 		$ichkDBMeetCollOutside = IniRead($config, "search", "DBMeetCollOutside", "0")
 		$iDBMinCollOutsidePercent = IniRead($config, "search", "DBMinCollOutsidePercent", "50")
-		
+
 		; SmartZap Settings - Added by LunaEclipse
 		$ichkSmartZap = IniRead($config, "SmartZap", "UseSmartZap", "1")
 		$ichkSmartZapDB = IniRead($config, "SmartZap", "ZapDBOnly", "1")
         	$ichkSmartZapSaveHeroes = IniRead($config, "SmartZap", "THSnipeSaveHeroes", "1")
 		$itxtMinDE = IniRead($config, "SmartZap", "MinDE", "250")
-		
+
 		; ExtremeZap - Added by TheRevenor
 		$ichkExtLightSpell = IniRead($config, "MOD", "ExtLightSpell", "0")
 		$itxtMinDE = IniRead($config, "MOD", "MinDE", "250")
@@ -1089,12 +1089,13 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$ichkSwitchDonate = IniRead($config, "Multy", "SwitchDonate", "0")
 		$ichkMultyFarming = IniRead($config, "Multy", "MultyFarming", "0")
 		$iAccount = IniRead($config, "Multy", "Account", "2")
-		
+
 		; Switch CoC Account
 		$nTotalCOCAcc = IniRead($profile, "switchcocacc", "totalacc", "2")
+		$nActiveCOCAcc = IniRead($profile, "switchcocacc", "activeacc", "2")
 		$ichkSwitchAcc = IniRead($profile, "switchcocacc", "Enable", "0")
 		$AccRelaxTogether = IniRead($profile, "switchcocacc", "AttackRelax", "0")
-		
+
 		; Android Settings - Added by LunaEclipse
 		$sAndroid = IniRead($config, "Android", "Emulator", "<No Emulators>")
 		$sAndroidInstance = IniRead($config, "Android", "Instance", "")
@@ -1106,7 +1107,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 	Else
 		Return False
 	EndIf
-	
+
 	;Profile Switch
 	$ichkGoldSwitchMax = IniRead($config, "profiles", "chkGoldSwitchMax", "0")
 	$icmbGoldMaxProfile = IniRead($config, "profiles", "cmbGoldMaxProfile", "0")
@@ -1135,5 +1136,5 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 	$ichkTrophySwitchMin = IniRead($config, "profiles", "chkTrophySwitchMin", "0")
 	$icmbTrophyMinProfile = IniRead($config, "profiles", "cmbTrophyMinProfile", "0")
 	$itxtMinTrophyAmount = IniRead($config, "profiles", "txtMinTrophyAmount", "1000")
-	
+
 EndFunc   ;==>readConfig

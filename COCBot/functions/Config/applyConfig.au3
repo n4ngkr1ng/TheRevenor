@@ -1526,7 +1526,7 @@ EndIf
 	EndIf
 	GUICtrlSetData($PushBulletTokenValue, $PushBulletToken)
 	GUICtrlSetData($OrigPushBullet, $iOrigPushBullet)
-	
+
 	;Pushbullet Stuff
 	If $VillageStatIncrement = 1 Then
 		GUICtrlSetState($chkVillageStatIncrement, $GUI_CHECKED)
@@ -2409,7 +2409,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_UNCHECKED)
 	EndIf
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
-	
+
 	; ExtremeZap - Added by TheRevenor
 	If $ichkExtLightSpell = 1 Then
 		GUICtrlSetState($chkSmartLightSpell, $GUI_DISABLE)
@@ -2419,7 +2419,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 		GUICtrlSetState($chkExtLightSpell, $GUI_UNCHECKED)
 	EndIf
 	ExtLightSpell()
-	
+
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
 
 	;Multy Farming Settings -------------------------------------------------------------------
@@ -2436,7 +2436,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	EndIf
 		GUICtrlSetData($Account, $iAccount)
 	MultiFarming()
-	
+
 	; Android Settings - Added by LunaEclipse
 	If _GUICtrlComboBox_FindStringExact($cmbAndroid, String($sAndroid)) <> -1 Then
 		_GUICtrlComboBox_SelectString($cmbAndroid, String($sAndroid))
@@ -2462,7 +2462,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 
 	; Reenabling window redraw
 	If $bRedrawAtExit Then SetRedrawBotWindow(True)
-	
+
 	;Profile Switch
 	If $ichkGoldSwitchMax = 1 Then
 		GUICtrlSetState($chkGoldSwitchMax, $GUI_CHECKED)
@@ -2530,7 +2530,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	Else
 		GUICtrlSetState($chkDStats, $GUI_UNCHECKED)
 	EndIf
-	
+
    ; mikemikemikecoc - Wait For Spells
    If $iEnableSpellsWait[$DB] = 1 Then
 		 GUICtrlSetState($chkDBSpellsWait, $GUI_CHECKED)
@@ -2541,7 +2541,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 		 GUICtrlSetState($chkABSpellsWait, $GUI_CHECKED)
 	  Else
 		 GUICtrlSetState($chkABSpellsWait, $GUI_UNCHECKED)
-   EndIf 
+   EndIf
 
 	; Close When Training Settings
 	If $ichkCloseTraining = 1 Then
@@ -2599,7 +2599,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	EndIf
 	chkDBMeetCollOutside()
 	GUICtrlSetData($txtDBMinCollOutsidePercent, $iDBMinCollOutsidePercent)
-	
+
 	; Simulate Sleep Settings
 	If $ichkCloseNight = 1 Then
 		GUICtrlSetState($chkUseSleep, $GUI_CHECKED)
@@ -2610,7 +2610,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	_GUICtrlComboBox_SetCurSel($cmbStartSleep, $sleepStart)
 	_GUICtrlComboBox_SetCurSel($cmbEndSleep, $sleepEnd)
 	calculateSleepTime($sleepStart, $sleepEnd)
-		
+
 	;chalicucu & demen:  switchcocacc
 	If $ichkSwitchAcc = 1 Then
 	   GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
@@ -2624,6 +2624,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
     	EndIf
 	GUICtrlSetData($txtTotalCoCAcc, $nTotalCOCAcc)	;fix set data from GUI
 	GUICtrlSetData($txtTotalCoCAcc, IniRead($profile, "switchcocacc" , "totalacc" ,"0"))
+	GUICtrlSetData($txtActiveCoCAcc, IniRead($profile, "switchcocacc" , "activeacc" ,"0"))
 	GUICtrlSetData($txtAccBottingOrder, IniRead($profile, "switchcocacc" , "order" ,"123"))
 	GUICtrlSetData($txtProfileIdxOrder, IniRead($profile, "switchcocacc" , "profile" ,"123"))
 
