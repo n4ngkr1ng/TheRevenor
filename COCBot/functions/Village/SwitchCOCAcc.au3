@@ -45,7 +45,7 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 		 $iElixirLast = ""
 		 Return
 	    EndIf
-	    Local $nPreCOCAcc = $nCurCOCAcc
+	    $nPreCOCAcc = $nCurCOCAcc
 	    $nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
 	Else
 	    MinRemainTrainAcc()
