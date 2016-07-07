@@ -1570,6 +1570,7 @@ If $nTotalCOCAcc = 0 Then
 EndIf
 Global $ichkSwitchAcc = Int(IniRead($profile, "switchcocacc" , "Enable" ,"1"))
 Global $nCurCOCAcc = 1     ;Chalicucu Current COC account index : 1 of 3 acc
+Global $nPreCOCAcc
 Global $lnNextStep
 Global $nCurStep = -1
 Global $anCOCAccIdx[$CoCAccNo]		; = [1, 3, 2]       ; 1->3->2->1	; Account walking step
