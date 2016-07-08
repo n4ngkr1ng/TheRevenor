@@ -166,7 +166,7 @@ Func _RemoteControlPushBullet()
 							EndIf
 						Case Else  ; Chalicucu
 							Local $lsNewOrd
-							If StringLeft($body[$x], 7) = "BOT ACC" Then			;Chalicucu order switch COC Account
+							If StringLeft($body[$x], 7) = "BOT ACC" Then		;Chalicucu order switch COC Account
 								$lsNewOrd = ReorderAcc(StringMid($body[$x], 9))
 								_PushToPushBullet("Reordered COC account: " & $lsNewOrd & " (" & AccGetStep() & ")")
 								_DeleteMessageOfPushBullet($iden[$x])
@@ -182,23 +182,42 @@ Func _RemoteControlPushBullet()
 								MapAccPro(StringMid($body[$x], 9))
 								_PushToPushBullet("Mapping success: " & StringMid($body[$x], 9) )
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf $body[$x] = "BOT GETORDER" Then				;Chalicucu inquiry acc order
+							ElseIf $body[$x] = "BOT GETORDER" Then		;Chalicucu inquiry acc order
 								SetLog("Get order: [" & $body[$x] & "]", $COLOR_RED)
 								; $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
 								_PushToPushBullet("Ordered COC acc: " & AccGetOrder() & " (" & AccGetStep() _
 													& ")\nCurrent:  " & $nCurCOCAcc _
 													& "\nBot profile: " & ProGetOrderName())
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf $body[$x] = "BOT HIDE" Then				;Chalicucu Hide emulator
+							ElseIf StringLeft($body[$x], 7) = "BOT ADD" Then		;Chalicucu Add Account to Playing list
+								$lsNewOrd = AddAcc(StringMid($body[$x], 9))
+								_PushToPushBullet($lsNewOrd)
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf StringLeft($body[$x], 7) = "BOT REM" Then		;Chalicucu Remove Account from Playing list
+								$lsNewOrd = RemAcc(StringMid($body[$x], 9))
+								_PushToPushBullet($lsNewOrd)
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf $body[$x] = "BOT HIDE" Then		;Chalicucu Hide emulator
 								myHide()
 								SetLog("Receive hide emulator", $COLOR_RED)
 								_PushToPushBullet("Received hide emulator")
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf $body[$x] = "BOT STOPSTART" Then				;Chalicucu Stop then start again
+							ElseIf $body[$x] = "BOT STOPSTART" Then		;Chalicucu Stop then start again
 								btnStop()
 								btnStart()
 								SetLog("Receive STOPSTART", $COLOR_RED)
 								_PushToPushBullet("Received STOPSTART")
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf StringLeft($body[$x],8) = "BOT ATKP" Then	;Chalicucu Option to enable/disable Attack Plan
+								$iChkAtkPln = (Number(StringMid($body[$x],10))=1)
+								IniWrite($profile, "switchcocacc" , "CheckAtkPln" , Number(StringMid($body[$x],10)))
+								If $iChkAtkPln Then
+									GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
+									_PushToPushBullet("Enabled attack scheduler!")
+								Else
+									GUICtrlSetState($chkAtkPln, $GUI_UNCHECKED)
+									_PushToPushBullet("Disabled attack scheduler!")
+								EndIf
 								_DeleteMessageOfPushBullet($iden[$x])
 							EndIf
 							Local $lenstr = StringLen(GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "")
