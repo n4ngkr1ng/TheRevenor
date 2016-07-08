@@ -207,12 +207,6 @@ Func _RemoteControlPushBullet()
 								SetLog("Pushbullet: received command syntax wrong, command ignored.", $COLOR_RED)
 								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,51, "Command not recognized") & "\n" & GetTranslated(620,52, "Please push BOT HELP to obtain a complete command list."))
 								_DeleteMessageOfPushBullet($iden[$x])
-							Local $lenstr = StringLen(GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "")
-							Local $teststr = StringLeft($body[$x], $lenstr)
-							If $teststr = (GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "") Then
-								SetLog("Pushbullet: received command syntax wrong, command ignored.", $COLOR_RED)
-								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,51, "Command not recognized") & "\n" & GetTranslated(620,52, "Please push BOT HELP to obtain a complete command list."))
-								_DeleteMessageOfPushBullet($iden[$x])
 							EndIf
 					EndSwitch
 					$body[$x] = ""
