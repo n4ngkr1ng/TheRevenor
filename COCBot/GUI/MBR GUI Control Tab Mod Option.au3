@@ -162,3 +162,12 @@ Func chkAccRelaxTogether()	;chalicucu
 	EndIf
 	IniWrite($profile, "switchcocacc", "AttackRelax", $AccRelaxTogether)
 EndFunc   ;==>chkAccRelaxTogether
+
+Func chkAtkPln()	;chalicucu enable/disable attack plan
+	If GUICtrlRead($chkAtkPln) = $GUI_CHECKED Then
+		$iChkAtkPln = 1
+	Else
+		$iChkAtkPln = 0
+	EndIf
+	IniWrite($profile, "switchcocacc", "CheckAtkPln", $iChkAtkPln)
+EndFunc   ;==>chkAtkPln
