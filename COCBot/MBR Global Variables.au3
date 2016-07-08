@@ -1597,3 +1597,8 @@ Global $AccCurMini[$nTotalCOCAcc],  $AccCurHogs[$nTotalCOCAcc],  $AccCurValk[$nT
 Global $AccFirstStart[$nTotalCOCAcc]
 Global $AccTotalTrainedTroops[$nTotalCOCAcc]
 Global $AccRelaxTogether = Iniread($profile, "switchcocacc", "AttackRelax", 1)
+Global $iChkAtkPln = (Number(Iniread($profile, "switchcocacc", "CheckAtkPln", 1)) = 1)
+
+Global $iAccGoldStart[$nTotalCOCAcc], $iAccElixirStart[$nTotalCOCAcc], $iAccDarkStart[$nTotalCOCAcc], $iAccTrophyStart[$nTotalCOCAcc]
+Global $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
+Global $AccStatFlg[$nTotalCOCAcc]
