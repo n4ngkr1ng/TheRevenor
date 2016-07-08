@@ -57,39 +57,44 @@ Func _RemoteControlPushBullet()
 			$pushLastModified -= 120 ; back 120 seconds to avoid loss of messages
 		EndIf
 
-		Local $findstr = StringRegExp(StringUpper($Result), '"BODY":"BOT')
-		If $findstr = 1 Then
-			Local $body = _StringBetween($Result, '"body":"', '"', "", False)
-			Local $iden = _StringBetween($Result, '"iden":"', '"', "", False)
-			For $x = UBound($body) - 1 To 0 Step -1
-				If $body <> "" Or $iden <> "" Then
-					$body[$x] = StringUpper(StringStripWS($body[$x], $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES))
-					$iden[$x] = StringStripWS($iden[$x], $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES)
+	Local $findstr = StringRegExp(StringUpper($Result), '"BODY":"BOT')
+	If $findstr = 1 Then
+		Local $body = _StringBetween($Result, '"body":"', '"', "", False)
+		Local $iden = _StringBetween($Result, '"iden":"', '"', "", False)
+		For $x = UBound($body) - 1 To 0 Step -1
+			If $body <> "" Or $iden <> "" Then
+				$body[$x] = StringUpper(StringStripWS($body[$x], $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES))
+				$iden[$x] = StringStripWS($iden[$x], $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES)
 
-					Switch $body[$x]
-						Case GetTranslated(620,1, "BOT") & " " & GetTranslated(620,14, "HELP")
-							Local $txtHelp = GetTranslated(620,13, "You can remotely control your bot sending commands following this syntax:")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,14, -1) & GetTranslated(620,2, " - send this help message")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,15,"DELETE") & GetTranslated(620,3, " - delete all your previous PushBullet messages")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,16,"RESTART") & GetTranslated(620,4, " - restart the bot named <Village Name> and Android Emulator")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,17,"STOP") & GetTranslated(620,5, " - stop the bot named <Village Name>")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,18,"PAUSE") & GetTranslated(620,6, " - pause the bot named <Village Name>")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,19,"RESUME") & GetTranslated(620,7, " - resume the bot named <Village Name>")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,20,"STATS") & GetTranslated(620,8, " - send Village Statistics of <Village Name>")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,21,"LOG") & GetTranslated(620,9, " - send the current log file of <Village Name>")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,22,"LASTRAID") & GetTranslated(620,10, " - send the last raid loot screenshot of <Village Name>")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,23,"LASTRAIDTXT") & GetTranslated(620,11, " - send the last raid loot values of <Village Name>")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,24,"SCREENSHOT") & GetTranslated(620,12, " - send a screenshot of <Village Name>")
-							$txtHelp &= '\n'
-							$txtHelp &= '\n' & GetTranslated(620,25, "Examples:")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620,18,"PAUSE")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,15,"DELETE")
-							$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620,24,"SCREENSHOT")
-							;_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,26, "Request for Help") & "\n" & $txtHelp)
-							;_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,26, "Request for Help") & "\n")
-							SetLog("Pushbullet: Your request has been received from ' " & $iOrigPushBullet & ". Help has been sent", $COLOR_GREEN)
-							_DeleteMessageOfPushBullet($iden[$x])
-						Case GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(620,18, -1) ;"PAUSE"
+				Switch $body[$x]
+					Case GetTranslated(620,1, "BOT") & " " & GetTranslated(620,14, "HELP")
+						Local $txtHelp = GetTranslated(620,13, "You can remotely control your bot sending commands following this syntax:")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,14, -1) & GetTranslated(620,2, " - send this help message")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,15,"DELETE") & GetTranslated(620,3, " - delete all your previous PushBullet messages")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,16,"RESTART") & GetTranslated(620,4, " - restart the bot named <Village Name> and Android Emulator")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,17,"STOP") & GetTranslated(620,5, " - stop the bot named <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,18,"PAUSE") & GetTranslated(620,6, " - pause the bot named <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,19,"RESUME") & GetTranslated(620,7, " - resume the bot named <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,20,"STATS") & GetTranslated(620,8, " - send Village Statistics of <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,21,"LOG") & GetTranslated(620,9, " - send the current log file of <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,22,"LASTRAID") & GetTranslated(620,10, " - send the last raid loot screenshot of <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,23,"LASTRAIDTXT") & GetTranslated(620,11, " - send the last raid loot values of <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,24,"SCREENSHOT") & GetTranslated(620,12, " - send a screenshot of <Village Name>")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,1,"ACC <Target1><~><Target8>") & GetTranslated(638,7, " - reorder COC accounts")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <Pro1><~><Pro8>") & GetTranslated(638,8, " - reorder bot profiles")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,9, " - get current CoC account and bot profile")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,10, " - stop then start bot again")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <Pro1><~><Pro8>") & GetTranslated(638,11, " - set up profiles correspond to all exists accounts")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,6,"MAP <Pro1>-<Pro2>") & GetTranslated(638,12, " - set up profile for only one account")
+						$txtHelp &= '\n'
+						$txtHelp &= '\n' & GetTranslated(620,25, "Examples:")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620,18,"PAUSE")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,15,"DELETE")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620,24,"SCREENSHOT")
+						_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,26, "Request for Help") & "\n" & $txtHelp)
+						SetLog("Pushbullet: Your request has been received from ' " & $iOrigPushBullet & ". Help has been sent", $COLOR_GREEN)
+						_DeleteMessageOfPushBullet($iden[$x])
+						Case GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(620,18, -1) ;"PAUSE"		
 							If $TPaused = False And $Runstate = True Then
 								If ( _ColorCheck(_GetPixelColor($NextBtn[0], $NextBtn[1], True), Hex($NextBtn[2], 6), $NextBtn[3])) = False And IsAttackPage() Then
 									SetLog("PushBullet: Unable to pause during attack", $COLOR_RED)
@@ -159,7 +164,49 @@ Func _RemoteControlPushBullet()
 							Else
 								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,48, "Request to Stop") & "..." & "\n" & GetTranslated(620,50, "Your bot is currently stopped, no action was taken"))
 							EndIf
-						Case Else ;
+						Case Else  ; Chalicucu
+							Local $lsNewOrd
+							If StringLeft($body[$x], 7) = "BOT ACC" Then			;Chalicucu order switch COC Account
+								$lsNewOrd = ReorderAcc(StringMid($body[$x], 9))
+								_PushToPushBullet("Reordered COC account: " & $lsNewOrd & " (" & AccGetStep() & ")")
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf StringLeft($body[$x], 7) = "BOT PRO" Then		;Chalicucu order switch bot profile
+								$lsNewOrd = ReorderCurPro(StringMid($body[$x], 9))
+								_PushToPushBullet("Reordered bot profile: " & $lsNewOrd )
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf StringLeft($body[$x], 10) = "BOT ALLPRO" Then		;Chalicucu order switch bot profile
+								$lsNewOrd = ReorderAllPro(StringMid($body[$x], 12))
+								_PushToPushBullet("Reordered bot profile for all acc: " & $lsNewOrd )
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf StringLeft($body[$x], 7) = "BOT MAP" Then		;Chalicucu Mapping Account & Profile
+								MapAccPro(StringMid($body[$x], 9))
+								_PushToPushBullet("Mapping success: " & StringMid($body[$x], 9) )
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf $body[$x] = "BOT GETORDER" Then				;Chalicucu inquiry acc order
+								SetLog("Get order: [" & $body[$x] & "]", $COLOR_RED)
+								; $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
+								_PushToPushBullet("Ordered COC acc: " & AccGetOrder() & " (" & AccGetStep() _
+													& ")\nCurrent:  " & $nCurCOCAcc _
+													& "\nBot profile: " & ProGetOrderName())
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf $body[$x] = "BOT HIDE" Then				;Chalicucu Hide emulator
+								myHide()
+								SetLog("Receive hide emulator", $COLOR_RED)
+								_PushToPushBullet("Received hide emulator")
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf $body[$x] = "BOT STOPSTART" Then				;Chalicucu Stop then start again
+								btnStop()
+								btnStart()
+								SetLog("Receive STOPSTART", $COLOR_RED)
+								_PushToPushBullet("Received STOPSTART")
+								_DeleteMessageOfPushBullet($iden[$x])
+							EndIf
+							Local $lenstr = StringLen(GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "")
+							Local $teststr = StringLeft($body[$x], $lenstr)
+							If $teststr = (GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "") Then
+								SetLog("Pushbullet: received command syntax wrong, command ignored.", $COLOR_RED)
+								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,51, "Command not recognized") & "\n" & GetTranslated(620,52, "Please push BOT HELP to obtain a complete command list."))
+								_DeleteMessageOfPushBullet($iden[$x])
 							Local $lenstr = StringLen(GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "")
 							Local $teststr = StringLeft($body[$x], $lenstr)
 							If $teststr = (GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "") Then
@@ -175,46 +222,6 @@ Func _RemoteControlPushBullet()
 		EndIf
 	EndIf
 
-<<<<<<< cd8750f4490b1adb64cccff6f0415f427eb28bf1
-	Local $findstr = StringRegExp(StringUpper($Result), '"BODY":"BOT')
-	If $findstr = 1 Then
-		Local $body = _StringBetween($Result, '"body":"', '"', "", False)
-		Local $iden = _StringBetween($Result, '"iden":"', '"', "", False)
-		For $x = UBound($body) - 1 To 0 Step -1
-			If $body <> "" Or $iden <> "" Then
-				$body[$x] = StringUpper(StringStripWS($body[$x], $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES))
-				$iden[$x] = StringStripWS($iden[$x], $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES)
-
-				Switch $body[$x]
-					Case GetTranslated(620,1, "BOT") & " " & GetTranslated(620,14, "HELP")
-						Local $txtHelp = GetTranslated(620,13, "You can remotely control your bot sending commands following this syntax:")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,14, -1) & GetTranslated(620,2, " - send this help message")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,15,"DELETE") & GetTranslated(620,3, " - delete all your previous PushBullet messages")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,16,"RESTART") & GetTranslated(620,4, " - restart the bot named <Village Name> and Android Emulator")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,17,"STOP") & GetTranslated(620,5, " - stop the bot named <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,18,"PAUSE") & GetTranslated(620,6, " - pause the bot named <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,19,"RESUME") & GetTranslated(620,7, " - resume the bot named <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,20,"STATS") & GetTranslated(620,8, " - send Village Statistics of <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,21,"LOG") & GetTranslated(620,9, " - send the current log file of <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,22,"LASTRAID") & GetTranslated(620,10, " - send the last raid loot screenshot of <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,23,"LASTRAIDTXT") & GetTranslated(620,11, " - send the last raid loot values of <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,24,"SCREENSHOT") & GetTranslated(620,12, " - send a screenshot of <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,1,"ACC <Target1><~><Target8>") & GetTranslated(638,7, " - reorder COC accounts")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <Pro1><~><Pro8>") & GetTranslated(638,8, " - reorder bot profiles")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,9, " - get current CoC account and bot profile")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,10, " - stop then start bot again")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <Pro1><~><Pro8>") & GetTranslated(638,11, " - set up profiles correspond to all exists accounts")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,6,"MAP <Pro1>-<Pro2>") & GetTranslated(638,12, " - set up profile for only one account")
-						$txtHelp &= '\n'
-						$txtHelp &= '\n' & GetTranslated(620,25, "Examples:")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620,18,"PAUSE")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(620,15,"DELETE")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620,24,"SCREENSHOT")
-						_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,26, "Request for Help") & "\n" & $txtHelp)
-						SetLog("Pushbullet: Your request has been received from ' " & $iOrigPushBullet & ". Help has been sent", $COLOR_GREEN)
-						_DeleteMessageOfPushBullet($iden[$x])
-					Case GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(620,18, -1) ;"PAUSE"
-=======
 	If $TelegramEnabled = 1 then
 		$lastmessage = GetLastMsg()
         If $lastmessage = "\/start" And $lastremote <> $lastuid Then
@@ -251,7 +258,6 @@ Func _RemoteControlPushBullet()
 						_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18,29,"Request for Help") & "\n" & $txtHelp)
 						SetLog("Telegram: Your request has been received from ' " & $iOrigPushBullet & ". Help has been sent", $COLOR_GREEN)
 					Case GetTranslated(18,3,"Pause") & "\u2016"
->>>>>>> MyMod v1.5 (07-07-2016)
 						If $TPaused = False And $Runstate = True Then
 							If ( _ColorCheck(_GetPixelColor($NextBtn[0], $NextBtn[1], True), Hex($NextBtn[2], 6), $NextBtn[3])) = False And IsAttackPage() Then
 								SetLog("Telegram: Unable to pause during attack", $COLOR_RED)
@@ -356,52 +362,6 @@ Func _RemoteControlPushBullet()
 						Else
 							_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,48, "Request to Stop") & "..." & "\n" & GetTranslated(620,50, "Your bot is currently stopped, no action was taken"))
 						EndIf
-<<<<<<< cd8750f4490b1adb64cccff6f0415f427eb28bf1
-					Case Else  ; Chalicucu
-						Local $lsNewOrd
-						If StringLeft($body[$x], 7) = "BOT ACC" Then			;Chalicucu order switch COC Account
-							$lsNewOrd = ReorderAcc(StringMid($body[$x], 9))
-							_PushToPushBullet("Reordered COC account: " & $lsNewOrd & " (" & AccGetStep() & ")")
-							_DeleteMessageOfPushBullet($iden[$x])
-						ElseIf StringLeft($body[$x], 7) = "BOT PRO" Then		;Chalicucu order switch bot profile
-							$lsNewOrd = ReorderCurPro(StringMid($body[$x], 9))
-							_PushToPushBullet("Reordered bot profile: " & $lsNewOrd )
-							_DeleteMessageOfPushBullet($iden[$x])
-						ElseIf StringLeft($body[$x], 10) = "BOT ALLPRO" Then		;Chalicucu order switch bot profile
-							$lsNewOrd = ReorderAllPro(StringMid($body[$x], 12))
-							_PushToPushBullet("Reordered bot profile for all acc: " & $lsNewOrd )
-							_DeleteMessageOfPushBullet($iden[$x])
-						ElseIf StringLeft($body[$x], 7) = "BOT MAP" Then		;Chalicucu Mapping Account & Profile
-							MapAccPro(StringMid($body[$x], 9))
-							_PushToPushBullet("Mapping success: " & StringMid($body[$x], 9) )
-							_DeleteMessageOfPushBullet($iden[$x])
-						ElseIf $body[$x] = "BOT GETORDER" Then				;Chalicucu inquiry acc order
-							SetLog("Get order: [" & $body[$x] & "]", $COLOR_RED)
-							; $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
-							_PushToPushBullet("Ordered COC acc: " & AccGetOrder() & " (" & AccGetStep() _
-												& ")\nCurrent:  " & $nCurCOCAcc _
-												& "\nBot profile: " & ProGetOrderName())
-							_DeleteMessageOfPushBullet($iden[$x])
-						ElseIf $body[$x] = "BOT HIDE" Then				;Chalicucu Hide emulator
-							myHide()
-							SetLog("Receive hide emulator", $COLOR_RED)
-							_PushToPushBullet("Received hide emulator")
-							_DeleteMessageOfPushBullet($iden[$x])
-						ElseIf $body[$x] = "BOT STOPSTART" Then				;Chalicucu Stop then start again
-							btnStop()
-							btnStart()
-							SetLog("Receive STOPSTART", $COLOR_RED)
-							_PushToPushBullet("Received STOPSTART")
-							_DeleteMessageOfPushBullet($iden[$x])
-						EndIf
-						
-						Local $lenstr = StringLen(GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "")
-						Local $teststr = StringLeft($body[$x], $lenstr)
-						If $teststr = (GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "") Then
-							SetLog("Pushbullet: received command syntax wrong, command ignored.", $COLOR_RED)
-							_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,51, "Command not recognized") & "\n" & GetTranslated(620,52, "Please push BOT HELP to obtain a complete command list."))
-							_DeleteMessageOfPushBullet($iden[$x])
-=======
 					Case GetTranslated(18,99,"ResetStats") & "\ud83d\udcca"
 						btnResetStats()
 						SetLog("Telegram: Your request has been received. Statistics resetted", $COLOR_GREEN)
@@ -515,7 +475,6 @@ Func _RemoteControlPushBullet()
 						ElseIf StringInStr($body2, "DONATEOFF") Then
 							$DonateAtivated = 0
 							$TroopType = StringRight($body2, StringLen($body2) - StringLen("DONATEOFF "))
->>>>>>> MyMod v1.5 (07-07-2016)
 						EndIf
 				EndSwitch
 				$body[$x] = ""
