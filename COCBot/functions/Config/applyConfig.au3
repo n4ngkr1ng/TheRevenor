@@ -2639,10 +2639,16 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
     	Else
 	   GUICtrlSetState($chkAccRelax, $GUI_UNCHECKED)
     	EndIf
+	If $iChkAtkPln = 1 Then
+	   GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
+	Else
+	   GUICtrlSetState($chkAtkPln, $GUI_UNCHECKED)
+	EndIf
 	GUICtrlSetData($txtTotalCoCAcc, $nTotalCOCAcc)	;fix set data from GUI
 	GUICtrlSetData($txtTotalCoCAcc, IniRead($profile, "switchcocacc" , "totalacc" ,"0"))
 	GUICtrlSetData($txtActiveCoCAcc, IniRead($profile, "switchcocacc" , "activeacc" ,"0"))
 	GUICtrlSetData($txtAccBottingOrder, IniRead($profile, "switchcocacc" , "order" ,"123"))
 	GUICtrlSetData($txtProfileIdxOrder, IniRead($profile, "switchcocacc" , "profile" ,"123"))
+	GUICtrlSetData($chkAtkPln, IniRead($profile, "switchcocacc" , "CheckAtkPln" ,"1"))
 
 EndFunc   ;==>applyConfig
