@@ -68,7 +68,7 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet/T
 
 		$y += 35
 		$lblPushBulletTokenValue = GUICtrlCreateLabel(GetTranslated(619,14, "Access Token") & ":", $x, $y, -1, -1, $SS_RIGHT)
-		$PushBulletTokenValue = GUICtrlCreateInput("", $x + 120, $y - 3, 280, 19)
+		$PushBulletTokenValue = GUICtrlCreateInput("", $x + 85, $y - 3, 315, 19)
 			GUICtrlSetTip(-1, GetTranslated(619,15, "You need a Token to use PushBullet notifications. Get a token from PushBullet.com"))
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		;Modified by CDudz
