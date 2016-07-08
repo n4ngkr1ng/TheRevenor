@@ -143,14 +143,8 @@ Func AttackReport()
 	SetLog("Stars earned: " & $starsearned)
 
 	Local $AtkLogTxt
-<<<<<<< cd8750f4490b1adb64cccff6f0415f427eb28bf1
 	;Chalicucu 
 	$AtkLogTxt = String($nCurCOCAcc) & " |" & String(_NowTime(4)) & "|"
-=======
-	$iLastAtkTime = _NowTime(4) ;loot hour:mins last raid Added by CDudz Modified by CDudz
-	$AtkLogTxt = StringFormat("%1d", _GUICtrlComboBox_GetCurSel($cmbProfile) + 1) & "|" ;<== New
-	$AtkLogTxt &= "" & _NowTime(4) & "|"
->>>>>>> MyMod v1.5 (07-07-2016)
 	$AtkLogTxt &= StringFormat("%5d", $iTrophyCurrent) & "|"
 	$AtkLogTxt &= StringFormat("%6d", $SearchCount) & "|"
 	$AtkLogTxt &= StringFormat("%7d", $iGoldLast) & "|"
