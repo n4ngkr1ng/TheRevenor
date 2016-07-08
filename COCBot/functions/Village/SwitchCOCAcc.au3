@@ -256,6 +256,40 @@ Func ReorderAcc($cfgStr, $GUIconfig = False)
 	Return $reorderstr
 EndFunc   ;==> ReorderAcc
 
+Func AddAcc($accIdx)		;add one account to order list
+	Local $newAcc = Number(StringLeft($accIdx, 1))
+	If $newAcc > 0 And $newAcc <= $nTotalCOCAcc Then
+		For $i = 0 To $CoCAccNo - 1
+			If $anCOCAccIdx[$i] = $newAcc Then
+				Return "Account " & $newAcc & " already in playing list"
+			EndIf
+		Next
+		$CoCAccNo += 1
+		Redim $anCOCAccIdx[$CoCAccNo]
+		$anCOCAccIdx[$CoCAccNo - 1] = $newAcc
+		AccSaveConfig()
+		Return "Account " & $newAcc & " was added to playing list"
+	EndIf
+EndFunc   ;==> AddAcc
+
+Func RemAcc($accIdx)		;remove account from order list
+	Local $newAcc = Number(StringLeft($accIdx, 1))
+	If $newAcc > 0 And $newAcc <= $nTotalCOCAcc Then
+		For $i = 0 To $CoCAccNo - 1
+			If $anCOCAccIdx[$i] = $newAcc Then
+				For $j = $i To $CoCAccNo - 2
+					$anCOCAccIdx[$j] = $anCOCAccIdx[$j + 1]
+				Next
+				$CoCAccNo -= 1
+				Redim $anCOCAccIdx[$CoCAccNo]
+		AccSaveConfig()
+				Return "Account " & $newAcc & " was removed from playing list"
+			EndIf
+		Next
+		Return "Account " & $newAcc & " is not in playing list"
+	EndIf
+EndFunc   ;==> RemAcc
+
 Func ReorderCurPro($cfgStr)
 	;reorder profile for current playing accounts
 	Local $reorderstr = "", $lsPlaying = ""
