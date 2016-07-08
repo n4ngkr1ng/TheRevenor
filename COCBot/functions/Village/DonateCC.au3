@@ -40,8 +40,21 @@ Func DonateCC($Check = False)
 	Global $bSkipDonTroops = False, $bSkipDonSpells = False
 
 	If $bDonate = False Or $bDonationEnabled = False Then
-		If $debugsetlog = 1 Then Setlog("Donate Clan Castle troops skip", $COLOR_PURPLE)
-		Return ; exit func if no donate checkmarks
+		;DonateStats by CDudz ====================================
+		If GuiCtrlRead($chkLimitDStats) = $GUI_CHECKED And GuiCtrlRead($lblCurDonate) < GuiCtrlRead($iLimitDStats) Then
+			SetLog("Donations re-activated!", $COLOR_PURPLE)
+			$bDonationEnabled = True
+		Else
+			If GuiCtrlRead($chkLimitDStats) = $GUI_CHECKED And GuiCtrlRead($lblCurDonate) > GuiCtrlRead($iLimitDStats) Then
+				SetLog("Donations de-activated! Donate maximum has reached!", $COLOR_PURPLE)
+			EndIf
+			If $debugsetlog = 1 Then Setlog("Donate Clan Castle troops skip", $COLOR_PURPLE)
+			Return ; exit func if no donate checkmarks
+		EndIf
+	ElseIf $bDonationEnabled = True And GuiCtrlRead($chkLimitDStats) = $GUI_CHECKED And GuiCtrlRead($lblCurDonate) > GuiCtrlRead($iLimitDStats) Then
+		$bDonationEnabled = False
+		SetLog("Donations de-activated! Donate maximum has reached!", $COLOR_PURPLE)
+		Return
 	EndIf
 
 	Local $hour = StringSplit(_NowTime(4), ":", $STR_NOCOUNT)
@@ -174,6 +187,7 @@ Func DonateCC($Check = False)
 				DonateWindowCap($bSkipDonTroops, $bSkipDonSpells)
 				If $bSkipDonTroops And $bSkipDonSpells Then
 					DonateWindow($bClose)
+			FileDelete($dirTemp & "*.bmp")
 					$bDonate = True
 					$y = $DonatePixel[1] + 50
 					If _Sleep($iDelayDonateCC2) Then ExitLoop
@@ -426,7 +440,7 @@ EndFunc   ;==>CheckDonateString
 
 Func DonateTroopType($Type, $Quant = 0, $Custom = False, $bDonateAll = False)
 ;Setlog ($debugOCRdonate,$color_green) ; aqua
-Setlog ($debugOCRdonate,$color_purple)
+;Setlog ($debugOCRdonate,$color_purple)
 
 	If $debugSetlog = 1 Then Setlog("$DonateTroopType Start: " & NameOfTroop($Type), $COLOR_PURPLE)
 
@@ -671,7 +685,16 @@ Setlog ($debugOCRdonate,$color_purple)
 		Else
 			SetLog("DonateStats: There were errors, donated '" & NameOfTroop($Type, 1) & "' counts/totals skipped.", $COLOR_RED)
 		EndIf
+		
+		;Get Total current donations
+		Local $CurDonated = 0
+		$aResult = _GUICtrlListView_GetItemTextArray($lvDonatedTroops, 0)
 
+		For $x = 1 To $aResult[0]
+			$CurDonated += $aResult[$x]
+		Next
+		SetLog("Total Donations:" & $CurDonated)
+		GUICtrlSetData($lblCurDonate, $CurDonated)
 
 	EndIf
 	;===================================== End DonateStats =====================================;
@@ -708,8 +731,8 @@ Func DonateWindow($Open = True)
 		;===================================== DonateStats =====================================;
 		FileDelete($dirTemp & "*.bmp")
 
-		$iPosY = $DonatePixel[1] - 53
-		_CaptureRegion(20, $iPosY, 150, $iPosY + 20, True) ;5 170  25
+		$iPosY = $DonatePixel[1] - 49
+		_CaptureRegion(31, $iPosY, 170, $iPosY + 25, True)
 
 		Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
 		Local $Time = @HOUR & "." & @MIN & "." & @SEC

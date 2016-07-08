@@ -1430,6 +1430,17 @@ EndIf
 
 
 	; apply notify PushBullet
+	; Added by CDudz
+	GUICtrlSetData($TelegramTokenValue, $TelegramToken)
+	
+	If $TelegramEnabled = 1 Then
+		GUICtrlSetState($chkPBenabled2, $GUI_CHECKED)
+		chkPBenabled2()
+	ElseIf $TelegramEnabled = 0 Then
+		GUICtrlSetState($chkPBenabled2, $GUI_UNCHECKED)
+		chkPBenabled2()
+	EndIf
+	
 	If $PushBulletEnabled = 1 Then
 		GUICtrlSetState($chkPBenabled, $GUI_CHECKED)
 		chkPBenabled()
@@ -1675,6 +1686,12 @@ EndIf
 		GUICtrlSetState($chkUnbreakable, $GUI_UNCHECKED)
 	EndIf
 	chkUnbreakable()
+	
+	If $ichkAlertBuilderIdle = 1 Then
+		GUICtrlSetState($chkAlertBuilderIdle, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkAlertBuilderIdle, $GUI_UNCHECKED)
+	EndIf
 
 	; apply halt&resume-------------------------------------------------------------------
 	If $ichkBotStop = 1 Then

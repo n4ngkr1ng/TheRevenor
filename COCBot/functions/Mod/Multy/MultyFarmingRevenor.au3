@@ -688,7 +688,13 @@ Func SwitchAccount($bAccount)
 		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0) ;load pixel
 		If IsArray($Message) Then
 			SetLog("Load " & $bAccount & " Account", $COLOR_blue)
-			If _Sleep(1800) Then Return ;Not
+			If _Sleep(500) Then Return ;Not
+			SetLog("Loading Load Button: 1", $COLOR_blue)
+			If _Sleep(1000) Then Return ;Not
+			SetLog("Loading Load Button: 2", $COLOR_blue)
+			If _Sleep(1000) Then Return ;Not
+			SetLog("Loading Load Button: 3", $COLOR_blue)
+			If _Sleep(500) Then Return ;Not
 			Click(512, 433) ;Click Load Button
 			If _Sleep(1000) Then Return
 
@@ -751,7 +757,8 @@ Func SelectAccount($bAccount)
 
 		$iLoopCount += 1
 		ConsoleWrite($iLoopCount & @CRLF)
-		If $iLoopCount > 1500 Then
+		If $iLoopCount > 7000 Then
+			SetLog("No Detect Account, Sory..", $COLOR_PURPLE)
 			SelectAccount($bAccount)
 			ExitLoop
 		EndIf
@@ -770,7 +777,13 @@ Func LoadAccount($bAccount)
 		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0) ;load pixel
 		If IsArray($Message) Then
 			SetLog("Loading Account In Progress...", $COLOR_blue)
-			If _Sleep(1800) Then Return ;Not
+			If _Sleep(500) Then Return ;Not
+			SetLog("Loading Load Button: 1", $COLOR_blue)
+			If _Sleep(1000) Then Return ;Not
+			SetLog("Loading Load Button: 2", $COLOR_blue)
+			If _Sleep(1000) Then Return ;Not
+			SetLog("Loading Load Button: 3", $COLOR_blue)
+			If _Sleep(500) Then Return ;Not
 			Click(512, 433) ;Click Load Button
 			If _Sleep(1000) Then Return
 
@@ -793,12 +806,57 @@ Func LoadAccount($bAccount)
 
 		$iLoopCount += 1
 		ConsoleWrite($iLoopCount & @CRLF)
-		If $iLoopCount > 1000 Then
-			SelectAccount($bAccount)
+		If $iLoopCount > 3000 Then
+			SetLog("Slow Open Window Msg Load, Please Wait..", $COLOR_PURPLE)
+			LoadAccount2($bAccount)
 			ExitLoop
 		EndIf
 	WEnd
 EndFunc
+
+Func LoadAccount2($bAccount)
+	Local $iLoopCount = 0
+
+	While 1
+		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0) ;load pixel
+		If IsArray($Message) Then
+			SetLog("Loading Account In Progress...", $COLOR_blue)
+			If _Sleep(500) Then Return ;Not
+			SetLog("Loading Load Button: 1", $COLOR_blue)
+			If _Sleep(1000) Then Return ;Not
+			SetLog("Loading Load Button: 2", $COLOR_blue)
+			If _Sleep(1000) Then Return ;Not
+			SetLog("Loading Load Button: 3", $COLOR_blue)
+			If _Sleep(500) Then Return ;Not
+			Click(512, 433) ;Click Load Button
+			If _Sleep(1000) Then Return
+
+			Local $Message = _PixelSearch(470, 249 + $midOffsetY, 478, 255 + $midOffsetY, Hex(0xE8E8E0, 6), 0)
+			If IsArray($Message) Then
+				$iConfirm = 1
+				Click(521, 198) ;Click Confirm
+				If _Sleep(1500) Then Return
+				Click(339, 215) ;Click Confirm txtbox
+				SetLog("Insert CONFIRM To Text Box ", $COLOR_blue)
+				If _Sleep(1500) Then Return
+				ControlSend($Title, "", "", "{LSHIFT DOWN}{C DOWN}{C UP}{O DOWN}{O UP}{N DOWN}{N UP}{F DOWN}{F UP}{I DOWN}{I UP}{R DOWN}{R UP}{M DOWN}{M UP}{LSHIFT UP}") ;Enter  Confirm  txt
+				If _Sleep(2000) Then Return
+				Click(521, 200) ;Click Confirm
+			Else
+				Click(521, 200) ;Click Confirm
+			EndIf
+			ExitLoop
+		EndIf
+
+		$iLoopCount += 1
+		ConsoleWrite($iLoopCount & @CRLF)
+		If $iLoopCount > 3000 Then
+			SetLog("Not Open Window Msg Load, Please Wait..", $COLOR_PURPLE)
+			SelectAccount($bAccount)
+			ExitLoop
+		EndIf
+	WEnd
+EndFunc ; LoadAccount2
 
 Func CheckOK()
 

@@ -2013,6 +2013,17 @@ Func saveConfig() ;Saves the controls settings to the config
 
 
 	;PushBullet Settings----------------------------------------
+	; Added by CDudz
+	$TelegramToken = GUICtrlRead($TelegramTokenValue)
+	IniWriteS($config, "pushbullet", "AccountToken2", $TelegramToken)
+	IniWriteS($config, "pushbullet", "PBEnabled2", $TelegramEnabled)	
+	
+	If GUICtrlRead($chkPBenabled2) = $GUI_CHECKED Then
+		$TelegramEnabled = 1
+	Else
+		$TelegramEnabled = 0
+	EndIf
+	
 	IniWriteS($config, "pushbullet", "AccountToken", $PushBulletToken)
 	IniWriteS($config, "pushbullet", "OrigPushBullet", $iOrigPushBullet)
 	IniWriteS($config, "pushbullet", "PBEnabled", $PushBulletEnabled)

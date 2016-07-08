@@ -106,7 +106,7 @@ Local $x = 20, $y = 162 ;150
 		$Account = GUICtrlCreateInput("2", $x +170, $y -5, 18, 15, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 			$txtTip = GetTranslated(17,5, "How many account to use For multy-farming")
 			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetLimit(-1, 6)
+			GUICtrlSetLimit(-1, 1)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		$lblmultyAcc = GUICtrlCreateLabel(GetTranslated(17,2, "How Many:"), $x +100, $y -2, -1, -1)
 			GUICtrlSetTip(-1, $txtTip)

@@ -49,47 +49,56 @@ Func getArmySpellCount($bOpenArmyWindow = False, $bCloseArmyWindow = False, $tes
 			If $debugsetlogTrain = 1 Then Setlog(" Slot : " & $i + 1, $COLOR_PURPLE)
 			Local $FullTemp = getOcrSpellDetection(125 + (62 * $i), 450 + $midOffsetY)
 			If $debugsetlogTrain = 1 Then Setlog(" getOcrSpellDetection: " & $FullTemp, $COLOR_PURPLE)
+			;Modified by CDudz - Troops & Spells Stats Mod
 			Local $Result = getOcrSpellQuantity(146 + (62 * $i), 414 + $midOffsetY)
 			Local $SpellQ = StringReplace($Result, "x", "")
 			If $debugsetlogTrain = 1 Then Setlog(" getOcrSpellQuantity: " & $SpellQ, $COLOR_PURPLE)
 			If $FullTemp = "Lightning" Then
 				$CurLightningSpell = $SpellQ
 				Setlog(" - No. of Lightning Spells: " & $SpellQ)
+				_ArrayAdd($TroopSpellStats, $FullTemp & " Spells|" & $SpellQ)
 				$iTotalSpellSpace += (2 * $SpellQ) ;mikemikemikecoc - Wait For Spells
 			EndIf
 			If $FullTemp = "Heal" Then
 				$CurHealSpell = $SpellQ
 				Setlog(" - No. of Heal Spells: " & $SpellQ)
+				_ArrayAdd($TroopSpellStats, $FullTemp & " Spells|" & $SpellQ)
 				$iTotalSpellSpace += (2 * $SpellQ) ;mikemikemikecoc - Wait For Spells
 			EndIf
 			If $FullTemp = "Rage" Then
 				$CurRageSpell = $SpellQ
 				Setlog(" - No. of Rage Spells: " & $SpellQ)
+				_ArrayAdd($TroopSpellStats, $FullTemp & " Spells|" & $SpellQ)
 				$iTotalSpellSpace += (2 * $SpellQ) ;mikemikemikecoc - Wait For Spells
 			EndIf
 			If $FullTemp = "Jump" Then
 				$CurJumpSpell = $SpellQ
 				Setlog(" - No. of Jump Spells: " & $SpellQ)
+				_ArrayAdd($TroopSpellStats, $FullTemp & " Spells|" & $SpellQ)
 				$iTotalSpellSpace += (2 * $SpellQ) ;mikemikemikecoc - Wait For Spells
 			EndIf
 			If $FullTemp = "Freeze" Then
 				$CurFreezeSpell = $SpellQ
 				Setlog(" - No. of Freeze Spells: " & $SpellQ)
+				_ArrayAdd($TroopSpellStats, $FullTemp & " Spells|" & $SpellQ)
 				$iTotalSpellSpace += (2 * $SpellQ) ;mikemikemikecoc - Wait For Spells
 			EndIf
 			If $FullTemp = "Poison" Then
 				$CurPoisonSpell = $SpellQ
 				Setlog(" - No. of Poison Spells: " & $SpellQ)
+				_ArrayAdd($TroopSpellStats, $FullTemp & " Spells|" & $SpellQ)
 				$iTotalSpellSpace += $SpellQ ;mikemikemikecoc - Wait For Spells
 			EndIf
 			If $FullTemp = "Haste" Then
 				$CurHasteSpell = $SpellQ
 				Setlog(" - No. of Haste Spells: " & $SpellQ)
+				_ArrayAdd($TroopSpellStats, $FullTemp & " Spells|" & $SpellQ)
 				$iTotalSpellSpace += $SpellQ ;mikemikemikecoc - Wait For Spells
 			EndIf
 			If $FullTemp = "Earth" Then
 				$CurEarthSpell = $SpellQ
 				Setlog(" - No. of Earthquake Spells: " & $SpellQ)
+				_ArrayAdd($TroopSpellStats, $FullTemp & " Spells|" & $SpellQ)
 				$iTotalSpellSpace += $SpellQ ;mikemikemikecoc - Wait For Spells
 			EndIf
 			If $FullTemp = "" And $debugsetlogTrain = 1 Then

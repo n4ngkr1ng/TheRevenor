@@ -63,10 +63,6 @@ Func ExtremeZap()
 	; Create the log entry string for amount stealable
 	_ArraySort($aDarkDrills, 1, 0, 0, 3)
 
-	; Offset the drill level based on town hall level
-	$drillLvlOffset = getDrillOffset()
-	If $debugSetLog = 1 Then SetLog("Drill Level Offset is: " & $drillLvlOffset, $COLOR_PURPLE)
-
 	; Offset the number of spells based on town hall level
 	$spellAdjust = getSpellOffset()
 	If $debugSetLog = 1 Then SetLog("Spell Adjust is: " & $spellAdjust, $COLOR_PURPLE)
@@ -77,14 +73,14 @@ Func ExtremeZap()
 		$oldSearchDark = $searchDark
 
 		If ($searchDark < Number($itxtMinDE)) Then
-			SetLog("Dark Elixir is below minimum value, exiting now!", $COLOR_RED)
+			SetLog("Dark Elixir is below minimum value " & $itxtMinDE & ", Exiting Now!", $COLOR_RED)
 			Return $performedZap
 		EndIf
 
 		CheckHeroesHealth()
 		; If you have max lightning spells, drop lightning on any level DE drill
 		If $oldSearchDark = $searchDark Then
-			SetLog("ExtremeZap: Drop L.Spell For All Dark Elixir Drill.", $COLOR_FUCHSIA)
+			SetLog("ExtremeZap Drop L.Spell For All Dark Elixir Drill.", $COLOR_FUCHSIA)
 			zapDrill($eLSpell, $aDarkDrills[0][0] + $strikeOffsets[0], $aDarkDrills[0][1] + $strikeOffsets[1])
 
 			$numSpells -= 1
@@ -123,6 +119,9 @@ Func ExtremeZap()
 			$SmartZapGain += $strikeGain
 			SetLog("DE from last zap: " & $strikeGain & ", Total DE from ExtremeZap: " & $SmartZapGain, $COLOR_FUCHSIA)
 
+			; Get the DE Value after ExtremeZap has performed its actions.
+			$searchDark = getDarkElixir()
+			
 		; Resort the array
 		_ArraySort($aDarkDrills, 1, 0, 0, 3)
 

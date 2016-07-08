@@ -376,6 +376,8 @@ $sModeText[$MA] = "Milking Attack"
 Global $iAtkAlgorithm[$iModeCount]
 
 ;PushBullet---------------------------------------------------------------
+Global $TroopSpellStats[0][2] = [[]]
+Global $iLastAtkTime ; loot hour:mins last raid Added by CDudz Modified by CDudz
 Global $PBRemoteControlInterval = 60000 ; 60 secs
 Global $PBDeleteOldPushesInterval = 1800000 ; 30 mins
 Global $iOrigPushBullet
@@ -427,6 +429,8 @@ Global $tPush2
 Global $cmbTroopComp ;For Event change on ComboBox Troop Compositions
 Global $iCollectCounter = 0 ; Collect counter, when reaches $COLLECTATCOUNT, it will collect
 Global $COLLECTATCOUNT = 10 ; Run Collect() after this amount of times before actually collect
+Global $ichkAlertBuilderIdle
+Global $iReportIdleBuilder = 0
 
 ;---------------------------------------------------------------------------------------------------
 Global $BSpos[2] ; Inside Android window positions relative to the screen, [x,y]

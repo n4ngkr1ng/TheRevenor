@@ -48,8 +48,13 @@ EndIf
 #include "COCBot\functions\Config\ScreenCoordinates.au3"
 
 Global $sGitHubModOwner = "TheRevenor"
+<<<<<<< cd8750f4490b1adb64cccff6f0415f427eb28bf1
 Global $sGitHubModRepo = "MyBot-v6.1.4"
 Global $sGitHubModLatestReleaseTag = "v1.4.1"
+=======
+Global $sGitHubModRepo = "MyBot-v6.1.4-MyMod"
+Global $sGitHubModLatestReleaseTag = "v1.5"
+>>>>>>> MyMod v1.5 (07-07-2016)
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016" ; Website
 
 $sBotVersion = "v6.1.4" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
@@ -201,6 +206,12 @@ SetLog("Android Emulator Configuration: " & $Android & ($AndroidInstance <> "" ?
 AdlibRegister("PushBulletRemoteControl", $PBRemoteControlInterval)
 AdlibRegister("PushBulletDeleteOldPushes", $PBDeleteOldPushesInterval)
 
+; Add Telegram extension by CDudz
+$lastmessage = GetLastMsg()
+If $FirstRun = 1 Then
+	$lastremote = $lastuid
+	Getchatid(GetTranslated(620, 92, "select your remote")) ; receive Telegram chat id and send keyboard
+EndIf
 
 CheckDisplay() ; verify display size and DPI (Dots Per Inch) setting
 
@@ -407,11 +418,16 @@ EndIf
 			   UpgradeWall()
 			   If _Sleep($iDelayRunBot3) Then Return
 			   If $Restart = True Then ContinueLoop
+<<<<<<< cd8750f4490b1adb64cccff6f0415f427eb28bf1
 			   ;Chalicucu change Idle()
 			   If Idle()= 1 Then
 				$Quickattack = False
 				ContinueLoop
 			   EndIf
+=======
+			   PushMsgToPushBullet("CheckBuilderIdle")
+			   Idle()
+>>>>>>> MyMod v1.5 (07-07-2016)
 			   ;$fullArmy1 = $fullArmy
 			   If _Sleep($iDelayRunBot3) Then Return
 			   If $Restart = True Then ContinueLoop
