@@ -1101,6 +1101,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$nActiveCOCAcc = IniRead($profile, "switchcocacc", "activeacc", "2")
 		$ichkSwitchAcc = IniRead($profile, "switchcocacc", "Enable", "0")
 		$AccRelaxTogether = IniRead($profile, "switchcocacc", "AttackRelax", "0")
+		$chkAtkPln = IniRead($profile, "switchcocacc", "CheckAtkPln", "0")
 
 		; Android Settings - Added by LunaEclipse
 		$sAndroid = IniRead($config, "Android", "Emulator", "<No Emulators>")
