@@ -2504,6 +2504,11 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($profile, "switchcocacc", "AttackRelax", 0)
 	EndIf
+	If GUICtrlRead($chkAtkPln) = $GUI_CHECKED Then
+		IniWrite($profile, "switchcocacc", "CheckAtkPln", 1)
+	Else
+		IniWrite($profile, "switchcocacc", "CheckAtkPln", 0)
+	EndIf
 
 EndFunc   ;==>saveConfig
 
