@@ -636,7 +636,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		IniReadS($ichkDeleteOldPBPushes, $config, "pushbullet", "DeleteOldPBPushes", "0")
 		IniReadS($ichkAlertPBCampFull, $config, "pushbullet", "AlertPBCampFull", "0")
 		$ichkAlertBuilderIdle = IniRead($config, "pushbullet", "AlertBuilderIdle", "0")
-		
+
 		IniReadS($iAlertPBVillage, $config, "pushbullet", "AlertPBVillage", "0")
 		IniReadS($iLastAttackPB, $config, "pushbullet", "AlertPBLastAttack", "0")
 

@@ -80,12 +80,16 @@ Func _RemoteControlPushBullet()
 						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,22,"LASTRAID") & GetTranslated(620,10, " - send the last raid loot screenshot of <Village Name>")
 						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,23,"LASTRAIDTXT") & GetTranslated(620,11, " - send the last raid loot values of <Village Name>")
 						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620,24,"SCREENSHOT") & GetTranslated(620,12, " - send a screenshot of <Village Name>")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,1,"ACC <Target1><~><Target8>") & GetTranslated(638,7, " - reorder COC accounts")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <Pro1><~><Pro8>") & GetTranslated(638,8, " - reorder bot profiles")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,9, " - get current CoC account and bot profile")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,10, " - stop then start bot again")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <Pro1><~><Pro8>") & GetTranslated(638,11, " - set up profiles correspond to all exists accounts")
-						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,6,"MAP <Pro1>-<Pro2>") & GetTranslated(638,12, " - set up profile for only one account")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,1,"ACC <Target1><~><Target8>") & GetTranslated(638,11, " - reorder COC accounts")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <Pro1><~><Pro8>") & GetTranslated(638,12, " - reorder bot profiles")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,13, " - get current CoC account and bot profile")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,14, " - stop then start bot again")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <Pro1><~><Pro8>") & GetTranslated(638,15, " - set up profiles correspond to all exists accounts")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,6,"MAP <Pro1>-<Pro2>") & GetTranslated(638,16, " - set up profile for only one account")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,7,"ADD n") & GetTranslated(638,17, " - add account number n to playing list")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,8,"REM n") & GetTranslated(638,18, " - remove account number n from playing list")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,9,"HIDE") & GetTranslated(638,19, " - hide android emulator")
+						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,10,"ATKP 1/0") & GetTranslated(638,20, " - enable/disable attack plan")
 						$txtHelp &= '\n'
 						$txtHelp &= '\n' & GetTranslated(620,25, "Examples:")
 						$txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620,18,"PAUSE")
@@ -94,7 +98,7 @@ Func _RemoteControlPushBullet()
 						_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,26, "Request for Help") & "\n" & $txtHelp)
 						SetLog("Pushbullet: Your request has been received from ' " & $iOrigPushBullet & ". Help has been sent", $COLOR_GREEN)
 						_DeleteMessageOfPushBullet($iden[$x])
-						Case GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(620,18, -1) ;"PAUSE"		
+						Case GetTranslated(620,1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(620,18, -1) ;"PAUSE"
 							If $TPaused = False And $Runstate = True Then
 								If ( _ColorCheck(_GetPixelColor($NextBtn[0], $NextBtn[1], True), Hex($NextBtn[2], 6), $NextBtn[3])) = False And IsAttackPage() Then
 									SetLog("PushBullet: Unable to pause during attack", $COLOR_RED)
@@ -166,11 +170,11 @@ Func _RemoteControlPushBullet()
 							EndIf
 						Case Else  ; Chalicucu
 							Local $lsNewOrd
-							If StringLeft($body[$x], 7) = "BOT ACC" Then		;Chalicucu order switch COC Account
+							If StringLeft($body[$x], 7) = "BOT ACC" Then				;Chalicucu order switch COC Account
 								$lsNewOrd = ReorderAcc(StringMid($body[$x], 9))
 								_PushToPushBullet("Reordered COC account: " & $lsNewOrd & " (" & AccGetStep() & ")")
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf StringLeft($body[$x], 7) = "BOT PRO" Then		;Chalicucu order switch bot profile
+							ElseIf StringLeft($body[$x], 7) = "BOT PRO" Then			;Chalicucu order switch bot profile
 								$lsNewOrd = ReorderCurPro(StringMid($body[$x], 9))
 								_PushToPushBullet("Reordered bot profile: " & $lsNewOrd )
 								_DeleteMessageOfPushBullet($iden[$x])
@@ -178,39 +182,39 @@ Func _RemoteControlPushBullet()
 								$lsNewOrd = ReorderAllPro(StringMid($body[$x], 12))
 								_PushToPushBullet("Reordered bot profile for all acc: " & $lsNewOrd )
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf StringLeft($body[$x], 7) = "BOT MAP" Then		;Chalicucu Mapping Account & Profile
+							ElseIf StringLeft($body[$x], 7) = "BOT MAP" Then			;Chalicucu Mapping Account & Profile
 								MapAccPro(StringMid($body[$x], 9))
 								_PushToPushBullet("Mapping success: " & StringMid($body[$x], 9) )
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf $body[$x] = "BOT GETORDER" Then		;Chalicucu inquiry acc order
+							ElseIf $body[$x] = "BOT GETORDER" Then						;Chalicucu inquiry acc order
 								SetLog("Get order: [" & $body[$x] & "]", $COLOR_RED)
 								; $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
 								_PushToPushBullet("Ordered COC acc: " & AccGetOrder() & " (" & AccGetStep() _
 													& ")\nCurrent:  " & $nCurCOCAcc _
 													& "\nBot profile: " & ProGetOrderName())
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf StringLeft($body[$x], 7) = "BOT ADD" Then		;Chalicucu Add Account to Playing list
+							ElseIf StringLeft($body[$x], 7) = "BOT ADD" Then			;Chalicucu Add Account to Playing list
 								$lsNewOrd = AddAcc(StringMid($body[$x], 9))
 								_PushToPushBullet($lsNewOrd)
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf StringLeft($body[$x], 7) = "BOT REM" Then		;Chalicucu Remove Account from Playing list
+							ElseIf StringLeft($body[$x], 7) = "BOT REM" Then			;Chalicucu Remove Account from Playing list
 								$lsNewOrd = RemAcc(StringMid($body[$x], 9))
 								_PushToPushBullet($lsNewOrd)
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf $body[$x] = "BOT HIDE" Then		;Chalicucu Hide emulator
+							ElseIf $body[$x] = "BOT HIDE" Then							;Chalicucu Hide emulator
 								myHide()
 								SetLog("Receive hide emulator", $COLOR_RED)
 								_PushToPushBullet("Received hide emulator")
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf $body[$x] = "BOT STOPSTART" Then		;Chalicucu Stop then start again
+							ElseIf $body[$x] = "BOT STOPSTART" Then						;Chalicucu Stop then start again
 								btnStop()
 								btnStart()
 								SetLog("Receive STOPSTART", $COLOR_RED)
 								_PushToPushBullet("Received STOPSTART")
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf StringLeft($body[$x],8) = "BOT ATKP" Then	;Chalicucu Option to enable/disable Attack Plan
+							ElseIf StringLeft($body[$x],8) = "BOT ATKP" Then			;Chalicucu Option to enable/disable Attack Plan
 								$iChkAtkPln = (Number(StringMid($body[$x],10))=1)
-								IniWrite($profile, "switchcocacc" , "CheckAtkPln" , Number(StringMid($body[$x],10)))
+								IniWrite($profile, "switchcocacc", "CheckAtkPln", Number(StringMid($body[$x],10)))
 								If $iChkAtkPln Then
 									GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
 									_PushToPushBullet("Enabled attack scheduler!")
@@ -532,7 +536,7 @@ Func _PushBullet($pMessage = "")
 		 $oHTTP2.SetRequestHeader("Content-Type", "application/json; charset=ISO-8859-1,utf-8")
 	     Local $Date = @YEAR & '-' & @MON & '-' & @MDAY
 		 Local $Time = @HOUR & '.' & @MIN
-		 Local $pPush = '{"type": "note", "body": "' & $pMessage & '"}'
+		 Local $pPush3 = '{"type": "note", "body": "' & $pMessage & '"}'
 		 $oHTTP2.Send($pPush3)
 	EndIf
 
@@ -800,7 +804,7 @@ Func PushMsgToPushBullet($Message, $Source = "")
 		Case "AnotherDevice"
 			If ($PushBulletEnabled = 1 Or $TelegramEnabled = 1) And $pAnotherDevice = 1 Then _PushToPushBullet($iOrigPushBullet & " | 3. " & GetTranslated(620,65, "Another Device has connected") & "\n" & GetTranslated(620,66, "Another Device has connected, waiting") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603,8, "seconds"))
 		Case "TakeBreak"
-			If $PushBulletEnabled = 1 And $pTakeAbreak = 1 AND $PersonalBreakNotified = False Then 
+			If $PushBulletEnabled = 1 And $pTakeAbreak = 1 AND $PersonalBreakNotified = False Then
 				_PushToPushBullet (@HOUR & ":" & @MIN &" - " & $iOrigPushBullet & " - Personal Break")
 				$PersonalBreakNotified = True
 			EndIf
@@ -848,9 +852,9 @@ Func PushMsgToPushBullet($Message, $Source = "")
 					$ichkAlertPBCampFullTest = 1
 				EndIf
 			EndIf
-			
+
 		Case "CurrentSearchCount"
-			If mod($searchcount,$SearchNotifyCountTXT) = 0 AND isarray($SearchNotifyCountMsgIden) THEN 
+			If mod($searchcount,$SearchNotifyCountTXT) = 0 AND isarray($SearchNotifyCountMsgIden) THEN
 				_DeleteMessageOfPushBullet($SearchNotifyCountMsgIden[0]) ;Delete old searching messages
 			ENDIF
 			Local $Time = @HOUR & ":" & @MIN
@@ -869,7 +873,7 @@ Func PushMsgToPushBullet($Message, $Source = "")
 			Local $time2 = _TicksToTime(Int(TimerDiff($sTimer) + $iTimePassed), $hour, $min, $sec)
 			Local $tempruntime = StringFormat("%02i:%02i:%02i", $hour, $min, $sec)
 			_PushToPushBullet($Time &" - " & $iOrigPushBullet & " - Stats Report" & "\nStart @ "& $StartTime & "\n[G]" & _NumberFormat(round($iGoldStart/1000000,2)) & "m [E]" & _NumberFormat(round($iElixirStart/1000000,2)) & "m [D]" & _NumberFormat(round($iDarkStart/1000,1)) & "k [T]" & $iTrophyStart & "\n\nCurrent @ " & $Time & "\n[G]" & _NumberFormat(round($iGoldCurrent/1000000,2)) & "m [E]" & _NumberFormat(round($iElixirCurrent/1000000,2)) & "m [D]" & _NumberFormat(round($iDarkCurrent/1000,1)) & "k [T]" & $iTrophyCurrent & "\n\nHourly Stats: (Runtime "& $tempruntime & ")\n[G]"& _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "k [E]" & _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "k [D]" & Round($iDarkTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000) & " [T]" & _NumberFormat(Round($iTrophyTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & "\n\nGems: " & $iGemAmount & ", Free Builders: " & $iFreeBuilderCount & "\n[Walls Upgraded] G: " & $iNbrOfWallsUppedGold & "/ E: " & $iNbrOfWallsUppedElixir & "\n\nAttacked: " & GUICtrlRead($lblresultvillagesattacked) & "/" & GUICtrlRead($lblresultvillagesskipped) & ", Army " &$CurCamp & "/" & $TotalCamp)
-		
+
 		Case "CheckBuilderIdle"
 			If ($PushBulletEnabled = 1 Or $TelegramEnabled = 1) And $ichkAlertBuilderIdle = 1 Then
 				Local $iAvailBldr = $iFreeBuilderCount - $iSaveWallBldr

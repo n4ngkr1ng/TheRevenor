@@ -75,9 +75,9 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet/T
 		$lblTelegramTokenValue = GUICtrlCreateLabel(GetTranslated(619,14, "Access Token") & ":", $x, $y + 23, -1, -1, $SS_RIGHT)
 		$TelegramTokenValue = GUICtrlCreateInput("", $x + 85, $y +22, 315, 19)
 		GUICtrlSetState(-1, $GUI_DISABLE)
-		
+
 		$y += 30
-		
+
 		$lblOrigPushBullet = GUICtrlCreateLabel(GetTranslated(619,16, "Origin") & ":", $x+220, $y+25, -1, -1, $SS_RIGHT)
 			$txtTip = GetTranslated(619,17, "Your Profile/Village name - Set this on the Misc Tab under Profiles.")
 			GUICtrlSetTip(-1, $txtTip)
@@ -124,8 +124,8 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet/T
 			GUICtrlSetTip(-1, GetTranslated(619,38, "Send an Alert when your village is connected to from another device."))
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
-		
-;Periodic village stats and Searchcount Nofications.		
+
+;Periodic village stats and Searchcount Nofications.
 $y += 20
 		$chkSearchNotifyCount = GUICtrlCreateCheckbox("Searchcount.  Increment:", $x + 10, $y, -1, -1)
 		GUICtrlSetTip(-1, "Searchcount Notification every ____ searches.  If getting pushbullet errors or acting funny, increase increment.  ")
@@ -161,12 +161,16 @@ $hGUI_NOTIFY_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600,19,"Instructions
 				GetTranslated(620,1, -1) & " <" & GetTranslated(619,16, -1) & "> " & GetTranslated(620,22,"LASTRAID") & GetTranslated(620,10, " - send the last raid loot screenshot of <Village Name>") & @CRLF & _
 				GetTranslated(620,1, -1) & " <" & GetTranslated(619,16, -1) & "> " & GetTranslated(620,23,"LASTRAIDTXT") & GetTranslated(620,11, " - send the last raid loot values of <Village Name>") & @CRLF & _
 				GetTranslated(620,1, -1) & " <" & GetTranslated(619,16, -1) & "> " & GetTranslated(620,24,"SCREENSHOT") & GetTranslated(620,12, " - send a screenshot of <Village Name>") & @CRLF & _
-				GetTranslated(620,1, -1) & " " & GetTranslated(638,1,"ACC <Target1><~><Target8>") & GetTranslated(638,7, " - reorder COC accounts") & @CRLF & _
-				GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <Pro1><~><Pro8>") & GetTranslated(638,8, " - reorder bot profiles") & @CRLF & _
-			    	GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,9, " - get current CoC account and bot profile") & @CRLF & _
-			    	GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,10, " - stop then start bot again") & @CRLF & _
-			    	GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <Pro1><~><Pro8>") & GetTranslated(638,11, " - set up profiles correspond to all exists accounts") & @CRLF & _
-			    	GetTranslated(620,1, -1) & " " & GetTranslated(638,6,"MAP <Pro1>-<Pro2>") & GetTranslated(638,12, " - set up profile for only one account"), $x, $y - 5, -1, -1, $SS_LEFT)
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,1,"ACC <Target1><~><Target8>") & GetTranslated(638,11, " - reorder COC accounts") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <Pro1><~><Pro8>") & GetTranslated(638,12, " - reorder bot profiles") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,13, " - get current CoC account and bot profile") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,14, " - stop then start bot again") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <Pro1><~><Pro8>") & GetTranslated(638,15, " - set up profiles correspond to all exists accounts") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,6,"MAP <Pro1>-<Pro2>") & GetTranslated(638,16, " - set up profile for only one account") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,7,"ADD n") & GetTranslated(638,17, " - add account number n to playing list") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,8,"REM n") & GetTranslated(638,18, " - remove account number n from playing list") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,9,"HIDE") & GetTranslated(638,19, " - hide android emulator") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,10,"ATKP 1/0") & GetTranslated(638,20, " - 1-enable/0-disable attack plan"), $x, $y - 5, -1, -1, $SS_LEFT)
     GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")
 

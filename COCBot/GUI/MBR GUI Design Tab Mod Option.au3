@@ -149,7 +149,7 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "btnmultyDetectAcc")
 			GUICtrlSetState(-1, $GUI_ENABLE)
-					GUICtrlCreateGroup("", -99, -99, 1, 1)
+    GUICtrlCreateGroup("", -99, -99, 1, 1)
 ;===================================================================================================================;
 
 	; Android Settings

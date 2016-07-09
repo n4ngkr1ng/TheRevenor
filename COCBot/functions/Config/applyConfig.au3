@@ -1432,7 +1432,7 @@ EndIf
 	; apply notify PushBullet
 	; Added by CDudz
 	GUICtrlSetData($TelegramTokenValue, $TelegramToken)
-	
+
 	If $TelegramEnabled = 1 Then
 		GUICtrlSetState($chkPBenabled2, $GUI_CHECKED)
 		chkPBenabled2()
@@ -1440,7 +1440,7 @@ EndIf
 		GUICtrlSetState($chkPBenabled2, $GUI_UNCHECKED)
 		chkPBenabled2()
 	EndIf
-	
+
 	If $PushBulletEnabled = 1 Then
 		GUICtrlSetState($chkPBenabled, $GUI_CHECKED)
 		chkPBenabled()
@@ -1686,7 +1686,7 @@ EndIf
 		GUICtrlSetState($chkUnbreakable, $GUI_UNCHECKED)
 	EndIf
 	chkUnbreakable()
-	
+
 	If $ichkAlertBuilderIdle = 1 Then
 		GUICtrlSetState($chkAlertBuilderIdle, $GUI_CHECKED)
 	Else
@@ -2636,9 +2636,9 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	EndIf
 	If $AccRelaxTogether = 1 Then
 	   GUICtrlSetState($chkAccRelax, $GUI_CHECKED)
-    	Else
+    Else
 	   GUICtrlSetState($chkAccRelax, $GUI_UNCHECKED)
-    	EndIf
+	EndIf
 	If $iChkAtkPln = 1 Then
 	   GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
 	Else
