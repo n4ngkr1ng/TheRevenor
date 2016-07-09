@@ -136,7 +136,7 @@ Func IsStopped()
 EndFunc   ;==>IsStopped
 
 Func btnStart()
-	ResumeAndroid
+	ResumeAndroid()
 	AccStartInit()		;Chalicucu init COC Account environment
 	If $RunState = False Then
 		;GUICtrlSetState($chkBackground, $GUI_DISABLE) ; will be disbaled after check if Android supports Background Mode
