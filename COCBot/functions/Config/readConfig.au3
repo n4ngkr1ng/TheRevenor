@@ -1097,8 +1097,8 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$iAccount = IniRead($config, "Multy", "Account", "2")
 
 		; Switch CoC Account
-		$nTotalCOCAcc = IniRead($profile, "switchcocacc", "totalacc", "2")
-		$nActiveCOCAcc = IniRead($profile, "switchcocacc", "activeacc", "2")
+		$nTotalCOCAcc = IniRead($profile, "switchcocacc", "totalacc", "0")
+		$nActiveCOCAcc = IniRead($profile, "switchcocacc", "activeacc", "0")
 		$ichkSwitchAcc = IniRead($profile, "switchcocacc", "Enable", "0")
 		$AccRelaxTogether = IniRead($profile, "switchcocacc", "AttackRelax", "0")
 		$chkAtkPln = IniRead($profile, "switchcocacc", "CheckAtkPln", "0")
