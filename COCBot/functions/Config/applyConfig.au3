@@ -2634,16 +2634,19 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	Else
 	   GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
 	EndIf
+	chkSwitchAcc()
 	If $AccRelaxTogether = 1 Then
 	   GUICtrlSetState($chkAccRelax, $GUI_CHECKED)
     	Else
 	   GUICtrlSetState($chkAccRelax, $GUI_UNCHECKED)
     	EndIf
+    	chkAccRelaxTogether()
 	If $iChkAtkPln = 1 Then
 	   GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
 	Else
 	   GUICtrlSetState($chkAtkPln, $GUI_UNCHECKED)
 	EndIf
+	chkAtkPln()
 	GUICtrlSetData($txtTotalCoCAcc, $nTotalCOCAcc)	;fix set data from GUI
 	GUICtrlSetData($txtTotalCoCAcc, IniRead($profile, "switchcocacc" , "totalacc" ,"0"))
 	GUICtrlSetData($txtActiveCoCAcc, IniRead($profile, "switchcocacc" , "activeacc" ,"0"))
