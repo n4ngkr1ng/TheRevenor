@@ -188,11 +188,11 @@ Local $x = 20, $y = 162 ;150
 	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 90)
 		$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x - 10, $y - 5, -1, -1)
 			$txtTip = "Switch to another account & profile when camp is less than 85%" & @CRLF & _
-			          "This function supports maximum 8 CoC accounts & 3 Bot profiles" & @CRLF & _
+			          "This function supports maximum 8 CoC accounts & 8 Bot profiles" & @CRLF & _
 			          "Make sure to align the accounts with profiles in listing order"
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
-			GUICtrlSetState(-1, $GUI_CHECKED)
+			GUICtrlSetState(-1, $GUI_UNCHECKED)
 		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y - 1, 130, 20)
 		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 240, $y - 6, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 			GUICtrlSetLimit(-1, 1)
@@ -212,16 +212,17 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetLimit(-1, 8)
 			$txtTip = "Input the order of Profiles to align with CoC Accounts order. Supporting maximum 8 Profiles"
 			GUICtrlSetTip(-1,$txtTip)
-		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x - 10, $y + 46, -1, -1)
+		$chkAtkPln = GUICtrlCreateCheckbox("Check attack plan", $x - 10, $y + 45, -1, -1)
+			$txtTip = "Enable/Disable attack plan"
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_UNCHECKED)
+			GUICtrlSetOnEvent(-1, "chkAtkPln")
+	    $chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 120, $y + 45, -1, -1)
 			$txtTip = "If attack is not planned for current profile" & @CRLF & _
 			          "Then bot stop emulator and relax!"
 			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkAccRelaxTogether")
-		$chkAtkPln = GUICtrlCreateCheckbox("Check attack plan", $x + 125, $y + 46, -1, -1)
-			$txtTip = "Enable/Disable attack plan"
-			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetOnEvent(-1, "chkAtkPln")
-			GUICtrlSetState(-1, $GUI_CHECKED)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 Global $LastControlToHideMOD = GUICtrlCreateDummy()
