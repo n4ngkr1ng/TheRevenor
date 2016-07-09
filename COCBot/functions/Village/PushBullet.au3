@@ -542,7 +542,7 @@ Func _PushToPushBullet($pMessage, $1="",$2="",$3="")
 
 	   Local $Date = @YEAR & '-' & @MON & '-' & @MDAY
 	   Local $Time = @HOUR & '.' & @MIN
-	   Local $pPush = '{"type": "note", "body": "' & $pMessage & '"}'
+	   Local $pPush3 = '{"type": "note", "body": "' & $pMessage & '"}'
 	   $oHTTP2.Send($pPush3)
 	EndIf
 EndFunc   ;==>_Push
