@@ -139,13 +139,13 @@ Func chkFastADBClicks()
 ; Demen & chalicucu Switch Account
 Func chkSwitchAcc()
 	If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then
-	    For $i = $lbTotalCoCAcc To $chkAccRelax
+	    For $i = $lbTotalCoCAcc To $chkAtkPln
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
 		$ichkSwitchAcc = 1
 		GUICtrlSetState($chkUseTrainingClose, $GUI_DISABLE)
 	Else
-		For $i = $lbTotalCoCAcc To $chkAccRelax
+		For $i = $lbTotalCoCAcc To $chkAtkPln
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
 		$ichkSwitchAcc = 0
