@@ -2634,7 +2634,6 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	Else
 	   GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
 	EndIf
-	chkSwitchAcc()
 	If $AccRelaxTogether = 1 Then
 	   GUICtrlSetState($chkAccRelax, $GUI_CHECKED)
     	Else
