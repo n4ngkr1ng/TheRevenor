@@ -139,17 +139,25 @@ Func chkFastADBClicks()
 ; Demen & chalicucu Switch Account
 Func chkSwitchAcc()
 	If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then
-	    For $i = $lbTotalCoCAcc To $chkAccRelax
+		GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
+		GUICtrlSetState($chkUseTrainingClose, $GUI_DISABLE)
+		For $i = $lblExtraTimeMin To $chkRandomStayORClose
+			GUICtrlSetState($i, $GUI_HIDE)
+		Next
+		For $i = $lbTotalCoCAcc To $chkAccRelax
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
 		$ichkSwitchAcc = 1
-		GUICtrlSetState($chkUseTrainingClose, $GUI_DISABLE)
 	Else
+		GUICtrlSetState($chkUseTrainingClose, $GUI_ENABLE)
+		GUICtrlSetState($chkUseTrainingClose, $GUI_CHECKED)
+		For $i = $lblExtraTimeMin To $chkRandomStayORClose
+			GUICtrlSetState($i, $GUI_SHOW)
+		Next
 		For $i = $lbTotalCoCAcc To $chkAccRelax
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
 		$ichkSwitchAcc = 0
-		GUICtrlSetState($chkUseTrainingClose, $GUI_ENABLE)
 	EndIf
 	IniWrite($profile, "switchcocacc", "Enable", $ichkSwitchAcc)
 EndFunc   ;==>chkSwitchAcc

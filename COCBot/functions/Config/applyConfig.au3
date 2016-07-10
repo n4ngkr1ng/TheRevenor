@@ -2631,9 +2631,20 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	;chalicucu & demen:  switchcocacc
 	If $ichkSwitchAcc = 1 Then
 	   GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
-	Else
+	   GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkUseTrainingClose, $GUI_DISABLE)
+		For $i = $lblExtraTimeMin To $chkRandomStayORClose
+			GUICtrlSetState($i, $GUI_HIDE)
+		Next
+		For $i = $lbTotalCoCAcc To $chkAccRelax
+			GUICtrlSetState($i, $GUI_SHOW)
+		Next
+    Else
 	   GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
-	EndIf
+		For $i = $lbTotalCoCAcc To $chkAccRelax
+ 			GUICtrlSetState($i, $GUI_HIDE)
+ 		Next
+    EndIf
 	If $AccRelaxTogether = 1 Then
 	   GUICtrlSetState($chkAccRelax, $GUI_CHECKED)
     Else

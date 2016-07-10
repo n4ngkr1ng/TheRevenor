@@ -194,12 +194,12 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y - 1, 130, 20)
-		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 240, $y - 6, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 240, $y - 6, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $SS_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 1)
 			$txtTip = "Number of Google Accounts on emulator. Supporting maximum 8 Accounts."
 			GUICtrlSetTip(-1,$txtTip)
 		$lbActiveCoCAcc = GUICtrlCreateLabel("Active Accounts:", $x + 288, $y - 1, 130, 20)
-		$txtActiveCoCAcc = GUICtrlCreateInput("0", $x + 373, $y - 6, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+		$txtActiveCoCAcc = GUICtrlCreateInput("0", $x + 373, $y - 6, 35, 21, BitOR($GUI_SS_DEFAULT_INPUT, $SS_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 1)
 			$txtTip = "Number of Google Accounts that you set for botting."
 			GUICtrlSetTip(-1,$txtTip)
