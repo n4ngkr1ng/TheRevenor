@@ -635,7 +635,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		IniReadS($icmbHoursPushBullet, $config, "pushbullet", "HoursPushBullet", "4")
 		IniReadS($ichkDeleteOldPBPushes, $config, "pushbullet", "DeleteOldPBPushes", "0")
 		IniReadS($ichkAlertPBCampFull, $config, "pushbullet", "AlertPBCampFull", "0")
-		$ichkAlertBuilderIdle = IniRead($config, "pushbullet", "AlertBuilderIdle", "0")
+		IniReadS($ichkAlertBuilderIdle, $config, "pushbullet", "AlertBuilderIdle", "0")
 
 		IniReadS($iAlertPBVillage, $config, "pushbullet", "AlertPBVillage", "0")
 		IniReadS($iLastAttackPB, $config, "pushbullet", "AlertPBLastAttack", "0")
@@ -727,6 +727,9 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		;InireadS(xxxx,$config, "attack", "xxxx", "0")
 		;InireadS(xxxx,$config, "attack", "xxxx", "0")
 
+		; Don't Barack Mode ==========================================================================
+		$iChkDontRemove = IniRead($config, "troop", "DontRemove", "0")
+		$iChkBarrackSpell = IniRead($config, "Spells", "BarrackSpell", "0")
 
 		; Donate Stats ==========================================================================
 		$ichkDStats = IniRead($config, "donate", "chkDStats", "1")
@@ -1084,7 +1087,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		; SmartZap Settings - Added by LunaEclipse
 		$ichkSmartZap = IniRead($config, "SmartZap", "UseSmartZap", "1")
 		$ichkSmartZapDB = IniRead($config, "SmartZap", "ZapDBOnly", "1")
-        	$ichkSmartZapSaveHeroes = IniRead($config, "SmartZap", "THSnipeSaveHeroes", "1")
+        $ichkSmartZapSaveHeroes = IniRead($config, "SmartZap", "THSnipeSaveHeroes", "1")
 		$itxtMinDE = IniRead($config, "SmartZap", "MinDE", "250")
 
 		; ExtremeZap - Added by TheRevenor
