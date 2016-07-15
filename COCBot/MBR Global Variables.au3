@@ -92,7 +92,7 @@ Global $AndroidAdbScreencapEnabled = True ; Use Android ADB to capture screensho
 Global $AndroidAdbScreencapPngEnabled = False ; Use Android ADB to capture screenshots in PNG format, significantly slower than raw format (not final, captured screenshot resize too slow...)
 Global $AndroidAdbZoomoutEnabled = True ; Use Android ADB zoom-out script
 Global $AndroidAdbClickDragEnabled = True ; Use Android ADB click drag script
-Global $AndroidAdbInputEnabled = True ; Enable Android ADB send text (CC requests), swipe not used as click drag anymore
+Global $AndroidAdbInputEnabled = False ; Enable Android ADB send text (CC requests), swipe not used as click drag anymore
 Global $AndroidAdbInputWordsCharLimit = 0 ; Android ADB send text words (split by space) with this limit of specified characters per command (0 = disabled and entire text is sent at once)
 Global $AndroidAdbClickEnabled = False ; Enable Android ADB mouse click
 Global $AndroidAdbClicksEnabled = False ; (Experimental & Dangerous!) Enable Android KeepClicks() and ReleaseClicks() to fire collected clicks all at once, only available when also $AndroidAdbClick = True
@@ -822,6 +822,10 @@ Global $CurMini = 0, $CurHogs = 0, $CurValk = 0, $CurGole = 0, $CurWitc = 0, $Cu
 Global $T[1] = [97]
 Global $ArmyComp
 
+; Don't Barack Mode =================
+Global $iChkDontRemove, $chkDontRemove
+Global $iChkBarrackSpell, $chkBarrackSpell
+
 ;Spell Settings
 Global $DonPois = 0, $DonEart = 0, $DonHast = 0
 Global $iLightningSpellComp = 0, $iHealSpellComp = 0, $iRageSpellComp = 0, $iJumpSpellComp = 0, $iFreezeSpellComp = 0, $iPoisonSpellComp = 0, $iEarthSpellComp = 0, $iHasteSpellComp = 0
@@ -1134,6 +1138,7 @@ Global $bGForcePBTUpdate = False
 
 Global $iMakeScreenshotNow = False
 
+
 Global $lastversion = "" ;latest version from GIT
 Global $lastModversion = "" ;latest version from GIT
 Global $lastmessage = "" ;message for last version
@@ -1202,6 +1207,7 @@ Global $GoldStoragePos
 Global $ElixirStoragePos
 Global $darkelixirStoragePos
 
+
 ;Snipe While Train
 Global $isSnipeWhileTrain = False
 Global $SnipeChangedSettings = False
@@ -1216,6 +1222,7 @@ Global $iRestartSearchlimit = 25
 Global $Is_SearchLimit = False
 
 Global $canRequestCC = True
+
 
 ; Heroes upgrade
 Global $ichkUpgradeKing = 0
@@ -1439,6 +1446,7 @@ Global $SecondaryOutputFile = ""
 Global $quicklyfirststart = true
 Global $configLoaded = false
 
+
 Global $chkMakeIMGCSV
 
 ; Splash Variables - mikemikemikecoc
@@ -1485,6 +1493,9 @@ Global $iAccount, $OkLoc, $AccountLoc
 Global $iconfirm
 Global $bAccount[6] = ["Main", "Second", "Third", "Fourth", "Fifth", "Sixth"]
 
+; Donate Stats - by Cutidudz
+Global $iLimitDStats = 5000
+
 ; ExtremeZap - by TheRevenor
 Global $ichkExtLightSpell = 1
 
@@ -1514,6 +1525,8 @@ Global Const $drillLevelSteal[6] = [59, _
 								    251, _
 								    343, _
 								    479]
+
+
 
 ; Android Settings - Added by LunaEclipse
 Global $sAndroid = "<No Emulators>"
@@ -1553,57 +1566,3 @@ $iCSVSpeeds[9] = 2.25
 $iCSVSpeeds[10] = 2.5
 $iCSVSpeeds[11] = 2.75
 $iCSVSpeeds[12] = 3
-
-;[Chalicucu] Switch COC account
-Global $nTotalCOCAcc					; up to 8 Number of Google+ accounts on emulator
-Global $nActiveCoCAcc
-   ; Number of active CoC accounts that you set for Botting.
-   ; This number is <= $nTotalCOCAcc (<=8). For examble, if you want to bot Acc No. 2, 4 & 6 among the total 8 accounts, then $nActiveCoCAcc = 3
-   ; This number can be set following the Input of Acc Order.
-Global $aActiveCoCAcc
-   ; List of active CoC accounts.
-   ; For examble Acc No. 2, 4, 6 are active among the total 8 accounts, then $aActiveCoCAcc = [2,4,6].
-Global $aTimerStart[1] 					; Timer counter start as soon as the Bot read Remain Train Time of an account.
-Global $aTimerEnd[1]					; To count the elapse time from the Timer starts
-Global $aInitialRemainTrainTime[1]		; The remain train time of each account read at Army Overview Window
-Global $aUpdateRemainTrainTime[1]		; Update the remain train time of all accounts
-   ; These arrays shall be ReDim following the value of $nTotalCOCAcc
-Global $aRemainTrainTime[1]				; Remain train time of Active Accounts only. This Array shall be ReDim following the value of $nActiveCoCAcc
-Global $nNextCoCAcc						; The Account Number has shortest remain train time (among the active accounts)
-Global $nMinRemainTrain					; The minimum remain train time in minutes
-Global $CoCAccNo
-Global $profile = $sProfilePath & "\profile.ini"
-$nTotalCOCAcc = Int(Iniread($profile, "switchcocacc", "totalacc", "0"))
-If $nTotalCOCAcc = 0 Then
-	SetLog("---------------Switch CoC Accounts ---------------", $COLOR_RED)
-	SetLog("Set up your total google account first!", $COLOR_RED)
-	SetLog("------------------------------------------------------", $COLOR_RED)
-	$nTotalCOCAcc = 8
-EndIf
-Global $ichkSwitchAcc = Int(IniRead($profile, "switchcocacc" , "Enable" ,"1"))
-Global $nCurCOCAcc = 1     			;Chalicucu Current COC account index : 1 of 3 acc
-Global $nPreCOCAcc
-Global $lnNextStep
-Global $nCurStep = -1
-Global $anCOCAccIdx[$CoCAccNo]			; = [1, 3, 2], 1->3->2->1, Account walking step
-Global $anBotProfileIdx[$nTotalCOCAcc]	; = [1, 2, 3], bot profile index correspond to COC account
-   ;Training progress for accounts
-Global $AccDonBarb[$nTotalCOCAcc], $AccDonArch[$nTotalCOCAcc], $AccDonGiant[$nTotalCOCAcc], $AccDonGobl[$nTotalCOCAcc], $AccDonWall[$nTotalCOCAcc], $AccDonBall[$nTotalCOCAcc], $AccDonWiza[$nTotalCOCAcc], $AccDonHeal[$nTotalCOCAcc]
-Global $AccDonMini[$nTotalCOCAcc], $AccDonHogs[$nTotalCOCAcc], $AccDonValk[$nTotalCOCAcc], $AccDonGole[$nTotalCOCAcc], $AccDonWitc[$nTotalCOCAcc], $AccDonLava[$nTotalCOCAcc], $AccDonDrag[$nTotalCOCAcc], $AccDonPekk[$nTotalCOCAcc]
-Global $AccBarbComp[$nTotalCOCAcc], $AccArchComp[$nTotalCOCAcc], $AccGoblComp[$nTotalCOCAcc], $AccGiantComp[$nTotalCOCAcc], $AccWallComp[$nTotalCOCAcc], $AccWizaComp[$nTotalCOCAcc], $AccMiniComp[$nTotalCOCAcc], $AccHogsComp[$nTotalCOCAcc]
-Global $AccDragComp[$nTotalCOCAcc], $AccBallComp[$nTotalCOCAcc], $AccPekkComp[$nTotalCOCAcc], $AccHealComp [$nTotalCOCAcc], $AccValkComp[$nTotalCOCAcc], $AccGoleComp[$nTotalCOCAcc], $AccWitcComp[$nTotalCOCAcc], $AccLavaComp[$nTotalCOCAcc]
-Global $AccCurBarb[$nTotalCOCAcc],  $AccCurArch[$nTotalCOCAcc],  $AccCurGiant[$nTotalCOCAcc], $AccCurGobl[$nTotalCOCAcc],  $AccCurWall[$nTotalCOCAcc],  $AccCurBall[$nTotalCOCAcc],  $AccCurWiza[$nTotalCOCAcc],  $AccCurHeal[$nTotalCOCAcc]
-Global $AccCurMini[$nTotalCOCAcc],  $AccCurHogs[$nTotalCOCAcc],  $AccCurValk[$nTotalCOCAcc], $AccCurGole[$nTotalCOCAcc],  $AccCurWitc[$nTotalCOCAcc],  $AccCurLava[$nTotalCOCAcc],  $AccCurDrag[$nTotalCOCAcc],  $AccCurPekk[$nTotalCOCAcc]
-Global $AccFirstStart[$nTotalCOCAcc]
-Global $AccTotalTrainedTroops[$nTotalCOCAcc]
-Global $AccRelaxTogether = Iniread($profile, "switchcocacc", "AttackRelax", 1)
-Global $iChkAtkPln = (Number(Iniread($profile, "switchcocacc", "CheckAtkPln", 1)) = 1)
-
-Global $iAccGoldStart[$nTotalCOCAcc], $iAccElixirStart[$nTotalCOCAcc], $iAccDarkStart[$nTotalCOCAcc], $iAccTrophyStart[$nTotalCOCAcc]
-Global $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
-Global $AccStatFlg[$nTotalCOCAcc]
-
-Global $ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
-Global $lblGoldLootAcc[$ProfileList[0]], $lblElixirLootAcc[$ProfileList[0]], $lblDarkLootAcc[$ProfileList[0]], $lblHourlyStatsGoldAcc[$ProfileList[0]], $lblHourlyStatsElixirAcc[$ProfileList[0]], $lblHourlyStatsDarkAcc[$ProfileList[0]]
-Global $aGoldTotalAcc[$ProfileList[0]], $aElixirTotalAcc[$ProfileList[0]], $aDarkTotalAcc[$ProfileList[0]], $aAttackedCountAcc[$ProfileList[0]] , $aSkippedVillageCountAcc[$ProfileList[0]]
-
