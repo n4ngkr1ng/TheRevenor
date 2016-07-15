@@ -129,18 +129,21 @@ Func Collect()
 		$tempGoldCollected = $iGoldCurrent - $tempGold
 		$iGoldFromMines += $tempGoldCollected
 		$iGoldTotal += $tempGoldCollected
+		$aGoldTotalAcc[$nCurProfile -1] += $tempGoldCollected ; Separate Stats per Each Account - Switch Acc Mode - DEMEN
 	EndIf
 
 	If $tempElixir <> "" And $iElixirCurrent <> "" Then
 		$tempElixirCollected = $iElixirCurrent - $tempElixir
 		$iElixirFromCollectors += $tempElixirCollected
 		$iElixirTotal += $tempElixirCollected
+		$aElixirTotalAcc[$nCurProfile -1] += $tempElixirCollected ; Separate Stats per Each Account - Switch Acc Mode - DEMEN
 	EndIf
 
 	If $tempDElixir <> "" And $iDarkCurrent <> "" Then
 		$tempDElixirCollected = $iDarkCurrent - $tempDElixir
 		$iDElixirFromDrills += $tempDElixirCollected
 		$iDarkTotal += $tempDElixirCollected
+		$aDarkTotalAcc[$nCurProfile -1] += $tempDElixirCollected  ; Separate Stats per Each Account - Switch Acc Mode - DEMEN
 	EndIf
 
 	UpdateStats()
