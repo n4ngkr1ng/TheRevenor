@@ -49,7 +49,7 @@ EndIf
 
 Global $sGitHubModOwner = "n4ngkr1ng"
 Global $sGitHubModRepo = "TheRevenor"
-Global $sGitHubModLatestReleaseTag = "v1.5"
+Global $sGitHubModLatestReleaseTag = "v1.6"
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016" ; Website
 
 $sBotVersion = "v6.1.4" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
@@ -210,8 +210,6 @@ EndIf
 
 CheckDisplay() ; verify display size and DPI (Dots Per Inch) setting
 
-
-
 ;~ readCollectorConfig();initialize collector fullness variables before loading images
 
 LoadTHImage() ; Load TH images
@@ -306,7 +304,7 @@ EndIf
 				SwitchCOCAcc()
 				If _Sleep(20000) Then Return
 			EndIf
-        	EndIf
+	    EndIf
 		checkMainScreen()
 		If $Restart = True Then ContinueLoop
 		chkShieldStatus()
@@ -646,7 +644,7 @@ Func Idle() ;Sequence that runs until Full Army
             		Else
                 		If _Sleep(30000) Then Return
             		EndIf
-        	EndIf
+				 EndIf
 		Local $hTimer = TimerInit()
 		Local $iReHere = 0
 
