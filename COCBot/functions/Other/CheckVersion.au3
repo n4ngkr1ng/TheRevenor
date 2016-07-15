@@ -33,7 +33,7 @@ Func CheckVersion()
 			SetLog(" ")
 			_PrintLogVersion($lastmessage)
 		EndIf
-		
+
 		If $lastModversion = "" Then
 			SetLog("WE CANNOT OBTAIN MOD VERSION AT THIS TIME", $COLOR_ORANGE)
 		ElseIf VersionNumFromVersionTXT($sModversion) < VersionNumFromVersionTXT($lastModversion) Then
@@ -51,9 +51,9 @@ Func CheckVersion()
 			SetLog(" ")
 			_PrintLogVersion($lastmessage)
 		EndIf
-		
-		;CheckMODVersion()
-		
+
+		CheckMODVersion()
+
 	EndIf
 EndFunc   ;==>CheckVersion
 
@@ -90,7 +90,7 @@ Func CheckVersionHTML()
 		FileCopy(@ScriptDir & "\TestVersion.txt", $versionfile, 1)
 	Else
 		;download page from site contains last bot version
-		$hDownload = InetGet("https://raw.githubusercontent.com/TheRevenor/MyBot-6.1.2-Official-Release/master/LastVersions.txt", $versionfile, 0, 1)
+		$hDownload = InetGet("https://raw.githubusercontent.com/TheRevenor/MyBot-6.1.4-Official-Release/master/LastVersions.txt", $versionfile, 0, 1)
 
 		; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 		Local $i = 0
@@ -116,7 +116,7 @@ Func CheckVersionHTML()
 			FileCopy(@ScriptDir & "\TestVersion_" & $sLanguage & ".txt", $versionfilelocalized, 1)
 		Else
 			;download page from site contains last bot version localized messages
-			$hDownload = InetGet("https://raw.githubusercontent.com/TheRevenor/MyBot-6.1.2-Official-Release/master/LastVersions_" & $sLanguage & ".txt", $versionfilelocalized, 0, 1)
+			$hDownload = InetGet("https://raw.githubusercontent.com/TheRevenor/MyBot-6.1.4-Official-Release/master/LastVersions_" & $sLanguage & ".txt", $versionfilelocalized, 0, 1)
 
 			; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 			Local $i = 0
@@ -186,7 +186,7 @@ Func CheckMODVersion()
 	Local $file = FileOpen($tempJson, 0)
 	Local $fileContent = FileRead($file)
 	Local $decodedArray = Json_Decode($fileContent)
-	
+
 	Local $sLatestReleaseTag = ""
 	If Ubound($decodedArray) > 0 Then
 		$sLatestReleaseTag = Json_Get($decodedArray, '[0]["tag_name"]')
@@ -199,7 +199,7 @@ Func CheckMODVersion()
 		"Check And Download Latest Version From Help Menu")
 		Return False
 	EndIf
- 
+
 	Return True
 EndFunc
 
