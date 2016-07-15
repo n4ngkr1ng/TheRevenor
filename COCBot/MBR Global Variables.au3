@@ -1602,3 +1602,8 @@ Global $iChkAtkPln = (Number(Iniread($profile, "switchcocacc", "CheckAtkPln", 1)
 Global $iAccGoldStart[$nTotalCOCAcc], $iAccElixirStart[$nTotalCOCAcc], $iAccDarkStart[$nTotalCOCAcc], $iAccTrophyStart[$nTotalCOCAcc]
 Global $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
 Global $AccStatFlg[$nTotalCOCAcc]
+
+Global $ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
+Global $lblGoldLootAcc[$ProfileList[0]], $lblElixirLootAcc[$ProfileList[0]], $lblDarkLootAcc[$ProfileList[0]], $lblHourlyStatsGoldAcc[$ProfileList[0]], $lblHourlyStatsElixirAcc[$ProfileList[0]], $lblHourlyStatsDarkAcc[$ProfileList[0]]
+Global $aGoldTotalAcc[$ProfileList[0]], $aElixirTotalAcc[$ProfileList[0]], $aDarkTotalAcc[$ProfileList[0]], $aAttackedCountAcc[$ProfileList[0]] , $aSkippedVillageCountAcc[$ProfileList[0]]
+
