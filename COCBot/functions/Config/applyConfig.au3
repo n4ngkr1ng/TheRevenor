@@ -1538,6 +1538,12 @@ EndIf
 	GUICtrlSetData($PushBulletTokenValue, $PushBulletToken)
 	GUICtrlSetData($OrigPushBullet, $iOrigPushBullet)
 
+	If $ichkAlertBuilderIdle = 1 Then
+		GUICtrlSetState($chkAlertBuilderIdle, $GUI_CHECKED)
+	ElseIf $ichkAlertBuilderIdle = 0 Then
+		GUICtrlSetState($chkAlertBuilderIdle, $GUI_UNCHECKED)
+	EndIf
+
 	;Pushbullet Stuff
 	If $VillageStatIncrement = 1 Then
 		GUICtrlSetState($chkVillageStatIncrement, $GUI_CHECKED)
@@ -1687,11 +1693,6 @@ EndIf
 	EndIf
 	chkUnbreakable()
 
-	If $ichkAlertBuilderIdle = 1 Then
-		GUICtrlSetState($chkAlertBuilderIdle, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkAlertBuilderIdle, $GUI_UNCHECKED)
-	EndIf
 
 	; apply halt&resume-------------------------------------------------------------------
 	If $ichkBotStop = 1 Then
@@ -2541,6 +2542,19 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	_GUICtrlComboBox_SetCurSel($cmbTrophyMinProfile, $icmbTrophyMinProfile)
 	GUICtrlSetData($txtMinTrophyAmount, $itxtMinTrophyAmount)
 
+	; Don't Barack Mode =====================================================================
+	If $iChkDontRemove = 1 Then
+		GUICtrlSetState($chkDontRemove, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDontRemove, $GUI_UNCHECKED)
+	EndIf
+
+	If $iChkBarrackSpell = 1 Then
+		GUICtrlSetState($chkBarrackSpell, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkBarrackSpell, $GUI_UNCHECKED)
+	EndIf
+
 	; Donate Stats ====================================================================
 	If $ichkDStats = 1 Then
 		GUICtrlSetState($chkDStats, $GUI_CHECKED)
@@ -2627,38 +2641,5 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	_GUICtrlComboBox_SetCurSel($cmbStartSleep, $sleepStart)
 	_GUICtrlComboBox_SetCurSel($cmbEndSleep, $sleepEnd)
 	calculateSleepTime($sleepStart, $sleepEnd)
-
-	;chalicucu & demen:  switchcocacc
-	If $ichkSwitchAcc = 1 Then
-	   GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
-	   GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
-	   GUICtrlSetState($chkUseTrainingClose, $GUI_DISABLE)
-		For $i = $lblExtraTimeMin To $chkRandomStayORClose
-			GUICtrlSetState($i, $GUI_HIDE)
-		Next
-		For $i = $lbTotalCoCAcc To $chkAccRelax
-			GUICtrlSetState($i, $GUI_SHOW)
-		Next
-    Else
-	   GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
-		For $i = $lbTotalCoCAcc To $chkAccRelax
- 			GUICtrlSetState($i, $GUI_HIDE)
- 		Next
-    EndIf
-	If $AccRelaxTogether = 1 Then
-	   GUICtrlSetState($chkAccRelax, $GUI_CHECKED)
-    Else
-	   GUICtrlSetState($chkAccRelax, $GUI_UNCHECKED)
-	EndIf
-	If $iChkAtkPln = 1 Then
-	   GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
-	Else
-	   GUICtrlSetState($chkAtkPln, $GUI_UNCHECKED)
-	EndIf
-	GUICtrlSetData($txtTotalCoCAcc, $nTotalCOCAcc)	;fix set data from GUI
-	GUICtrlSetData($txtTotalCoCAcc, IniRead($profile, "switchcocacc" , "totalacc" ,"0"))
-	GUICtrlSetData($txtActiveCoCAcc, IniRead($profile, "switchcocacc" , "activeacc" ,"0"))
-	GUICtrlSetData($txtAccBottingOrder, IniRead($profile, "switchcocacc" , "order" ,"123"))
-	GUICtrlSetData($txtProfileIdxOrder, IniRead($profile, "switchcocacc" , "profile" ,"123"))
 
 EndFunc   ;==>applyConfig
