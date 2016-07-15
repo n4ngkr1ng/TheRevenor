@@ -1,4 +1,3 @@
-
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: DonateStats
 ; Description ...: GUICreateDStat(), GetTroopColumn(), InitDonateStats, CompareBitmaps(), part of DonateStats, for collecting total counts of Troops donated
@@ -6,7 +5,7 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: Cutidudz (2016)
-; Modified ......:
+; Modified ......: TheRevenor (2016)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -127,4 +126,3 @@ Func CompareDBitmaps($File1, $File2)
 	Return (Round($Difference,2) * 100)
 
 EndFunc  ;==>CompareBitmaps
-
