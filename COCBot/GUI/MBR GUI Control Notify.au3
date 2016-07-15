@@ -106,6 +106,7 @@ Func chkPBenabled2()
 		GUICtrlSetState($chkDeleteOldPBPushes, $GUI_ENABLE)
 		GUICtrlSetState($btnDeletePBmessages, $GUI_ENABLE)
 		GUICtrlSetState($chkAlertPBCampFull, $GUI_ENABLE)
+		GUICtrlSetState($chkAlertBuilderIdle, $GUI_ENABLE)
 		GUICtrlSetState($chkSearchNotifyCount, $GUI_ENABLE)
 		GUICtrlSetState($txtSearchNotifyCount, $GUI_ENABLE)
 		GUICtrlSetState($chkVillageStatIncrement, $GUI_ENABLE)
@@ -117,6 +118,7 @@ Func chkPBenabled2()
 
 	Else
 		If GUICtrlRead($chkPBenabled) = $GUI_CHECKED Then
+			GUICtrlSetState($chkAlertBuilderIdle, $GUI_ENABLE)
 			GUICtrlSetState($TelegramTokenValue, $GUI_DISABLE)
 		ElseIf GUICtrlRead($chkPBenabled2) = $GUI_UNCHECKED Then
 			GUICtrlSetState($chkPBenabled, $GUI_ENABLE)
@@ -167,7 +169,7 @@ Func chkPBenabled2()
 			GUICtrlSetState($txtVillageStatIncrement, $GUI_DISABLE)
 
 			GUICtrlSetState($cmbHoursPushBullet, $GUI_DISABLE)
-		GUICtrlSetState($chkAlertBuilderIdle, $GUI_DISABLE)
+			GUICtrlSetState($chkAlertBuilderIdle, $GUI_DISABLE)
 		EndIf
 	EndIf
 EndFunc   ;==>chkPBenabled2
@@ -232,6 +234,3 @@ Func _Restart()
 
 	Return SetError(2, 0, 0)
 EndFunc   ;==>_Restart
-
-
-
