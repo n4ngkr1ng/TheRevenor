@@ -1173,12 +1173,14 @@ Func Train()
 		$tempElixirSpent = ($tempElixir - $iElixirCurrent)
 		$iTrainCostElixir += $tempElixirSpent
 		$iElixirTotal -= $tempElixirSpent
+		$aElixirTotalAcc[$nCurProfile-1] -= $tempElixirSpent ; Separate stats per account - DEMEN
 	EndIf
 
 	If $tempDElixir <> "" And $iDarkCurrent <> "" Then
 		$tempDElixirSpent = ($tempDElixir - $iDarkCurrent)
 		$iTrainCostDElixir += $tempDElixirSpent
 		$iDarkTotal -= $tempDElixirSpent
+		$aDarkTotalAcc[$nCurProfile - 1] -= $tempDElixirSpent ; Separate stats per account - DEMEN
 	EndIf
 
 	UpdateStats()
