@@ -13,7 +13,6 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-
 Func saveConfig() ;Saves the controls settings to the config
 
 	;from GUI donate fields to variables  ----------------------------------------
@@ -1729,6 +1728,19 @@ Func saveConfig() ;Saves the controls settings to the config
 	;atk their king
 	;attk their queen
 
+	; Don't Barack Mode ==========================================================================
+	If GUICtrlRead($chkDontRemove) = $GUI_CHECKED Then
+		IniWrite($config, "troop", "DontRemove", 1)
+	Else
+		IniWrite($config, "troop", "DontRemove", 0)
+	EndIf
+
+	If GUICtrlRead($chkBarrackSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BarrackSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BarrackSpell", 0)
+	EndIf
+
 	; Donate Stats ==========================================================================
 	If GUICtrlRead($chkDStats) = $GUI_CHECKED Then
 		IniWrite($config, "donate", "chkDStats", 1)
@@ -2016,14 +2028,14 @@ Func saveConfig() ;Saves the controls settings to the config
 	; Added by CDudz
 	$TelegramToken = GUICtrlRead($TelegramTokenValue)
 	IniWriteS($config, "pushbullet", "AccountToken2", $TelegramToken)
-	IniWriteS($config, "pushbullet", "PBEnabled2", $TelegramEnabled)	
-	
+	IniWriteS($config, "pushbullet", "PBEnabled2", $TelegramEnabled)
+
 	If GUICtrlRead($chkPBenabled2) = $GUI_CHECKED Then
 		$TelegramEnabled = 1
 	Else
 		$TelegramEnabled = 0
 	EndIf
-	
+
 	IniWriteS($config, "pushbullet", "AccountToken", $PushBulletToken)
 	IniWriteS($config, "pushbullet", "OrigPushBullet", $iOrigPushBullet)
 	IniWriteS($config, "pushbullet", "PBEnabled", $PushBulletEnabled)
@@ -2041,6 +2053,11 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "pushbullet", "AlertPBVillage", $iAlertPBVillage)
 	IniWriteS($config, "pushbullet", "AlertPBLastAttack", $iLastAttackPB)
 	IniWriteS($config, "pushbullet", "AlertPBVBreak", $pTakeAbreak)
+	If GUICtrlRead($chkAlertBuilderIdle) = $GUI_CHECKED Then
+		IniWriteS($config, "pushbullet", "AlertBuilderIdle", "1")
+	Else
+		IniWriteS($config, "pushbullet", "AlertBuilderIdle", "0")
+	EndIf
 
 	IniWriteS($config, "other", "WAOffsetX", $iWAOffsetX)
 	IniWriteS($config, "other", "WAOffsetY", $iWAOffsetY)
@@ -2489,26 +2506,4 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "profiles", "cmbTrophyMinProfile", _GUICtrlComboBox_GetCurSel($cmbTrophyMinProfile))
 	IniWrite($config, "profiles", "txtMinTrophyAmount", GUICtrlRead($txtMinTrophyAmount))
 
-	;Chalicucu Switch CoC Account
-	If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then
-		IniWrite($profile, "switchcocacc", "Enable", 1)
-	Else
-		IniWrite($profile, "switchcocacc", "Enable", 0)
-	EndIf
-	IniWrite($profile, "switchcocacc", "totalacc", GUICtrlRead($txtTotalCoCAcc))
-	IniWrite($profile, "switchcocacc", "activeacc", GUICtrlRead($txtActiveCoCAcc))
-	IniWrite($profile, "switchcocacc", "order", GUICtrlRead($txtAccBottingOrder))
-	IniWrite($profile, "switchcocacc", "profile", GUICtrlRead($txtProfileIdxOrder))
-	If GUICtrlRead($chkAccRelax) = $GUI_CHECKED Then
-		IniWrite($profile, "switchcocacc", "AttackRelax", 1)
-	Else
-		IniWrite($profile, "switchcocacc", "AttackRelax", 0)
-	EndIf
-	If GUICtrlRead($chkAtkPln) = $GUI_CHECKED Then
-		IniWrite($profile, "switchcocacc", "CheckAtkPln", 1)
-	Else
-		IniWrite($profile, "switchcocacc", "CheckAtkPln", 0)
-	EndIf
-
 EndFunc   ;==>saveConfig
-
