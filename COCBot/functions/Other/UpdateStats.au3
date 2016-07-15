@@ -350,10 +350,16 @@ Func UpdateStats()
 
 	Next
 
-	If $iOldAttackedCount <> $iAttackedCount Then
+		If $iOldAttackedCount <> $iAttackedCount Then
+	    If $ichkSwitchAcc = 1 Then																; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		   GUICtrlSetData($lblresultvillagesattacked, $aAttackedCountAcc[$nCurProfile -1])		; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		   GUICtrlSetData($lblResultAttackedHourNow, $aSkippedVillageCountAcc[$nCurProfile -1])	; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		Else		   																			; Separate Stats per Profile - Switch Acc Mode - DEMEN
 		GUICtrlSetData($lblresultvillagesattacked, _NumberFormat($iAttackedCount, True))
 		GUICtrlSetData($lblResultAttackedHourNow, _NumberFormat($iAttackedCount, True))
+		EndIf																					; Separate Stats per Profile - Switch Acc Mode - DEMEN
 		$iOldAttackedCount = $iAttackedCount
+
 	EndIf
 
 	For $i = 0 To $iModeCount
@@ -377,6 +383,35 @@ Func UpdateStats()
 
 	Next
 
+; Separate Stats per Profile - Switch Acc Mode - DEMEN
+    For $i = 0 To $ProfileList[0] - 1
+	   GUICtrlSetData($lblGoldLootAcc[$i], _NumberFormat($aGoldTotalAcc[$i]))
+	   GUICtrlSetData($lblHourlyStatsGoldAcc[$i], _NumberFormat(Round($aGoldTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
+
+	   GUICtrlSetData($lblElixirLootAcc[$i], _NumberFormat($aElixirTotalAcc[$i]))
+	   GUICtrlSetData($lblHourlyStatsElixirAcc[$i], _NumberFormat(Round($aElixirTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
+
+	   If $iDarkStart <> "" Then
+		  GUICtrlSetData($lblDarkLootAcc[$i], _NumberFormat($aDarkTotalAcc[$i]))
+		  GUICtrlSetData($lblHourlyStatsDarkAcc[$i], _NumberFormat(Round($aDarkTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
+	   EndIf
+	Next
+
+	If $FirstAttack = 2 Then
+		GUICtrlSetData($lblHourlyStatsGoldCurAcc, _NumberFormat(Round($aGoldTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
+		GUICtrlSetData($lblGoldLootCurAcc, _NumberFormat($aGoldTotalAcc[$nCurProfile-1]))
+
+		GUICtrlSetData($lblHourlyStatsElixirCurAcc, _NumberFormat(Round($aElixirTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
+		GUICtrlSetData($lblElixirLootCurAcc, _NumberFormat($aElixirTotalAcc[$nCurProfile-1]))
+
+		If $iDarkStart <> "" Then
+			GUICtrlSetData($lblHourlyStatsDarkCurAcc, _NumberFormat(Round($aDarkTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
+			GUICtrlSetData($lblDarkLootCurAcc, _NumberFormat($aDarkTotalAcc[$nCurProfile-1]))
+		EndIf
+	 EndIf
+
+; ====== Separate Stats per Profile - Switch Acc Mode - DEMEN
+
 	If $FirstAttack = 2 Then
 		GUICtrlSetData($lblHourlyStatsGold, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
 		GUICtrlSetData($lblHourlyStatsElixir, _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
@@ -385,12 +420,19 @@ Func UpdateStats()
 		EndIf
 		GUICtrlSetData($lblHourlyStatsTrophy, _NumberFormat(Round($iTrophyTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
 
-		GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
-		GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
-		If $iDarkStart <> "" Then
-			GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($iDarkTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM
+	    If $ichkSwitchAcc = 1 Then																																			; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		   GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($aGoldTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") 			; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		   GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($aElixirTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") 		; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		   If $iDarkStart <> "" Then																																		; Separate Stats per Profile - Switch Acc Mode - DEMEN
+			  GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($aDarkTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") 	; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		   EndIf																																							; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		Else																																								; Separate Stats per Profile - Switch Acc Mode - DEMEN
+		   GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
+		   GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
+		   If $iDarkStart <> "" Then
+			  GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($iDarkTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM
+		   EndIf
 		EndIf
-
 	EndIf
 
 	If $ResetStats = 1 Then
@@ -417,6 +459,17 @@ Func ResetStats()
 	$iGoldTotal = 0
 	$iElixirTotal = 0
 	$iDarkTotal = 0
+
+; Separate Stats per Profile - Switch Acc Mode - DEMEN
+    For $i = 0 To $ProfileList[0] - 1
+	   $aGoldTotalAcc[$i] = 0
+	   $aElixirTotalAcc[$i] = 0
+	   $aDarkTotalAcc[$i] = 0
+	   $aAttackedCountAcc[$i] = 0
+	   $aSkippedVillageCountAcc[$i] = 0
+	Next
+; ====== Separate Stats per Profile - Switch Acc Mode - DEMEN
+
 	$iTrophyTotal = 0
 	$iGoldLast = 0
 	$iElixirLast = 0
@@ -446,10 +499,6 @@ Func ResetStats()
 	$iGoldFromMines = 0
 	$iElixirFromCollectors = 0
 	$iDElixirFromDrills = 0
-	; Reset SmartZap stats - Added by LunaEclipse
-	$smartZapGain = 0
-	$ExtremeZapGain = 0
-	$numLSpellsUsed = 0
 	For $i = 0 To $iModeCount
 		$iAttackedVillageCount[$i] = 0
 		$iTotalGoldGain[$i] = 0
