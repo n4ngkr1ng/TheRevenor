@@ -252,12 +252,12 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 							ReCfgTotalAcc(Int(GUICtrlRead($txtTotalCoCAcc)))
 					EndSwitch
 				Case $txtAccBottingOrder		;chalicucu: reorder switch acc
-					If $nNotifyCode = $EN_KILLFOCUS Then 
+					If $nNotifyCode = $EN_KILLFOCUS Then
 						SetLog("[Account order config]")
 						ReorderAcc(GUICtrlRead($txtAccBottingOrder), True)
 					EndIf
 				Case $txtProfileIdxOrder		;chalicucu: reorder profile for acc
-					If $nNotifyCode = $EN_KILLFOCUS Then 
+					If $nNotifyCode = $EN_KILLFOCUS Then
 						SetLog("[Profile config]")
 						ReorderAllPro(GUICtrlRead($txtProfileIdxOrder), True)
 					EndIf
@@ -472,7 +472,7 @@ Func tabMain()
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_BOT)
 				GUISetState(@SW_HIDE, $hGUI_MOD)
 				tabBot()
-				
+
 			Case $tabidx = 4 ; MOD Option
 				GUISetState(@SW_HIDE, $hGUI_LOG)
 				GUISetState(@SW_HIDE, $hGUI_VILLAGE)
@@ -480,7 +480,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $hGUI_BOT)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_MOD)
 				tabMOD()
-				
+
 			Case ELSE
 				GUISetState(@SW_HIDE, $hGUI_LOG)
 				GUISetState(@SW_HIDE, $hGUI_VILLAGE)

@@ -1624,3 +1624,16 @@ Global $iChkAtkPln = (Number(Iniread($profile, "switchcocacc", "CheckAtkPln", 1)
 Global $iAccGoldStart[$nTotalCOCAcc], $iAccElixirStart[$nTotalCOCAcc], $iAccDarkStart[$nTotalCOCAcc], $iAccTrophyStart[$nTotalCOCAcc]
 Global $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
 Global $AccStatFlg[$nTotalCOCAcc]
+
+Global $iSwitchMode = Iniread($profile, "switchcocacc", "SwitchMode", 0)		;0: shortest training mode (STM), 1: fixed order mode
+Global $iRemainTrainTime = 0	;remain train time of current account
+
+;Chalicucu STM mode control
+Global $accTrainTime[1]		;Remain train time of attacking account
+Global $accDonate[1] = [-1]	;donation list
+Global $accAttack[1] = [-1]	;attacking list
+Global $nCurAtkIdx = 0		;current attack index
+Global $nLastDonAcc = 0		;last donate account
+Global $iSwitchCnt = 0		;counting switching time to identify next switching step
+
+Global $iAtkPlan_HalfHour = True		;Chalicucu, attack more half hour in attack plan
