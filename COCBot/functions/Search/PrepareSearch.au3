@@ -19,8 +19,10 @@ Func PrepareSearch() ;Click attack button and find match button, will break shie
 
 	ChkAttackCSVConfig()
 
+	;If IsMainPage() Then
+	;	ClickP($aAttackButton, 1, 0, "#0149") ; Click Attack Button
 	If IsMainPage() Then
-		ClickP($aAttackButton, 1, 0, "#0149") ; Click Attack Button
+		ClickZone($aAttackButton[0],$aAttackButton[1],20) ; Click Attack Button
 	EndIF
 	If _Sleep($iDelayPrepareSearch1) Then Return
 
@@ -35,7 +37,8 @@ Func PrepareSearch() ;Click attack button and find match button, will break shie
 		checkMainScreen()
 		Return
 	Else
-		ClickP($aFindMatchButton, 1, 0, "#0150");Click Find a Match Button
+		;ClickP($aFindMatchButton, 1, 0, "#0150");Click Find a Match Button
+		ClickZone($aFindMatchButton[0], $aFindMatchButton[1], 20) ;Click Find a Match Button
 	EndIf
 
 
@@ -74,5 +77,3 @@ Func PrepareSearch() ;Click attack button and find match button, will break shie
 	EndIf
 
 EndFunc   ;==>PrepareSearch
-
-
