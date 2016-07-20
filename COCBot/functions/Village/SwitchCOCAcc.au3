@@ -14,60 +14,57 @@
 ; ===============================================================================================================================
 
 Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
-	If $FirstSwitch Then
-	   SetLog("First matching account and profile", $COLOR_GREEN);
+	If $FirstSwitch Then SetLog("First matching account and profile", $COLOR_GREEN);
 	   SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
 	   SetLog("Ordered bot profile: " & ProGetOrderName(), $COLOR_GREEN);
 	   SetLog("Switching Mode: " & $iSwitchMode & " - " & GUICtrlRead($cmbSwitchMode), $COLOR_GREEN)
-	   ;if $nCurCOCAcc = $anCOCAccIdx[$nCurCOCAcc - 1] And Not $FirstStart Then		;Loopping 1 account, disable switching
-	   Local $lnNextStep = 0
-	   Local $nPreCOCAcc = $nCurCOCAcc
-	   If $iSwitchMode = 0 And $iSwitchCnt >= $CoCAccNo Then
-		   If ($accAttack[0] <>  -1 And ($iSwitchCnt < $CoCAccNo + Ubound($accAttack))) Or ($accDonate[0] = -1) Then
-			   $lnNextStep = GetMinTrain()
-			   if $nCurCOCAcc = $accAttack[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
-				   SetLog("1. Target account is current one. Nothing to do..", $COLOR_GREEN)
-				   $iGoldLast = ""
-				   $iElixirLast = ""
-				   Return
-			   EndIf
-			   $nCurCOCAcc = $accAttack[$lnNextStep]     ;target attack account
-			   SetLog("Account " & $nCurCOCAcc & " has shortest training time now")
-		   Else
-			   $nCurCOCAcc = GetNextDonAcc();	$accDonate[0]				;target donate account
-			   SetLog("Account " & $nCurCOCAcc & " for donation")
-		   EndIf
-	   ElseIf $iSwitchMode = 2 Then ; random switch
-		   $nCurCOCAcc = GetRandomAcc()
-		   SetLog("Randomized to Account " & $nCurCOCAcc)
-	   Else
-		   $lnNextStep = AccGetNext()
-		   if $nCurCOCAcc = $anCOCAccIdx[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
-			   SetLog("Target account is current one. Nothing to do..", $COLOR_GREEN)
-			   $nCurStep = $lnNextStep		;but still move to next step
-			   $iGoldLast = ""
-			   $iElixirLast = ""
-			   Return
-		   EndIf
-		   $nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
-		   SetLog("Account " & $nCurCOCAcc & " is next acc")
-	   EndIf
+	Local $lnNextStep = 0
+	Local $nPreCOCAcc = $nCurCOCAcc
+	If $iSwitchMode = 0 And $iSwitchCnt >= $CoCAccNo Then
+		If ($accAttack[0] <>  -1 And ($iSwitchCnt < $CoCAccNo + Ubound($accAttack))) Or ($accDonate[0] = -1) Then
+			$lnNextStep = GetMinTrain()
+			if $nCurCOCAcc = $accAttack[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
+				SetLog("1. Target account is current one. Nothing to do..", $COLOR_GREEN)
+				$iGoldLast = ""
+				$iElixirLast = ""
+				Return
+			EndIf
+			$nCurCOCAcc = $accAttack[$lnNextStep]     ;target attack account
+			SetLog("Account " & $nCurCOCAcc & " has shortest training time now")
+		Else
+			$nCurCOCAcc = GetNextDonAcc();	$accDonate[0]				;target donate account
+			SetLog("Account " & $nCurCOCAcc & " for donation")
+		EndIf
+	ElseIf $iSwitchMode = 2 Then ; random switch
+		$nCurCOCAcc = GetRandomAcc()
+		SetLog("Randomized to Account " & $nCurCOCAcc)
+	Else
+		$lnNextStep = AccGetNext()
+		if $nCurCOCAcc = $anCOCAccIdx[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
+			SetLog("Target account is current one. Nothing to do..", $COLOR_GREEN)
+			$nCurStep = $lnNextStep		;but still move to next step
+			$iGoldLast = ""
+			$iElixirLast = ""
+			Return
+		EndIf
+		$nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
+		SetLog("Account " & $nCurCOCAcc & " is next acc")
+	EndIf
 
     Local Const $XConnect = 431
     Local Const $YConnect = 434
-    Local Const $ColorConnect = 4284458031      ;Connected Button: green
+    Local Const $ColorConnect = 4284458031      	;Connected Button: green
     PureClick(800, 585, 1, 0, "Click Setting")      ;Click setting
     If _Sleep(3000) Then Return
     If _GetPixelColor($XConnect, $YConnect, True) = Hex($ColorConnect, 6) Then       ;Green
-        Click($XConnect, $YConnect, 1, 0, "Click Connected")      ;Click Connect
+        Click($XConnect, $YConnect, 1, 0, "Click Connected")     	;Click Connect
     EndIf
 
     If _Sleep(3000) Then Return
-    Click($XConnect, $YConnect, 1, 0, "Click DisConnect")      ;Click DisConnect
+    Click($XConnect, $YConnect, 1, 0, "Click DisConnect")      		;Click DisConnect
     If _Sleep(8000) Then Return
-    ;need check acc clicked or not-------------------------
-	Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
-
+	   ;need check acc clicked or not-------------------------
+	   Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
     If _Sleep(8000) Then Return
     Local $idx = 0
     While 1
@@ -77,20 +74,18 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 				MatchProfile()
                 ClickP($aAway, 1, 0, "#0167") ;Click Away
                 If _Sleep(2000) Then Return
-                ;SwitchCOCAcc()     ;force switch
                 Return
             EndIf
 		ElseIf _GetPixelColor($XConnect, $YConnect, True) = Hex(4291299336, 6) Then       ;red
 			If _Sleep(4000) Then Return
 			Setlog("Still disconnect button", $COLOR_RED)
-			If $idx >= 5 Then		;network disconnected?
-                ClickP($aAway, 1, 0, "#0167") ;Click Away
+			If $idx >= 5 Then					;network disconnected?
+                ClickP($aAway, 1, 0, "#0167") 	;Click Away
                 If _Sleep(2000) Then Return
                 CloseAndroid()
                 Return
             EndIf
 		ElseIf _GetPixelColor($XConnect, $YConnect, True) = Hex(4294309365, 6) Then 	;not yet clicked google acc
-			;Click(383, 300 + 80*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
 			Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
 		Else	;4293454048
             Setlog("Changing to account [" & $nCurCOCAcc & "]", $COLOR_RED)
@@ -138,7 +133,6 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 	If $iSwitchMode = 0 Then
 		$nCurAtkIdx = $lnNextStep
 		$iSwitchCnt += 1
-		;If $iSwitchCnt > $CoCAccNo + Ubound($accAttack) Then $iSwitchCnt = $CoCAccNo
 		If $iSwitchCnt >= $CoCAccNo + $CoCAccNo Then $iSwitchCnt = $CoCAccNo
 	EndIf
 	$nCurStep = $lnNextStep

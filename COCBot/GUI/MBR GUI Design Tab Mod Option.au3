@@ -229,6 +229,10 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetData(-1, "Shortest Training" & "|" & "Ordered play list" & "|" & "Random")
 			GUICtrlSetOnEvent(-1, "cmbSwitchMode")
 			GUICtrlSetState (-1, $GUI_ENABLE)
+			GUICtrlCreateLabel("Mapped Acc - Profile:", $x + 300, $y, 130, 20)
+			GUICtrlSetColor(-1, $COLOR_BLUE)
+	    $lbMapHelp = GUICtrlCreateLabel("", $x + 305, $y, 230, 30)
+			GUICtrlSetColor(-1, $COLOR_BLUE)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 Global $LastControlToHideMOD = GUICtrlCreateDummy()
