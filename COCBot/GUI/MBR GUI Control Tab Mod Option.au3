@@ -144,7 +144,7 @@ Func chkSwitchAcc()
 		For $i = $lblExtraTimeMin To $chkRandomStayORClose
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
-		For $i = $lbTotalCoCAcc To $chkAccRelax
+		For $i = $lbMapHelpAccPro To $chkAccRelax
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
 		$ichkSwitchAcc = 1
@@ -154,7 +154,7 @@ Func chkSwitchAcc()
 		For $i = $lblExtraTimeMin To $chkRandomStayORClose
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
-		For $i = $lbTotalCoCAcc To $chkAccRelax
+		For $i = $lbMapHelpAccPro To $chkAccRelax
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
 		$ichkSwitchAcc = 0
