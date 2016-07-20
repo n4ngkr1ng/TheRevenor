@@ -81,8 +81,10 @@ GUISwitch($hGUI_ModDocOc)
 			GUICtrlSetLimit(-1, 30)
 			GUICtrlSetData(-1, 20)
 			GUICtrlSetOnEvent(-1, "sldExtraTimeMax")
-		$radLeaveCoCOpen = GUICtrlCreateRadio("Leave CoC open and disconnect by inactivity", $x + 81, $y + 70, -1, -1)
-			GUICtrlSetTip(-1, "While training the bot will leave CoC open and disconnect by inactivity.")
+		$radLeaveCoCOpen = GUICtrlCreateRadio("Leave CoC open and disconnect by inactivity Or Close Emulator", $x + 81, $y + 70, -1, -1)
+			$txtTip = "While training the bot will leave CoC open and disconnect by inactivity Or Close Emulator," & @CRLF & _
+					  "     If Time training more than 10 minutes."
+			GUICtrlSetTip(-1, $txtTip)
 			;GUICtrlSetOnEvent(-1, "chkLeaveOpenOrClose")
 			;GUICtrlSetState(-1, $GUI_DISABLE)
 		$radCloseCoCGame = GUICtrlCreateRadio("Close CoC game and stay on home screen", $x + 81, $y + 90, -1, -1)
