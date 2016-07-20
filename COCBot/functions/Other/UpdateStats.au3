@@ -93,6 +93,19 @@ Func UpdateStats()
 		$FirstAttack = 2
 	EndIf
 
+	If Number($iGoldLast) > Number($topgoldloot) Then
+        $topgoldloot = $iGoldLast
+        GUICtrlSetData($lbltopgoldloot,_NumberFormat($topgoldloot))
+    EndIf
+    If Number($iElixirLast) > Number($topelixirloot) Then
+        $topelixirloot = $iElixirLast
+        GUICtrlSetData($lbltopelixirloot,_NumberFormat($topelixirloot))
+    EndIf
+    If Number($iDarkLast) > Number($topdarkloot) Then
+        $topdarkloot = $idarklast
+        GUICtrlSetData($lbltopdarkloot,_NumberFormat($topdarkloot))
+    EndIf
+
 	If $ResetStats = 1 Then
 		GUICtrlSetData($lblResultGoldStart, _NumberFormat($iGoldCurrent, True))
 		GUICtrlSetData($lblResultElixirStart, _NumberFormat($iElixirCurrent, True))
@@ -395,6 +408,20 @@ Func UpdateStats()
 
 	If $ResetStats = 1 Then
 		$ResetStats = 0
+	EndIf
+
+	If Number($iGoldLast) > Number($topgoldloot) Then
+		$topgoldloot = $iGoldLast
+		GUICtrlSetData($lbltopgoldloot, _NumberFormat($topgoldloot))
+	EndIf
+	If Number($iElixirLast) > Number($topelixirloot) Then
+		$topelixirloot = $iElixirLast
+		GUICtrlSetData($lbltopelixirloot, _NumberFormat($topelixirloot))
+	EndIf
+
+	If Number($iDarkLast) > Number($topdarkloot) Then
+		$topdarkloot = $idarklast
+		GUICtrlSetData($lbltopdarkloot, _NumberFormat($topdarkloot))
 	EndIf
 
 EndFunc   ;==>UpdateStats
