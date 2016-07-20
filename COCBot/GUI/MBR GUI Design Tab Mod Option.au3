@@ -217,12 +217,18 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkAtkPln")
-	        $chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 120, $y + 45, -1, -1)
+		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 105, $y + 45, -1, -1)
 			$txtTip = "If attack is not planned for current profile" & @CRLF & _
 			          "Then bot stop emulator and relax!"
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkAccRelaxTogether")
+		$lbSwitchMode = GUICtrlCreateLabel("Switching Mode", $x, $y, 130, 20)
+		$cmbSwitchMode = GUICtrlCreateCombo("", $x + 215, $y - 2, 90, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+			GUICtrlSetTip(-1, "Choose switching mode for play list")
+			GUICtrlSetData(-1, "Shortest Training" & "|" & "Ordered play list" & "|" & "Random")
+			GUICtrlSetOnEvent(-1, "cmbSwitchMode")
+			GUICtrlSetState (-1, $GUI_ENABLE)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 Global $LastControlToHideMOD = GUICtrlCreateDummy()

@@ -178,4 +178,16 @@ Func chkAtkPln()	;chalicucu enable/disable attack plan
 		$iChkAtkPln = 0
 	EndIf
 	IniWrite($profile, "switchcocacc", "CheckAtkPln", $iChkAtkPln)
-EndFunc   ;==>chkAtkPln
+ EndFunc   ;==>chkAtkPln
+
+Func cmbSwitchMode()		;chalicucu switch account mode
+	Switch _GUICtrlComboBox_GetCurSel($cmbSwitchMode)
+		Case 0 	; shortest training mode
+			$iSwitchMode = 0
+		Case 1	; ordered mode
+			$iSwitchMode = 1
+		Case 2	; random mode
+			$iSwitchMode = 2
+	EndSwitch
+	IniWrite($profile, "switchcocacc", "SwitchMode", $iSwitchMode)
+EndFunc   ;==> cmbSwitchMode
