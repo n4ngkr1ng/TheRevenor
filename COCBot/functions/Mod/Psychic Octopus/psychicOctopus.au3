@@ -17,20 +17,20 @@
 
 Func CloseCOCAndWait($timeRemaining, $forceClose = False)
 
-	Local $tempCloseCoC = 0 
-	
+	Local $tempCloseCoC = 0
+
 	; Random Stay connect on Game or Close the Game while Training
-	If ($ichkCloseTraining = 1 and $RandomCloseTraining = 1 and $RandomCloseTraining2 = 1) then Return  
-		
+	If ($ichkCloseTraining = 1 and $RandomCloseTraining = 1 and $RandomCloseTraining2 = 1) then Return
+
 	; Randomly choose whether to actually exit COC or do nothing (time out)
-	
-	; Random Close or Leave 
-	If $RandomCoCOpen = 1 then 
-		if $debugSetlog = 1 then  Setlog("Random Close or Leave ...", $COLOR_RED)
+
+	; Random Close or Leave
+	If $RandomCoCOpen = 1 Then
+		if $debugSetlog = 1 Then  Setlog("Random Close or Leave ...", $COLOR_RED)
 		$tempCloseCoC = Random(0,1,1)
-		if $debugSetlog = 1 then  Setlog("$tempCloseCoC: " & $tempCloseCoC)
-	EndIf 
-	
+		if $debugSetlog = 1 Then  Setlog("$tempCloseCoC: " & $tempCloseCoC)
+	EndIf
+
 	If ($forceClose and $CloseCoCGame = 1) or ($forceClose and $RandomCoCOpen = 1 and $tempCloseCoC = 1 ) Then
 		; Force close the bot
 		; Find and wait for the confirmation of exit "okay" button
@@ -60,11 +60,20 @@ Func CloseCOCAndWait($timeRemaining, $forceClose = False)
 		; Log off CoC for set time
 		WaitnOpenCoC($timeRemaining * 1000, True)
 	Else
+		If $timeRemaining >= 600 Then
+			SetLog("Time training more than 10 minutes, Close Emulator", $COLOR_BLUE)
+			If _Sleep(1000) Then Return
+				CloseAndroid()
+			SetLog("Waiting " & (((($timeRemaining * 1000) / 60)/ 1000) + 25) & " minutes before starting Emulator and CoC", $COLOR_BLUE)
+			If _Sleep($timeRemaining * 1000) Then Return
+				StartAndroidCoC()
+		Else
 		; Nothing is needed here for timeout, as WaitnOpenCoC will stop the bot from doing anything so it will timeout naturally
 		; Pushbullet Msg
 		PushMsg("TakeBreak")
 		; Just wait without close the CoC
 		WaitnOpenCoC($timeRemaining * 1000, True, False)
+		EndIf
 	EndIf
 
 EndFunc   ;==>CloseCOCAndWait
@@ -136,8 +145,8 @@ Func checkRemainingTraining()
 	If $ichkCloseTraining = 0 Then Return
 
 	; Get the time remaining in minutes
-	If $iTotalCountSpell = 0 Then
-		Local $iRemainingTimeTroops = getRemainingTraining(True, True) ; Not necessary "read" the Spells
+	If $iEnableSpellsWait[$iMatchMode] = 1 Then
+		Local $iRemainingTimeTroops = getRemainingTraining(True, True)
 	Else
 		Local $iRemainingTimeTroops = getRemainingTraining(True, False)
 	EndIf
@@ -146,9 +155,15 @@ Func checkRemainingTraining()
 	If $iRemainingTimeTroops <= 2 Then Return
 
 	; Add random additional time from $minTrainAddition minute to $maxTrainAddition minutes
-	$iRemainingTimeTroops += Random($minTrainAddition, $maxTrainAddition, 1)
+	$TempsAdditionnel += Random($minTrainAddition, $maxTrainAddition, 1)
+	$iRemainingTimeTroops += $TempsAdditionnel
+	If $TempsAdditionnel >= 0 Then
+	Setlog("Additional time = " & $TempsAdditionnel & " minutes", $COLOR_BLUE)
+	EndIf
+
 	; Convert remaining time to seconds and close COC and wait for that length of time
 	CloseCOCAndWait($iRemainingTimeTroops * 60, True)
+	$TempsAdditionnel = 0
 EndFunc   ;==>checkRemainingTraining
 
 Func checkSleep()
