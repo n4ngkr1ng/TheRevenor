@@ -263,6 +263,7 @@
 #include "functions\Village\ProfileSwitch.au3"
 
 ; Doc Octopus - by ProMac
+#include "functions\Other\RandomClick.au3"
 #include "functions\Mod\Psychic Octopus\psychicOctopus.au3"
 
 ; Check Collector Outside
