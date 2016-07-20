@@ -23,7 +23,7 @@ Func getGoldVillageSearch($x_start, $y_start);48, 69 -> Gets complete value of g
 EndFunc   ;==>getGoldVillageSearch
 
 Func getRemainTrainTimer($x_start, $y_start);
-	Return getOcrAndCapture("coc-RemainTrain", $x_start, $y_start, 70, 12, True)
+	Return getOcrAndCapture("coc-RemainTrain", $x_start, $y_start, 70, 11, True)
 EndFunc   ;==>getRemainTrainTimer
 
 Func getElixirVillageSearch($x_start, $y_start) ;48, 69+29 -> Gets complete value of Elixir xxx,xxx, top left,  Getresources.au3
