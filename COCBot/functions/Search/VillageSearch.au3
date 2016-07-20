@@ -332,7 +332,8 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 			If _Sleep($iDelayVillageSearch2) Then Return
 			$i += 1
 			If ( _ColorCheck(_GetPixelColor($NextBtn[0], $NextBtn[1], True), Hex($NextBtn[2], 6), $NextBtn[3])) And IsAttackPage() Then
-				ClickP($NextBtn, 1, 0, "#0155") ;Click Next
+				;ClickP($NextBtn, 1, 0, "#0155") ;Click Next
+				ClickZone($NextBtn[0], $NextBtn[1], 20) ;Click Next
 				ExitLoop
 			Else
 				If $debugsetlog = 1 Then SetLog("Wait to see Next Button... " & $i, $COLOR_PURPLE)
