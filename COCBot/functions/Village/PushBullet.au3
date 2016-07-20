@@ -189,7 +189,6 @@ Func _RemoteControlPushBullet()
 								_DeleteMessageOfPushBullet($iden[$x])
 							ElseIf $body[$x] = "BOT GETORDER" Then						;Chalicucu inquiry acc order
 								SetLog("Get order: [" & $body[$x] & "]", $COLOR_RED)
-								; $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
 								_PushToPushBullet("Ordered COC acc: " & AccGetOrder() & " (" & AccGetStep() _
 													& ")\nCurrent:  " & $nCurCOCAcc _
 													& "\nBot profile: " & ProGetOrderName())

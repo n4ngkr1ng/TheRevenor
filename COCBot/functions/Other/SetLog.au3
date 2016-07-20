@@ -87,13 +87,12 @@ Func SetAtkLog($String1, $String2 = "", $Color = $COLOR_BLACK, $Font = "Lucida C
 	_GUICtrlRichEdit_AppendTextColor($txtAtkLog, $String1 & @CRLF, _ColorConvert($Color))
 	_FileWriteLog($hAttackLogFileHandle, $String1 & $String2)
 	FileClose($hAttackLogFileHandle)		;chalicucu
-	$hAttackLogFileHandle = ""			;chalicucu
+	$hAttackLogFileHandle = ""				;chalicucu
 EndFunc   ;==>SetAtkLog
 
 Func AtkLogHead()
 	SetAtkLog(_PadStringCenter(" " & GetTranslated(601, 15, "ATTACK LOG") & " ", 71, "="), "", $COLOR_BLACK, "MS Shell Dlg", 8.5)
 	SetAtkLog(GetTranslated(601, 16, "                   --------  LOOT --------       ----- BONUS ------"), "")
-	;Chalicucu SetAtkLog(GetTranslated(601, 17, " TIME|TROP.|SEARCH|   GOLD| ELIXIR|DARK EL|TR.|S|  GOLD|ELIXIR|  DE|L."), "")
 	SetAtkLog("AC|" & GetTranslated(601, 17, " TIME|TROP.|SEARCH|   GOLD| ELIXIR|DARK EL|TR.|S|  GOLD|ELIXIR|  DE|L."), "")
 EndFunc   ;==>AtkLogHead
 

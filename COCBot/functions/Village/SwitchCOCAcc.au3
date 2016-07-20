@@ -15,31 +15,50 @@
 
 Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 	If $FirstSwitch Then
-	    SetLog("First matching account and profile", $COLOR_GREEN);
-	    SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
-	    SetLog("Ordered bot profile: " & ProGetOrderName(), $COLOR_GREEN);
-	    ;if $nCurCOCAcc = $anCOCAccIdx[$nCurCOCAcc - 1] And Not $FirstStart Then  ;Loopping 1 account, disable switching
-	    $lnNextStep = AccGetNext()
-	    If $nCurCOCAcc = $anCOCAccIdx[$lnNextStep] And Not $FirstStart Then  ;Loopping 1 account, disable switching
-		 SetLog("Target account is current one. Nothing to do..", $COLOR_GREEN)
-		 $nCurStep = $lnNextStep  ;but still move to next step
-		 $iGoldLast = ""
-		 $iElixirLast = ""
-		 Return
-	    EndIf
-	    $nPreCOCAcc = $nCurCOCAcc
-	    $nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
-	Else
-	    MinRemainTrainAcc()
-	    $nCurCOCAcc = $nNextCoCAcc
-	EndIf
+	   SetLog("First matching account and profile", $COLOR_GREEN);
+	   SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
+	   SetLog("Ordered bot profile: " & ProGetOrderName(), $COLOR_GREEN);
+	   SetLog("Switching Mode: " & $iSwitchMode & " - " & GUICtrlRead($cmbSwitchMode), $COLOR_GREEN)
+	   ;if $nCurCOCAcc = $anCOCAccIdx[$nCurCOCAcc - 1] And Not $FirstStart Then		;Loopping 1 account, disable switching
+	   Local $lnNextStep = 0
+	   Local $nPreCOCAcc = $nCurCOCAcc
+	   If $iSwitchMode = 0 And $iSwitchCnt >= $CoCAccNo Then
+		   If ($accAttack[0] <>  -1 And ($iSwitchCnt < $CoCAccNo + Ubound($accAttack))) Or ($accDonate[0] = -1) Then
+			   $lnNextStep = GetMinTrain()
+			   if $nCurCOCAcc = $accAttack[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
+				   SetLog("1. Target account is current one. Nothing to do..", $COLOR_GREEN)
+				   $iGoldLast = ""
+				   $iElixirLast = ""
+				   Return
+			   EndIf
+			   $nCurCOCAcc = $accAttack[$lnNextStep]     ;target attack account
+			   SetLog("Account " & $nCurCOCAcc & " has shortest training time now")
+		   Else
+			   $nCurCOCAcc = GetNextDonAcc();	$accDonate[0]				;target donate account
+			   SetLog("Account " & $nCurCOCAcc & " for donation")
+		   EndIf
+	   ElseIf $iSwitchMode = 2 Then ; random switch
+		   $nCurCOCAcc = GetRandomAcc()
+		   SetLog("Randomized to Account " & $nCurCOCAcc)
+	   Else
+		   $lnNextStep = AccGetNext()
+		   if $nCurCOCAcc = $anCOCAccIdx[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
+			   SetLog("Target account is current one. Nothing to do..", $COLOR_GREEN)
+			   $nCurStep = $lnNextStep		;but still move to next step
+			   $iGoldLast = ""
+			   $iElixirLast = ""
+			   Return
+		   EndIf
+		   $nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
+		   SetLog("Account " & $nCurCOCAcc & " is next acc")
+	   EndIf
 
     Local Const $XConnect = 431
     Local Const $YConnect = 434
     Local Const $ColorConnect = 4284458031      ;Connected Button: green
-    Click(800, 585, 1, 0, "Click Setting")      ;Click setting
+    PureClick(800, 585, 1, 0, "Click Setting")      ;Click setting
     If _Sleep(3000) Then Return
-    If _ColorCheck(_GetPixelColor($XConnect, $YConnect, True), Hex($ColorConnect, 6), 20) Then       ;Green
+    If _GetPixelColor($XConnect, $YConnect, True) = Hex($ColorConnect, 6) Then       ;Green
         Click($XConnect, $YConnect, 1, 0, "Click Connected")      ;Click Connect
     EndIf
 
@@ -48,21 +67,29 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
     If _Sleep(8000) Then Return
     ;need check acc clicked or not-------------------------
 	Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
+
     If _Sleep(8000) Then Return
     Local $idx = 0
     While 1
-        If _ColorCheck(_GetPixelColor($XConnect, $YConnect, True), Hex($ColorConnect, 6), 20) Then       ;Blue
+        If _GetPixelColor($XConnect, $YConnect, True) = Hex($ColorConnect, 6) Then       ;Blue
             Setlog("Still current account. Wait for next switching", $COLOR_RED)
             If $idx >= 2 Then
-		MatchProfile()
+				MatchProfile()
                 ClickP($aAway, 1, 0, "#0167") ;Click Away
                 If _Sleep(2000) Then Return
+                ;SwitchCOCAcc()     ;force switch
                 Return
             EndIf
-		ElseIf _ColorCheck(_GetPixelColor($XConnect, $YConnect, True), Hex(4291299336, 6), 20) Then       ;red
+		ElseIf _GetPixelColor($XConnect, $YConnect, True) = Hex(4291299336, 6) Then       ;red
 			If _Sleep(4000) Then Return
 			Setlog("Still disconnect button", $COLOR_RED)
-		ElseIf _ColorCheck(_GetPixelColor($XConnect, $YConnect, True), Hex(4294309365, 6), 20) Then 	;not yet clicked google acc
+			If $idx >= 5 Then		;network disconnected?
+                ClickP($aAway, 1, 0, "#0167") ;Click Away
+                If _Sleep(2000) Then Return
+                CloseAndroid()
+                Return
+            EndIf
+		ElseIf _GetPixelColor($XConnect, $YConnect, True) = Hex(4294309365, 6) Then 	;not yet clicked google acc
 			;Click(383, 300 + 80*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
 			Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
 		Else	;4293454048
@@ -72,42 +99,52 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
         $idx = $idx + 1
         If _Sleep(1000) Then Return
     WEnd
+    ;If _Sleep(1000) Then Return
     $idx = 0
     While $idx <= 30
-        If _ColorCheck(_GetPixelColor(443, 430, True), Hex(4284390935, 6), 20) Then
+        If _GetPixelColor(443, 430, True) = Hex(4284390935, 6) Then
             Setlog("Load button appears", $COLOR_RED)
             ExitLoop
         Else
             Setlog("Wait!", $COLOR_RED)
             If _Sleep(1000) Then Return
-		$idx = $idx + 1
-		If $idx >= 31 Then
-			ClickP($aAway, 1, 0, "#0167") ;Click Away
-			Return False
-		EndIf
+			$idx = $idx + 1
+			If $idx >= 31 Then
+				ClickP($aAway, 1, 0, "#0167") ;Click Away
+				$nCurCOCAcc = $nPreCOCAcc
+				Return False
+			EndIf
         EndIf
     WEnd
     $idx = 0
-    While _ColorCheck(_GetPixelColor(443, 430, True), Hex(4284390935, 6), 20) And $idx <= 40
+    While _GetPixelColor(443, 430, True) = Hex(4284390935, 6) And $idx <= 40
         If _Sleep(1000) Then Return
         Click(443, 430, 1, 0, "Click Load")      ;Click Load
         $idx = $idx + 1
     WEnd
     If _Sleep(5000) Then Return
-	Click(353, 180, 1, 0, "Click Text box")      ;Click Text box
+    Click(353, 180, 1, 0, "Click Text box")      ;Click Text box
     If _Sleep(2000) Then Return
     If SendText("CONFIRM") = 0 Then
         Setlog("Error sending CONFIRM text", $COLOR_RED)
+		$nCurCOCAcc = $nPreCOCAcc
         Return
     EndIf
     If _Sleep(3000) Then Return
-    	PureClick(463, 180, 1, 0, "Click CONFIRM")      ;Click CONFIRM
+    PureClick(463, 180, 1, 0, "Click CONFIRM")      ;Click CONFIRM
     If _Sleep(3000) Then Return
-    	ClickP($aAway, 1, 0, "#0167") ;Click Away
+    ClickP($aAway, 1, 0, "#0167") ;Click Away
+
+	If $iSwitchMode = 0 Then
+		$nCurAtkIdx = $lnNextStep
+		$iSwitchCnt += 1
+		;If $iSwitchCnt > $CoCAccNo + Ubound($accAttack) Then $iSwitchCnt = $CoCAccNo
+		If $iSwitchCnt >= $CoCAccNo + $CoCAccNo Then $iSwitchCnt = $CoCAccNo
+	EndIf
 	$nCurStep = $lnNextStep
+
 	;init for new acc
-	Init4NewAcc($nPreCOCAcc)
-	VillageReport()
+	Init4NewAcc($nPreCOCAcc, $FirstSwitch)
 EndFunc     ;==> SwitchCOCAcc
 
 Func AccGetNext()
@@ -162,6 +199,43 @@ Func Init4NewAcc($nPreCOCAcc, $FirstSwitch = False)
 	Next
 
 	MatchProfile()
+	$CommandStop = -1
+	BotCommand()
+	If $iSwitchMode = 0 Then
+		SetAtkDonAcc($nCurCOCAcc)
+		If $CommandStop = 0 Then $nLastDonAcc = $nCurCOCAcc
+	EndIf
+
+	If _Sleep(1000) Then Return
+	VillageReport()
+
+	;Account Stats
+	$iAccAttacked[$nPreCOCAcc - 1] = $iOldAttackedCount		;Number(GUICtrlRead($lblresultvillagesattacked))
+	$iAccSkippedCount[$nPreCOCAcc - 1] = $iSkippedVillageCount
+	If $AccStatFlg[$nCurCOCAcc - 1] = True And $iGoldCurrent <> "" And $iElixirCurrent <> "" Then
+		SetLog("Init stats for acc " & $nCurCOCAcc & ": [G] " & $iGoldCurrent & " [E] " & $iElixirCurrent & " [D] " & $iDarkCurrent)
+		$iAccGoldStart[$nCurCOCAcc - 1] = $iGoldCurrent
+		$iAccElixirStart[$nCurCOCAcc - 1] = $iElixirCurrent
+		$iAccDarkStart[$nCurCOCAcc - 1] = $iDarkCurrent
+		$iAccTrophyStart[$nCurCOCAcc - 1] = $iTrophyCurrent
+		If $FirstSwitch Then
+			$iAccAttacked[$nCurCOCAcc - 1] = $iOldAttackedCount		;Number(GUICtrlRead($lblresultvillagesattacked))
+			$iAccSkippedCount[$nCurCOCAcc - 1] = $iSkippedVillageCount
+		Else
+			$iAccAttacked[$nCurCOCAcc - 1] = 0
+			$iAccSkippedCount[$nCurCOCAcc - 1] = 0
+		EndIf
+		$AccStatFlg[$nCurCOCAcc - 1] = False
+	EndIf
+	;SetLog("Get init stats of account " & $nCurCOCAcc)
+	$iGoldStart = $iAccGoldStart[$nCurCOCAcc - 1]
+	$iElixirStart = $iAccElixirStart[$nCurCOCAcc - 1]
+	$iDarkStart = $iAccDarkStart[$nCurCOCAcc - 1]
+	$iTrophyStart = $iAccTrophyStart[$nCurCOCAcc - 1]
+
+	GUICtrlSetData($lblresultvillagesattacked, $iAccAttacked[$nCurCOCAcc - 1])
+	$iOldAttackedCount = $iAccAttacked[$nCurCOCAcc - 1]		;;;;;;;
+	$iSkippedVillageCount = $iAccSkippedCount[$nCurCOCAcc - 1]
 EndFunc   ;==>Init4NewAcc
 
 Func AccGetStep()
@@ -218,15 +292,23 @@ Func AccStartInit()
 		Execute("$AccCur" & $TroopDarkName[$i] & " = $initAccTrain")	;reset current troops no.
 	Next
 
-	For $i = 0 To UBound($AccFirstStart) - 1
+	For $i = 0 To $nTotalCOCAcc - 1
 		$AccFirstStart[$i] = True
 	Next
 	$AccTotalTrainedTroops = $initAccTrain
+	;SETLOG("AccStartInit done")
 EndFunc   ;==> AccStartInit
+
+Func AccStatInit()
+	For $i = 0 To $nTotalCOCAcc -  1
+		$AccStatFlg[$i] = True
+	Next
+EndFunc   ;=> AccStatInit
 
 Func ReorderAcc($cfgStr, $GUIconfig = False)
 	Local $reorderstr = "", $lbWrongCfg = False
 	Local $lsNewOrd = StringStripWS($cfgStr, $STR_STRIPALL)
+	If StringLen($lsNewOrd) < 1 Then Return "Missing input!"
 
 	If $CoCAccNo <> StringLen($lsNewOrd) Then $nCurStep = StringLen($lsNewOrd) - 1
 
@@ -252,8 +334,10 @@ Func ReorderAcc($cfgStr, $GUIconfig = False)
 	If $lbWrongCfg Or Not $GUIconfig Then
 		If IsDeclared("txtAccBottingOrder") Then GUICtrlSetData($txtAccBottingOrder, $reorderstr)
 	EndIf
+
+	ResetMinTrainMode()
 	Return $reorderstr
-EndFunc   ;==> ReorderAcc
+ EndFunc   ;==> ReorderAcc
 
 Func AddAcc($accIdx)		;add one account to order list
 	Local $newAcc = Number(StringLeft($accIdx, 1))
@@ -267,6 +351,7 @@ Func AddAcc($accIdx)		;add one account to order list
 		Redim $anCOCAccIdx[$CoCAccNo]
 		$anCOCAccIdx[$CoCAccNo - 1] = $newAcc
 		AccSaveConfig()
+		ResetMinTrainMode()
 		Return "Account " & $newAcc & " was added to playing list"
 	EndIf
 EndFunc   ;==> AddAcc
@@ -276,18 +361,21 @@ Func RemAcc($accIdx)		;remove account from order list
 	If $newAcc > 0 And $newAcc <= $nTotalCOCAcc Then
 		For $i = 0 To $CoCAccNo - 1
 			If $anCOCAccIdx[$i] = $newAcc Then
-				For $j = $i To $CoCAccNo - 2
-					$anCOCAccIdx[$j] = $anCOCAccIdx[$j + 1]
-				Next
+				If $CoCAccNo =  1 Then Return "Remain only this account on playing list. Skip.."
+				; For $j = $i To $CoCAccNo - 2
+					; $anCOCAccIdx[$j] = $anCOCAccIdx[$j + 1]
+				; Next
+				_ArrayDelete($anCOCAccIdx, $i)
 				$CoCAccNo -= 1
 				Redim $anCOCAccIdx[$CoCAccNo]
-		AccSaveConfig()
+				AccSaveConfig()
+				ResetMinTrainMode()
 				Return "Account " & $newAcc & " was removed from playing list"
 			EndIf
 		Next
 		Return "Account " & $newAcc & " is not in playing list"
 	EndIf
-EndFunc   ;==> RemAcc
+EndFunc   ;==> AddAcc
 
 Func ReorderCurPro($cfgStr)
 	;reorder profile for current playing accounts
@@ -315,6 +403,8 @@ Func ReorderCurPro($cfgStr)
 	Next
 	$lsPlaying &= ")"
 	SetLog($lsPlaying, $COLOR_RED)
+
+	ShowProMap()
 	Return $lsPlaying
 EndFunc   ;==> ReorderCurPro
 
@@ -340,13 +430,14 @@ Func ReorderAllPro($cfgStr, $GUIconfig = false)
 		If IsDeclared("txtProfileIdxOrder") Then GUICtrlSetData($txtProfileIdxOrder, $reorderstr)
 	EndIf
 	Local $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
-	 If  _GUICtrlComboBox_GetCount($cmbProfile) = 0 Then Return "Set up profiles!"
+	If _GUICtrlComboBox_GetCount($cmbProfile) = 0 Then Return "Set up profiles!"
 	$reorderstr &= " ([1]" & $comboBoxArray[$anBotProfileIdx[0]]
 	For $i = 1 to $nTotalCOCAcc - 1
 		$reorderstr &= ", [" & ($i + 1) & "]" & $comboBoxArray[$anBotProfileIdx[$i]]
 	Next
 	$reorderstr &= ")"
 	SetLog("Reordered Bot profile for all accounts: " & $reorderstr, $COLOR_RED)
+	ShowProMap()
 
 	Return $reorderstr
 EndFunc   ;==> ReorderAllPro
@@ -380,7 +471,7 @@ Func InitOrder()
 	EndIf
 	InireadS($lsconfig,$profile, "switchcocacc", "profile", "00000000")
 	If $lsconfig = "00000000" Then	;first set up
-		$lsconfig = "12345678"
+		$lsconfig = "11111111"
 		IniWriteS($profile, "switchcocacc", "profile", $lsconfig)
 	EndIf
 	For $i = 1 To $nTotalCOCAcc
@@ -399,6 +490,7 @@ Func InitOrder()
 		If IsDeclared("txtProfileIdxOrder") Then GUICtrlSetData($txtProfileIdxOrder, $lsconfig)		;StringLeft($lsconfig, $nTotalCOCAcc))
 	EndIf
 
+	ShowProMap()
 EndFunc   ;==> InitOrder
 
 Func MapAccPro($imapstr) ; $mapstr = <Account No>-<Profile No> , ie: 1-9, account 1 use profile 9 (digit only)
@@ -407,9 +499,13 @@ Func MapAccPro($imapstr) ; $mapstr = <Account No>-<Profile No> , ie: 1-9, accoun
 	Local $lnProNo = Number(StringMid($mapstr, 3, 1))
 	If (0 < $lnAcno And $lnAcno <= $nTotalCOCAcc) _
 		And (0 < $lnProNo And $lnProNo <= _GUICtrlComboBox_GetCount($cmbProfile)) Then
-		$anBotProfileIdx[$lnAcno - 1] = $lnProNo
+		If $anBotProfileIdx[$lnAcno - 1] <> $lnProNo Then
+			$anBotProfileIdx[$lnAcno - 1] = $lnProNo
+			$AccFirstStart[$lnAcno - 1] = True		;set new training progress
+		EndIf
 		SetLog("Mapping success account " & $lnAcno & " to profile " & $lnProNo, $COLOR_RED)
 		ProSaveConfig()
+		ShowProMap()
 		Return True
 	EndIf
 	Return False
@@ -454,7 +550,145 @@ Func ReCfgTotalAcc($anewTotal)
 		Redim $AccCurMini[$nTotalCOCAcc],  $AccCurHogs[$nTotalCOCAcc],  $AccCurValk[$nTotalCOCAcc], $AccCurGole[$nTotalCOCAcc],  $AccCurWitc[$nTotalCOCAcc],  $AccCurLava[$nTotalCOCAcc],  $AccCurDrag[$nTotalCOCAcc],  $AccCurPekk[$nTotalCOCAcc]
 		Redim $AccFirstStart[$nTotalCOCAcc]
 		Redim $AccTotalTrainedTroops[$nTotalCOCAcc]
+		Redim $AccStatFlg[$nTotalCOCAcc], $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
 	EndIf
 	IniWrite($profile, "switchcocacc" , "totalacc" , $nTotalCOCAcc)
 	Return True
 EndFunc
+
+Func SetAtkDonAcc($accIdx)		;for shortest training switch mode
+	If $CommandStop = 0 Then		;set donate acc
+		For $i = 0 To Ubound($accDonate) - 1
+			If $accDonate[$i] = $accIdx Then Return		;already in donation list
+		Next
+		If $accDonate[0] = -1 Then
+			$accDonate[0] = $accIdx
+		Else
+			_ArrayAdd($accDonate, $accIdx)
+		EndIf
+		SetLog("Account " & $nCurCOCAcc & " added to donation list")
+		For $i = 0 To Ubound($accAttack) - 1
+			If $accAttack[$i] = $accIdx Then
+				If Ubound($accAttack) = 1 Then
+					$accAttack[0] = -1
+				Else
+					_ArrayDelete($accAttack, $i)
+					_ArrayDelete($aTimerStart, $i)
+					_ArrayDelete($accTrainTime, $i)
+				EndIf
+				SetLog("Account " & $nCurCOCAcc & " removed from attacking list")	;happen after switch profile from attack to train/donate
+				Return
+			EndIf
+		Next
+	Else		;set attack acc
+		For $i = 0 To Ubound($accAttack) - 1
+			If $accAttack[$i] = $accIdx Then Return
+		Next
+		If $accAttack[0] = -1 Then
+			$accAttack[0] = $accIdx
+			$aTimerStart[0] = 0
+			$accTrainTime[0] = 0
+			$nCurAtkIdx = 0
+		Else
+			_ArrayAdd($accAttack, $accIdx)	;add acc to attack list
+			_ArrayAdd($aTimerStart, 0)		;init start time
+			_ArrayAdd($accTrainTime, 0)		;init troops training time
+			$nCurAtkIdx = Ubound($accAttack) - 1
+		EndIf
+		SetLog("Account " & $nCurCOCAcc & " added to attacking list")
+		For $i = 0 To Ubound($accDonate) - 1
+			If $accDonate[$i] = $accIdx Then
+				If Ubound($accDonate) = 1 Then
+					$accDonate[0] = -1
+				Else
+					_ArrayDelete($accDonate, $i)
+				EndIf
+				SetLog("Account " & $nCurCOCAcc & " removed from donation list")
+				Return
+			EndIf
+		Next
+	EndIf
+EndFunc   ;==> AddAttackAcc
+
+Func SetCurTrainTime($TrainTime)
+	If $iSwitchMode = 0 And $CommandStop <>  0 Then
+		$accTrainTime[$nCurAtkIdx] = $TrainTime
+		$aTimerStart[$nCurAtkIdx] = TimerInit()
+	EndIf
+EndFunc   ;==> SetCurTrainTime
+
+Func GetMinTrain()		; demen & chalicucu
+	Local $lnTimerEnd, $minIdx
+	Local $lRemTrainTime = $accTrainTime
+	For $i = 0 To Ubound($accAttack) - 1
+		$lnTimerEnd = Round(TimerDiff($aTimerStart[$i])/1000/60,2)		;elapse of training time of an account from last army checking - in minutes
+		$lRemTrainTime[$i] = $accTrainTime[$i] - $lnTimerEnd		; remain train time
+		;SetLog("Account " & $accAttack[$i] & " remain " & $lRemTrainTime[$i] & " minute(s)")
+	Next
+
+	$minIdx = _ArrayMinIndex($lRemTrainTime)
+	$accTrainTime[$minIdx] =  $lRemTrainTime[$minIdx]
+	$aTimerStart[$minIdx] = TimerInit()		;set new point of timer (don't set for other accs, because of Round can make wrong time)
+	Return $minIdx
+EndFunc   ;==> GetMinTrain
+
+Func ResetMinTrainMode()
+	If $iSwitchMode = 0 Then
+		SetLog("Playing list changed. Reset mode as beginning...", $COLOR_RED)
+		$iSwitchCnt = 0
+		Redim $aTimerStart[1]
+		$aTimerStart[0] = 0
+		Redim $accTrainTime[1]
+		$accTrainTime[0]= 0
+		Redim $accDonate[1]
+		$accDonate[0] = -1
+		Redim $accAttack[1]
+		$accAttack[0] = -1
+		$nLastDonAcc = 0
+		$nCurAtkIdx =0
+	EndIf
+EndFunc   ;==> ResetMinTrainMode
+
+Func GetNextDonAcc()
+	If $nLastDonAcc = 0 Then Return $accDonate[0]
+	For $i = 0 To UBound($accDonate) - 1
+		If $accDonate[$i] = $nLastDonAcc Then
+			If $i = UBound($accDonate) - 1 Then Return $accDonate[0]	;never happen
+			Return $accDonate[$i + 1]	;next donate account
+		EndIf
+	Next
+	Return $accDonate[0]
+EndFunc   ;==> GetNextDonAcc
+
+Func SwitchMode($cfg)
+	Local $lnMode = Number($cfg)
+	If $iSwitchMode = $lnMode Then Return "Same as current mode"
+	If 0 <= $lnMode And $lnMode < _GUICtrlComboBox_GetCount($cmbSwitchMode) Then
+		$iSwitchMode = $lnMode
+		_GUICtrlComboBox_SetCurSel($cmbSwitchMode, $lnMode)
+		If $iSwitchMode = 0 Then ResetMinTrainMode()
+		IniWrite($profile, "switchcocacc", "SwitchMode", $iSwitchMode)
+		Return "Switch mode changed to " & $lnMode & ": " & GUICtrlRead($cmbSwitchMode)
+	Else
+		Return "Invalid mode! Able: 0 to " & (_GUICtrlComboBox_GetCount($cmbSwitchMode) - 1)
+	EndIf
+EndFunc   ;==> SwitchMode
+
+Func GetRandomAcc()
+	Local $idx, $cnt = 0
+	While $cnt < 20
+		$idx = Random(0, UBound($anCOCAccIdx) - 1, 1)
+		If $anCOCAccIdx[$idx] <> $nCurCOCAcc Then Return $anCOCAccIdx[$idx]
+		$cnt += 1
+	WEnd
+EndFunc   ;==> GetRandomAcc
+
+Func ShowProMap()		;display mapped accounts - profile on help lable
+	Local $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
+	If _GUICtrlComboBox_GetCount($cmbProfile) = 0 Then Return "Set up profiles!"
+	Local $reorderstr = "[1] " & $comboBoxArray[$anBotProfileIdx[0]]
+	For $i = 1 to $nTotalCOCAcc - 1
+		$reorderstr &= ", [" & ($i + 1) & "] " & $comboBoxArray[$anBotProfileIdx[$i]]
+	Next
+	GUICtrlSetData($lbMapHelp, $reorderstr)
+EndFunc   ;==> ShowProMap
