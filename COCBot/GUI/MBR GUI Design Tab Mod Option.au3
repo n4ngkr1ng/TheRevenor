@@ -185,7 +185,11 @@ Local $x = 20, $y = 162 ;150
 
 	; Chalicucu & demen: switch CoC Acc GUI
 	Local $x = 20, $y = 294
-	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 90)
+	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 28, $y - 20, 440, 90)
+			GUICtrlCreateLabel("Mapped Acc - Profile:", $x + 88, $y - 20, 130, 20)
+			GUICtrlSetColor(-1, $COLOR_BLUE)
+	    $lbMapHelp = GUICtrlCreateLabel("", $x + 193, $y - 20, 230, 30)
+			GUICtrlSetColor(-1, $COLOR_BLUE)
 		$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x - 10, $y - 5, -1, -1)
 			$txtTip = "Switch to another account & profile when camp is less than 85%" & @CRLF & _
 			          "This function supports maximum 8 CoC accounts & 8 Bot profiles" & @CRLF & _
@@ -217,22 +221,18 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkAtkPln")
-		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 105, $y + 45, -1, -1)
+		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 100, $y + 45, -1, -1)
 			$txtTip = "If attack is not planned for current profile" & @CRLF & _
 			          "Then bot stop emulator and relax!"
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkAccRelaxTogether")
-		$lbSwitchMode = GUICtrlCreateLabel("Switching Mode", $x + 215, $y, 130, 20)
-		$cmbSwitchMode = GUICtrlCreateCombo("", $x + 265, $y - 2, 90, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		$lbSwitchMode = GUICtrlCreateLabel("Switching Mode", $x + 220, $y + 48, 130, 20)
+		$cmbSwitchMode = GUICtrlCreateCombo("", $x + 305, $y + 46, 90, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetTip(-1, "Choose switching mode for play list")
 			GUICtrlSetData(-1, "Shortest Training" & "|" & "Ordered play list" & "|" & "Random")
 			GUICtrlSetOnEvent(-1, "cmbSwitchMode")
 			GUICtrlSetState (-1, $GUI_ENABLE)
-			GUICtrlCreateLabel("Mapped Acc - Profile:", $x + 300, $y, 130, 20)
-			GUICtrlSetColor(-1, $COLOR_BLUE)
-	    $lbMapHelp = GUICtrlCreateLabel("", $x + 305, $y, 230, 30)
-			GUICtrlSetColor(-1, $COLOR_BLUE)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 Global $LastControlToHideMOD = GUICtrlCreateDummy()
