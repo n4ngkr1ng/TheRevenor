@@ -119,6 +119,7 @@
 #include "functions\CreateArmy\TrainIt.au3"
 
 #include "functions\CreateArmy\GetRemainTimeTrainning.au3"
+#include "functions\CreateArmy\RemainTrainTime.au3"
 #include "functions\CreateArmy\MinRemainTrainAcc.au3"
 
 #include "functions\Image Search\ImageSearch.au3"
