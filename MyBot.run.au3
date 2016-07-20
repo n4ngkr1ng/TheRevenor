@@ -10,7 +10,6 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-
 #RequireAdmin
 #AutoIt3Wrapper_UseX64=7n
 #include <WindowsConstants.au3>
@@ -294,7 +293,7 @@ EndIf
 			EndIf
 
 		If _Sleep($iDelayRunBot1) Then Return
-		If GotoAttack() = False Then    ;Chalicucu not start emulator. relax
+		If GotoAttack() = False And $CommandStop <> 0 Then    ;Chalicucu not start emulator. relax
             		If $ichkSwitchAcc=1 And $AccRelaxTogether = 1 Then
 				CloseAndroid()
 				SetLog("Relax! Attack not planned...",$COLOR_RED)
@@ -626,25 +625,35 @@ Func Idle() ;Sequence that runs until Full Army
 		If _Sleep($iDelayIdle1) Then Return
 		If $CommandStop = -1 Or ($ichkSwitchAcc=1 And $CommandStop = 0) Then 	;Chalicucu
             SetLog("====== Waiting for full army ======", $COLOR_GREEN)
-            If $ichkSwitchAcc =1 And ((($CurCamp/$TotalCamp)*100) < 85 Or $CommandStop = 0) Then    ;Chalicucu
+            If $ichkSwitchAcc = 1 And ($iRemainTrainTime > 2 Or $CommandStop = 0) Then    ;Chalicucu
 			    RequestCC()
 				SetLog("====== Switching COC account ======", $COLOR_GREEN)
-				SwitchCOCAcc()      ;Chalicucu switch COC acc
-				BotCommand()
-				_RunFunction("DonateCC,Train")
-                		If $CommandStop <> 0 And ($CurCamp/$TotalCamp)*100 < 96 Then		;new village camp
-							 CloseCOC()
-							 SetLog("====== Sleeping 2 minutes ======", $COLOR_GREEN)
-							 If _Sleep(120000) Then Return
-								 OpenCOC()
-							Else
-									If _Sleep(2000) Then Return
-							EndIf
-						Return	1
-            		Else
-                		If _Sleep(30000) Then Return
-            		EndIf
+				SwitchCOCAcc()      ;Chalicucu switch COC
+				checkMainScreen(True)
+				Train()
+				  If $CommandStop <> 0 And $iRemainTrainTime > 0 Then		;new village camp
+					   CloseCOC()
+					   If $iRemainTrainTime < 3 Then
+						   SetLog("====== Sleeping " & $iRemainTrainTime & " minutes and wait to attack ======", $COLOR_GREEN)
+						   If _Sleep($iRemainTrainTime * 60000) Then Return
+					   Else
+						   If $iSwitchMode = 0 And $CommandStop <>  0 And $iSwitchCnt > $CoCAccNo Then
+							   SetLog("====== Sleeping " & $accTrainTime[$nCurAtkIdx] & " minutes ======", $COLOR_GREEN)
+							   If _Sleep($accTrainTime[$nCurAtkIdx] * 60000) Then Return
+						   Else
+							   SetLog("====== Sleeping 2 minutes ======", $COLOR_GREEN)
+							   If _Sleep(120000) Then Return
+						   EndIf
+					   EndIf
+					   OpenCOC()
+					 Else
+					   If _Sleep(2000) Then Return
+					 EndIf
+					 Return	1
+				 Else
+					 If _Sleep(30000) Then Return
 				 EndIf
+			EndIf
 		Local $hTimer = TimerInit()
 		Local $iReHere = 0
 
@@ -833,13 +842,20 @@ Func QuickAttack()
 EndFunc
 
 Func GotoAttack()
-
+	 If Not $iChkAtkPln Then Return True		;Chalicucu disable attack plan (can use with switch accounts)
 	 If $iPlannedAttackWeekDays[@WDAY - 1] = 1 Then
 		Local $hour = StringSplit(_NowTime(4), ":", $STR_NOCOUNT)
 		$hourLoot = $hour[0]
 		If $iPlannedattackHours[$hourLoot] = 1 Then
 			Return True
 		Else
+			If $iAtkPlan_HalfHour Then	; Chalicucu attack more half hour
+				If $hourLoot >0 Then
+					If $hour[1] < 30 And $iPlannedattackHours[$hourLoot -1] = 1 Then Return True
+				ElseIf $hour[1] < 30 And $iPlannedattackHours[23 - 1] = 1 Then
+					 Return True
+				EndIf
+			EndIf
 			Return False
 		EndIf
 	 Else
