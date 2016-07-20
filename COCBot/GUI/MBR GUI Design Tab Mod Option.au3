@@ -197,13 +197,13 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetColor(-1, $COLOR_BLUE)
 	    $lbMapHelp = GUICtrlCreateLabel("", $x + 201, $y - 20, 190, 30)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
-		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y, 130, 20)
+		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y, 100, 20)
 		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 240, $y, 18, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 1)
 			$txtTip = "Number of Google Accounts on emulator" & @CRLF & _
 					  "Supporting maximum 8 Accounts."
 			GUICtrlSetTip(-1,$txtTip)
-		$lbActiveCoCAcc = GUICtrlCreateLabel("Active Accounts:", $x + 285, $y, 130, 20)
+		$lbActiveCoCAcc = GUICtrlCreateLabel("Active Accounts:", $x + 285, $y, 90, 20)
 		$txtActiveCoCAcc = GUICtrlCreateInput("0", $x + 370, $y, 18, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 1)
 			$txtTip = "Number of Google Accounts that you set for botting."
