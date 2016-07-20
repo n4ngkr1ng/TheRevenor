@@ -2650,12 +2650,12 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 		For $i = $lblExtraTimeMin To $chkRandomStayORClose
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
-		For $i = $lbTotalCoCAcc To $chkAccRelax
+		For $i = $lbTotalCoCAcc To $cmbSwitchMode
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
     Else
 	   GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
-		For $i = $lbTotalCoCAcc To $chkAccRelax
+		For $i = $lbTotalCoCAcc To $cmbSwitchMode
  			GUICtrlSetState($i, $GUI_HIDE)
  		Next
     EndIf
@@ -2674,5 +2674,6 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	GUICtrlSetData($txtActiveCoCAcc, IniRead($profile, "switchcocacc" , "activeacc" ,"0"))
 	GUICtrlSetData($txtAccBottingOrder, IniRead($profile, "switchcocacc" , "order" ,"123"))
 	GUICtrlSetData($txtProfileIdxOrder, IniRead($profile, "switchcocacc" , "profile" ,"123"))
+	GUICtrlSetData($cmbSwitchMode, IniRead($profile, "switchcocacc" , "SwitchMode" ,"0"))
 
 EndFunc   ;==>applyConfig
