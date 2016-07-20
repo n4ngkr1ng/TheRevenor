@@ -757,7 +757,7 @@ Func SelectAccount($bAccount)
 
 		$iLoopCount += 1
 		ConsoleWrite($iLoopCount & @CRLF)
-		If $iLoopCount > 7000 Then
+		If $iLoopCount > 2000 Then
 			SetLog("No Detect Account, Sory..", $COLOR_PURPLE)
 			SelectAccount($bAccount)
 			ExitLoop
