@@ -14,8 +14,7 @@
 ; ===============================================================================================================================
 
 Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
-	If $FirstSwitch Then
-	    SetLog("First matching account and profile", $COLOR_GREEN);
+	If $FirstSwitch Then SetLog("First matching account and profile", $COLOR_GREEN);
 	    SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
 	    SetLog("Ordered bot profile: " & ProGetOrderName(), $COLOR_GREEN);
 	    ;if $nCurCOCAcc = $anCOCAccIdx[$nCurCOCAcc - 1] And Not $FirstStart Then  ;Loopping 1 account, disable switching
