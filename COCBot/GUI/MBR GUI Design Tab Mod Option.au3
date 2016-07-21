@@ -195,7 +195,7 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 		$lbMapHelpAccPro = GUICtrlCreateLabel("Mapped Acc - Profile:", $x + 100, $y - 20, 130, 20)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
-	    $lbMapHelp = GUICtrlCreateLabel("", $x + 201, $y - 20, 190, 30)
+	        $lbMapHelp = GUICtrlCreateLabel("", $x + 201, $y - 20, 190, 30)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
 		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y, 100, 20)
 		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 240, $y, 18, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
