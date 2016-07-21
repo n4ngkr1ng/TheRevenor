@@ -64,7 +64,7 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
     Click($XConnect, $YConnect, 1, 0, "Click DisConnect")      		;Click DisConnect
     If _Sleep(8000) Then Return
 	   ;need check acc clicked or not-------------------------
-	   Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
+	   PureClick(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
     If _Sleep(8000) Then Return
     Local $idx = 0
     While 1
@@ -86,7 +86,7 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
                 Return
             EndIf
 		ElseIf _GetPixelColor($XConnect, $YConnect, True) = Hex(4294309365, 6) Then 	;not yet clicked google acc
-			Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
+			PureClick(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
 		Else	;4293454048
             Setlog("Changing to account [" & $nCurCOCAcc & "]", $COLOR_RED)
             ExitLoop
