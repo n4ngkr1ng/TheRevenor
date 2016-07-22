@@ -146,49 +146,6 @@ FileChangeDir($LibDir)
 MBRFunc(True) ; start MBRFunctions dll
 debugMBRFunctions($debugSearchArea, $debugRedArea, $debugOcr) ; set debug levels
 
-#cs
-If $aCmdLine[0] < 2 and $sAndroid = "" Then
-	DetectRunningAndroid()
-	If Not $FoundRunningAndroid Then DetectInstalledAndroid()
-EndIf
-; Update Bot title
-$sBotTitle = $sBotTitleDefault & "(" & ($AndroidInstance <> "" ? $AndroidInstance : $Android) & ")" ; Do not change this. If you do, multiple instances will not work.
-WinSetTitle($frmBot, "", $sBotTitle)
-
-If $bBotLaunchOption_Restart = True Then
-   If CloseRunningBot($sBotTitle) = True Then
-	  ; wait for Mutexes to get disposed
-	  ;Sleep(1000) ; slow systems
-   EndIf
-EndIF
-
-Local $cmdLineHelp = "By using the commandline (or a shortcut) you can start multiple Bots:" & @CRLF & _
-					 "     MyBot.run.exe [ProfileName] [EmulatorName] [InstanceName]" & @CRLF & @CRLF & _
-					 "With the first command line parameter, specify the Profilename (you can create profiles on the Misc tab, if a " & _
-					 "profilename contains a {space}, then enclose the profilename in double quotes). " & _
-					 "With the second, specify the name of the Emulator and with the third, an Android Instance (not for BlueStacks). " & @CRLF & _
-					 "Supported Emulators are MEmu, Droid4X, Nox, BlueStacks2 and BlueStacks." & @CRLF & @CRLF & _
-					 "Examples:" & @CRLF & _
-					 "     MyBot.run.exe MyVillage BlueStacks2" & @CRLF & _
-					 "     MyBot.run.exe ""My Second Village"" MEmu MEmu_1"
-
-; Only check the Title if a specific emulator and/or instance was specified.
-If $aCmdLine[0] > 1 Then
-	$hMutex_BotTitle = _Singleton($sBotTitle, 1)
-	If $hMutex_BotTitle = 0 Then
-		MsgBox(0, $sBotTitle, "My Bot for " & $Android & ($AndroidInstance <> "" ? " (instance " & $AndroidInstance & ")" : "") & " is already running." & @CRLF & @CRLF & $cmdLineHelp)
-		Exit
-	EndIf
-EndIF
-
-$hMutex_Profile = _Singleton(StringReplace($sProfilePath & "\" & $sCurrProfile, "\", "-"), 1)
-If $hMutex_Profile = 0 Then
-   _WinAPI_CloseHandle($hMutex_BotTitle)
-	MsgBox($MB_OK + $MB_ICONINFORMATION, $sBotTitle, "My Bot with Profile " & $sCurrProfile & " is already running in " & $sProfilePath & "\" & $sCurrProfile & "." & @CRLF & @CRLF & $cmdLineHelp)
-	Exit
-EndIf
-#ce
-
 If $FoundRunningAndroid Then
 	SetLog("Found running " & $Android & " " & $AndroidVersion, $COLOR_GREEN)
 EndIf
@@ -210,7 +167,6 @@ EndIf
 CheckDisplay() ; verify display size and DPI (Dots Per Inch) setting
 
 ;~ readCollectorConfig();initialize collector fullness variables before loading images
-
 LoadTHImage() ; Load TH images
 LoadElixirImage() ; Load Elixir images
 LoadElixirImage75Percent(); Load Elixir images full at 75%
@@ -228,6 +184,7 @@ SetDebugLog("MyBot.run launch time " & Round($iBotLaunchTime) & " ms.")
 ProcessSetPriority(@AutoItPID, $iBotProcessPriority)
 
 InitOrder()			;chalicucu init SwitchCOCAcc
+AccStatInit()		;chalicucu init stats [SwitchCOCAcc]
 ResetTrainTimer()	;demen reset training time
 
 ;AutoStart Bot if request
@@ -621,39 +578,51 @@ Func Idle() ;Sequence that runs until Full Army
 		ElseIf $RunState Then
 		checkAndroidTimeLag()
 
-		If $RequestScreenshot = 1 Then PushMsg("RequestScreenshot")
+If $RequestScreenshot = 1 Then PushMsg("RequestScreenshot")
 		If _Sleep($iDelayIdle1) Then Return
-		If $CommandStop = -1 Or ($ichkSwitchAcc=1 And $CommandStop = 0) Then 	;Chalicucu
+		If $CommandStop = -1 Or ($ichkSwitchAcc = 1 And $CommandStop = 0) Then 	;Chalicucu
             SetLog("====== Waiting for full army ======", $COLOR_GREEN)
             If $ichkSwitchAcc = 1 And ($iRemainTrainTime > 2 Or $CommandStop = 0) Then    ;Chalicucu
-			    RequestCC()
+                RequestCC()
+				If _Sleep(1000) Then Return
 				SetLog("====== Switching COC account ======", $COLOR_GREEN)
-				SwitchCOCAcc()      ;Chalicucu switch COC
-				checkMainScreen(True)
-				Train()
-				  If $CommandStop <> 0 And $iRemainTrainTime > 0 Then		;new village camp
-					   CloseCOC()
-					   If $iRemainTrainTime < 3 Then
-						   SetLog("====== Sleeping " & $iRemainTrainTime & " minutes and wait to attack ======", $COLOR_GREEN)
-						   If _Sleep($iRemainTrainTime * 60000) Then Return
-					   Else
-						   If $iSwitchMode = 0 And $CommandStop <>  0 And $iSwitchCnt > $CoCAccNo Then
-							   SetLog("====== Sleeping " & $accTrainTime[$nCurAtkIdx] & " minutes ======", $COLOR_GREEN)
-							   If _Sleep($accTrainTime[$nCurAtkIdx] * 60000) Then Return
-						   Else
-							   SetLog("====== Sleeping 2 minutes ======", $COLOR_GREEN)
-							   If _Sleep(120000) Then Return
-						   EndIf
-					   EndIf
-					   OpenCOC()
-					 Else
-					   If _Sleep(2000) Then Return
-					 EndIf
-					 Return	1
-				 Else
-					 If _Sleep(30000) Then Return
-				 EndIf
-			EndIf
+				If $CommandStop <> 0 And $iSwitchMode = 0 Then
+					Local $lRemainTrainTime = RemainTrainTime(True, False, True)
+					SetLog("Before leaving. Training remain: " & $lRemainTrainTime & " minute(s)", $COLOR_GREEN)
+					If $lRemainTrainTime >= 0 Then
+						$iRemainTrainTime = $lRemainTrainTime
+						SetCurTrainTime($iRemainTrainTime)
+					EndIf
+					ClickP($aAway, 1, 0, "#0167") ;Click Away
+				EndIf
+
+				If SwitchCOCAcc() Then     ;Chalicucu switch COC acc
+					checkMainScreen(True)
+					Train()
+					If $CommandStop <> 0 And $iRemainTrainTime > 0 Then		;new village camp
+						CloseCOC()
+						If $iRemainTrainTime < 3 Then
+							SetLog("====== Sleeping " & $iRemainTrainTime & " minutes and wait to attack ======", $COLOR_GREEN)
+							If _Sleep($iRemainTrainTime * 60000) Then Return
+						Else
+							If $iSwitchMode = 0 And $CommandStop <>  0 And $iSwitchCnt > $CoCAccNo Then
+								SetLog("====== Sleeping " & ($iRemainTrainTime - 2) & " minutes ======", $COLOR_GREEN)
+								If _Sleep(($iRemainTrainTime - 2) * 60000) Then Return		;turn back before 2 minutes to donation, fill army ... then attack
+							Else
+								SetLog("====== Sleeping 2 minutes ======", $COLOR_GREEN)
+								If _Sleep(120000) Then Return
+							EndIf
+						EndIf
+						OpenCOC()
+					Else
+						If _Sleep(2000) Then Return
+					EndIf
+					Return 1
+				EndIf
+            Else
+                If _Sleep(30000) Then Return
+            EndIf
+        EndIf
 		Local $hTimer = TimerInit()
 		Local $iReHere = 0
 
