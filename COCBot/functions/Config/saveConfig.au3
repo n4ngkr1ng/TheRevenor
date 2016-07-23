@@ -13,6 +13,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+
 Func saveConfig() ;Saves the controls settings to the config
 
 	;from GUI donate fields to variables  ----------------------------------------
@@ -1748,6 +1749,12 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "donate", "chkDStats", 0)
 	EndIf
 
+	If GUICtrlRead($chkLimitDStats) = $GUI_CHECKED Then
+		IniWrite($config, "stats", "chkLimitDStats", 1)
+	Else
+		IniWrite($config, "stats", "chkLimitDStats", 0)
+	EndIf
+
 	;Donate Settings-------------------------------------------------------------------------
 
 ;~ 	IniWriteS($config, "donate", "chkRequest", $iChkRequest)
@@ -2384,7 +2391,6 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWriteS($config, "search", "ChkABSpellsWait", 0)
 	EndIf
-
 
 	; Close When Training Settings
 	If GUICtrlRead($chkUseTrainingClose) = $GUI_CHECKED Then
