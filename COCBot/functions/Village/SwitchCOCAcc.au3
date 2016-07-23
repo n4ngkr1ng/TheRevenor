@@ -64,31 +64,8 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
     If _Sleep(3000) Then Return False
     PureClick($XConnect, $YConnect, 1, 0, "Click DisConnect")      ;Click DisConnect
     If _Sleep(8000) Then Return False
-
-    ;Click(383, 300 + 80*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
     ;need check acc clicked or not-------------------------
-
 	Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
-
-    #CS Total three acc
-    If $nCurCOCAcc = 1 Then     ;switch 1st and 3rd account : 1->3->2->1
-        Click(383, 460, 1, 0, "Click Third Account")      ;Click Third Account
-        $nCurCOCAcc = 3
-        $TotalCamp = 220    ; Account TotalCamp
-        _GUICtrlComboBox_SetCurSel($cmbProfile,1-1)
-    ElseIf $nCurCOCAcc = 2 Then
-        Click(383, 300, 1, 0, "Click First Account")      ;Click First Account
-        $nCurCOCAcc = 1
-        $TotalCamp = 220    ; Account TotalCamp
-        _GUICtrlComboBox_SetCurSel($cmbProfile,4-1)
-    Else
-        Click(383, 380, 1, 0, "Click Second Account")      ;Click Second Account
-        $nCurCOCAcc = 2
-        $TotalCamp = 200    ; Account TotalCamp
-        _GUICtrlComboBox_SetCurSel($cmbProfile,2-1)
-    EndIf
-     #CE
-
     If _Sleep(8000) Then Return False
     Local $idx = 0
     While 1
@@ -99,7 +76,6 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
                 ClickP($aAway, 1, 0, "#0167") ;Click Away
 				$nCurStep = $lnNextStep		;but still move to next step
                 If _Sleep(2000) Then Return True
-                ;Return SwitchCOCAcc()     ;force switch
                 Return True
             EndIf
 		ElseIf _GetPixelColor($XConnect, $YConnect, True) = Hex(4291299336, 6) Then       ;red
