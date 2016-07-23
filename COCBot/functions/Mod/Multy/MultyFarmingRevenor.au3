@@ -598,8 +598,12 @@ Func LockGUI()
  			GUICtrlSetState($i, $GUI_DISABLE)
 		Next
 		For $i = $FirstControlToHideMOD To $LastControlToHideMOD ; Save state of all controls on tabs
+			If IsTab($i) Or IsDebugControl($i) Then ContinueLoop
+			If $PushBulletEnabled And $i = $btnDeletePBmessages Then ContinueLoop ; exclude the DeleteAllMesages button when PushBullet is enabled
+			If $i = $btnMakeScreenshot Then ContinueLoop ; exclude
+			If $i = $divider Then ContinueLoop ; exclude divider
 			$iPrevState[$i] = GUICtrlGetState($i)
- 			GUICtrlSetState($i, $GUI_DISABLE)
+			GUICtrlSetState($i, $GUI_DISABLE)
 		Next
 		$GUIControl_Disabled = False
 
@@ -631,12 +635,16 @@ Func UnLockGUI()
 		$GUIControl_Disabled = True
 		For $i = $FirstControlToHide To $LastControlToHide ; Restore previous state of controls
 			If IsTab($i) Or IsDebugControl($i) Then ContinueLoop
-			If $PushBulletEnabled And $i = $btnDeletePBmessages Or $TelegramEnabled Then ContinueLoop ; Modified by CDudz
+			If $PushBulletEnabled And $i = $btnDeletePBmessages Then ContinueLoop ; exclude the DeleteAllMesages button when PushBullet is enabled
 			If $i = $btnMakeScreenshot Then ContinueLoop ; exclude
 			If $i = $divider Then ContinueLoop ; exclude divider
 			GUICtrlSetState($i, $iPrevState[$i])
 		Next
 		For $i = $FirstControlToHideMOD To $LastControlToHideMOD ; Restore previous state of controls
+			If IsTab($i) Or IsDebugControl($i) Then ContinueLoop
+			If $PushBulletEnabled And $i = $btnDeletePBmessages Then ContinueLoop ; exclude the DeleteAllMesages button when PushBullet is enabled
+			If $i = $btnMakeScreenshot Then ContinueLoop ; exclude
+			If $i = $divider Then ContinueLoop ; exclude divider
 			GUICtrlSetState($i, $iPrevState[$i])
 		Next
 		$GUIControl_Disabled = False
@@ -1030,4 +1038,4 @@ Func SwitchDonate()
 		SetLog("Switching Account For Donate Completed", $COLOR_BLUE)
 		DetectAccount()
 	EndIf
-EndFunc ; Switch Donate
+ EndFunc ; Switch Donate
