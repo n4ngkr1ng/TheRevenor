@@ -2562,6 +2562,12 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 		GUICtrlSetState($chkDStats, $GUI_UNCHECKED)
 	EndIf
 
+	If $ichkLimitDStats = 1 Then
+		GUICtrlSetState($chkLimitDStats, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkLimitDStats, $GUI_UNCHECKED)
+	EndIf
+
    ; mikemikemikecoc - Wait For Spells
    If $iEnableSpellsWait[$DB] = 1 Then
 		 GUICtrlSetState($chkDBSpellsWait, $GUI_CHECKED)
