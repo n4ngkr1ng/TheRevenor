@@ -1503,6 +1503,7 @@ Global $iconfirm
 Global $bAccount[6] = ["Main", "Second", "Third", "Fourth", "Fifth", "Sixth"]
 
 ; Donate Stats - by Cutidudz
+Global $ichkLimitDStats = 0
 Global $iLimitDStats = 5000
 
 ; ExtremeZap - by TheRevenor
@@ -1534,8 +1535,6 @@ Global Const $drillLevelSteal[6] = [59, _
 								    251, _
 								    343, _
 								    479]
-
-
 
 ; Android Settings - Added by LunaEclipse
 Global $sAndroid = "<No Emulators>"
