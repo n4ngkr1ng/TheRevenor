@@ -185,7 +185,6 @@ ProcessSetPriority(@AutoItPID, $iBotProcessPriority)
 
 InitOrder()			;chalicucu init SwitchCOCAcc
 AccStatInit()		;chalicucu init stats [SwitchCOCAcc]
-ResetTrainTimer()	;demen reset training time
 
 ;AutoStart Bot if request
 AutoStart()
