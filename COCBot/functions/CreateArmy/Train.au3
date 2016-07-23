@@ -248,7 +248,7 @@ Func Train()
 		$BarrackDarkStatus[0] = False
 		$BarrackDarkStatus[1] = False
 		SetLog("Your Army Camps are now Full", $COLOR_RED)
-		If ($PushBulletEnabled = 1 And $ichkAlertPBCampFull = 1) Then PushMsg("CampFull")
+		If ($PushBulletEnabled = 1 Or $TelegramEnabled = 1) And $ichkAlertPBCampFull = 1 Then PushMsgToPushBullet("CampFull")
 	EndIf
 
 	;If is fullArmy or FirstStart or we are using the Barracks modes is not necessary count the donations , the $Cur will add the correct troops to make
@@ -373,8 +373,7 @@ Func Train()
 
 			For $i = 0 To UBound($TroopName) - 1
 				If Number(Eval($TroopName[$i] & "Comp")) <> 0 Then
-					;[chalicucu] If $TroopName[$i] = "Barb" Or $TroopName[$i] = "Arch" Or $TroopName[$i] = "Gobl" Then
-					If $TroopName[$i] = "Barb" Or $TroopName[$i] = "Gobl" Then
+					If $TroopName[$i] = "Barb" Or $TroopName[$i] = "Arch" Or $TroopName[$i] = "Gobl" Then
 						If Eval("Cur" & $TroopName[$i]) * -1 > ($TotalCamp - $anotherTroops) * Eval($TroopName[$i] & "Comp") / 100 * 1.1 Then ; 110% too many troops
 							SetLog("Too many " & $TroopName[$i] & ", train last.")
 							Assign("Cur" & $TroopName[$i], 0)
@@ -389,7 +388,6 @@ Func Train()
 					EndIf
 				EndIf
 			Next
-			$CurArch = $TotalCamp - $anotherTroops - $CurBarb - $CurGobl	;fill camp by archer [chalicucu]
 		Else
 			$CurGobl = ($TotalCamp - $anotherTroops) * Eval("GoblComp") / 100
 			$CurGobl = Round($CurGobl)
@@ -597,6 +595,7 @@ Func Train()
 						If $icount = 7 Then ExitLoop
 					WEnd
 				EndIf
+				If $iChkDontRemove = 0 Then
 				$icount = 0
 				While Not _ColorCheck(_GetPixelColor(593, 200 + $midOffsetY, True), Hex(0xD0D0C0, 6), 20) ; while not disappears  green arrow
 					If Not (IsTrainPage()) Then Return ;exit if no train page
@@ -606,6 +605,7 @@ Func Train()
 					If $icount = 100 Then ExitLoop
 				WEnd
 				If $debugsetlogTrain = 1 And $icount = 100 Then SetLog("Train warning 7", $COLOR_PURPLE)
+				EndIf
 			EndIf
 
 			If _Sleep($iDelayTrain1) Then Return
@@ -771,8 +771,7 @@ Func Train()
 				; If The remaining capacity is lower than the Housing Space of training troop and its not full army or first start then delete the training troop and train 20 archer
 				; If no troops are being trained in all barracks and its not full army or first start then train 20 archer to reach full army
 				If ($BarrackFull[0] = True Or $BarrackStatus[0] = False) And ($BarrackFull[1] = True Or $BarrackStatus[1] = False) And ($BarrackFull[2] = True Or $BarrackStatus[2] = False) And ($BarrackFull[3] = True Or $BarrackStatus[3] = False) Then
-					;chalicucu If (Not $isDarkBuild) Or (($BarrackDarkFull[0] = True Or $BarrackDarkStatus[0] = False) And ($BarrackDarkFull[1] = True Or $BarrackDarkStatus[1] = False)) Then
-					If ($CurCamp/$TotalCamp)*100 > 90 And (Not $isDarkBuild) Or (($BarrackDarkFull[0] = True Or $BarrackDarkStatus[0] = False) And ($BarrackDarkFull[1] = True Or $BarrackDarkStatus[1] = False)) Then
+					If (Not $isDarkBuild) Or (($BarrackDarkFull[0] = True Or $BarrackDarkStatus[0] = False) And ($BarrackDarkFull[1] = True Or $BarrackDarkStatus[1] = False)) Then
 						If _Sleep($iDelayTrain1) Then Return
 						ClickP($aAway, 2, $iDelayTrain5, "#0501"); Click away twice with 250ms delay
 						If WaitforPixel(28, 505 + $bottomOffsetY, 30, 507 + $bottomOffsetY, Hex(0xE4A438, 6), 5, 10) Then
@@ -781,12 +780,10 @@ Func Train()
 						EndIf
 
 						$icount = 0
-						Local $lnRemainTr = Ceiling(($TotalCamp - $CurCamp)/$numBarracksAvaiables)		;;chalicucu number of archer each barrack
 						While IsTrainPage() = False
 							If _Sleep($iDelayTrain1) Then Return
 							$icount += 1
-							;chalicucu If $icount = 20 Then ExitLoop
-							If $icount >= $lnRemainTr Then ExitLoop
+							If $icount = 20 Then ExitLoop
 						WEnd
 						If Not (IsTrainPage()) Then Return
 
@@ -818,8 +815,7 @@ Func Train()
 							If _Sleep($iDelayTrain1) Then Return
 							If $debugsetlogTrain = 1 Then SetLog("Call Func TrainIt Arch", $COLOR_PURPLE)
 							If Not (IsTrainPage()) Then Return ;exit from train
-							;chalicucu TrainIt($eArch, 20)
-							TrainIt($eArch, $lnRemainTr)
+							TrainIt($eArch, 20)
 							$BarrackFull[$brrNum - 1] = False
 							$BarrackStatus[$brrNum - 1] = True
 							If $brrNum >= $numBarracksAvaiables Then ExitLoop ; make sure no more infiniti loop
@@ -881,9 +877,7 @@ Func Train()
 							If $icount = 7 Then ExitLoop
 						WEnd
 					EndIf
-
-						If $iChkDontRemove = 0 Then
-
+					If $iChkDontRemove = 0 Then
 					$icount = 0
 					While Not _ColorCheck(_GetPixelColor(599, 202 + $midOffsetY, True), Hex(0xD0D0C0, 6), 20) ; while not disappears  green arrow
 						If Not (IsTrainPage()) Then Return
@@ -893,7 +887,7 @@ Func Train()
 						If $RunState = False Then Return
 					WEnd
 					If $debugsetlogTrain = 1 And $icount = 100 Then SetLog("Train warning 6", $COLOR_PURPLE)
-				EndIf
+					EndIf
 				EndIf
 				If _Sleep($iDelayTrain2) Then ExitLoop
 				If Not (IsTrainPage()) Then Return ; exit from train if no train page
@@ -951,6 +945,7 @@ Func Train()
 						WEnd
 					EndIf
 					$icount = 0
+					If $iChkDontRemove = 0 Then
 					While Not _ColorCheck(_GetPixelColor(599, 202 + $midOffsetY, True), Hex(0xD0D0C0, 6), 20) ; while not disappears  green arrow
 						If Not (IsTrainPage()) Then Return ;exit if no train page
 						Click(568, 177 + $midOffsetY, 10, 0, "#0287") ; Remove Troops in training
@@ -959,6 +954,7 @@ Func Train()
 						If $RunState = False Then Return
 					WEnd
 					If $debugsetlogTrain = 1 And $icount = 100 Then SetLog("Train warning 9", $COLOR_PURPLE)
+					EndIf
 				EndIf
 				If _Sleep($iDelayTrain1) Then Return
 				For $i = 0 To UBound($TroopDarkName) - 1
