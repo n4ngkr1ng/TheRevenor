@@ -733,6 +733,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 
 		; Donate Stats ==========================================================================
 		$ichkDStats = IniRead($config, "donate", "chkDStats", "1")
+		$ichkLimitDStats = IniRead($config, "stats", "chkLimitDStats", "0")
 
 		;Donate Settings-------------------------------------------------------------------------
 		$sTxtRequest = IniRead($config, "donate", "txtRequest", "")
