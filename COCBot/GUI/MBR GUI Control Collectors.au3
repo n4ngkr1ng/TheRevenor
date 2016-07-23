@@ -191,8 +191,8 @@ EndFunc   ;==>allUnChecked
 ; Check Collectors Outside
 Func chkDBMeetCollOutside()
 	If GUICtrlRead($chkDBMeetCollOutside) = $GUI_CHECKED Then
-		_GUICtrlEdit_SetReadOnly($txtDBMinCollOutsidePercent, False)
+		GUICtrlSetState($txtDBMinCollOutsidePercent, $GUI_ENABLE)
 	Else
-		_GUICtrlEdit_SetReadOnly($txtDBMinCollOutsidePercent, True)
+		GUICtrlSetState($txtDBMinCollOutsidePercent, $GUI_DISABLE)
 	EndIf
 EndFunc   ;==>chkDBMeetCollOutside
