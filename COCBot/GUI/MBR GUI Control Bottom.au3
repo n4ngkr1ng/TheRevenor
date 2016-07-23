@@ -186,8 +186,12 @@ Func btnStart()
  			GUICtrlSetState($i, $GUI_DISABLE)
 		Next
 		For $i = $FirstControlToHideMOD To $LastControlToHideMOD ; Save state of all controls on tabs
+			If IsTab($i) Or IsDebugControl($i) Then ContinueLoop
+			If $PushBulletEnabled And $i = $btnDeletePBmessages Then ContinueLoop ; exclude the DeleteAllMesages button when PushBullet is enabled
+			If $i = $btnMakeScreenshot Then ContinueLoop ; exclude
+			If $i = $divider Then ContinueLoop ; exclude divider
 			$iPrevState[$i] = GUICtrlGetState($i)
- 			GUICtrlSetState($i, $GUI_DISABLE)
+			GUICtrlSetState($i, $GUI_DISABLE)
 		Next
 		$GUIControl_Disabled = False
 
@@ -206,7 +210,7 @@ Func btnStart()
 		EndIf
 		If $HWnD <> 0 Then ;Is Android open?
 			If Not $RunState Then Return
-		    If IsArray(ControlGetPos($HWnD, $AppPaneName, $AppClassInstance))  Then ; Really?
+		    If IsArray(ControlGetPos($HWnD, $AppPaneName, $AppClassInstance)) Then ; Really?
 				If Not $Result Then
 					$Result = InitiateLayout()
 				EndIf
@@ -244,6 +248,7 @@ Func btnStart()
 			SetLog("Cannot start " & $Android & ", please check log", $COLOR_RED)
 			btnStop()
 		EndIf
+
 	EndIf
 
 EndFunc   ;==>btnStart
@@ -282,6 +287,10 @@ Func btnStop()
 			GUICtrlSetState($i, $iPrevState[$i])
 		Next
 		For $i = $FirstControlToHideMOD To $LastControlToHideMOD ; Restore previous state of controls
+			If IsTab($i) Or IsDebugControl($i) Then ContinueLoop
+			If $PushBulletEnabled And $i = $btnDeletePBmessages Then ContinueLoop ; exclude the DeleteAllMesages button when PushBullet is enabled
+			If $i = $btnMakeScreenshot Then ContinueLoop ; exclude
+			If $i = $divider Then ContinueLoop ; exclude divider
 			GUICtrlSetState($i, $iPrevState[$i])
 		Next
 		$GUIControl_Disabled = False
@@ -347,7 +356,6 @@ Func reHide()
 	Return 0
 EndFunc   ;==>reHide
 
-; Modified by LunaEclipse
 Func btnHide()
 	ResumeAndroid()
 	WinGetAndroidHandle()
@@ -356,8 +364,6 @@ Func btnHide()
 
 	If $Hide = False Then
 		GUICtrlSetData($btnHide, GetTranslated(602, 26, "Show"))
-		; Hide the taskbar icon now as Bluestacks has been moved off the screen
-		;hideTaskBarIcon($HWnD) > Disable Coz error
 		Local $a = WinGetPos($HWnD)
 		$botPos[0] = $a[0]
 		$botPos[1] = $a[1]
@@ -365,8 +371,6 @@ Func btnHide()
 		$Hide = True
 	Else
 		GUICtrlSetData($btnHide, GetTranslated(602, 11, "Hide"))
-		; Show the taskbar icon now while Bluestack is still off the screen
-		;showTaskBarIcon($HWnD) > Disable Coz error
 		If $botPos[0] = -32000 Then
 			WinMove2($HWnD, "", 0, 0)
 		Else
