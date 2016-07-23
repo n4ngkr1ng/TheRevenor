@@ -187,8 +187,8 @@ Local $x = 20, $y = 162 ;150
 	Local $x = 20, $y = 291
 	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 90)
 		$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x - 10, $y - 5, -1, -1)
-			$txtTip = "Switch to another account & profile when camp is less than 85%" & @CRLF & _
-			          "This function supports maximum 8 CoC accounts & 8 Bot profiles" & @CRLF & _
+			$txtTip = "Switch to another account & profile when remain train time >=3 minutes" & @CRLF & _
+			          "This function supports maximum 8 CoC accounts & 9 Bot profiles" & @CRLF & _
 			          "Make sure to align the accounts with profiles in listing order"
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
@@ -208,18 +208,17 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetLimit(-1, 1)
 			$txtTip = "Number of Google Accounts that you set for botting."
 			GUICtrlSetTip(-1,$txtTip)
-		$lbAccBottingOrder = GUICtrlCreateLabel("CoC Accounts Botting order:", $x - 10, $y + 25, 135, 20)
+		$lbAccBottingOrder = GUICtrlCreateLabel("Accounts Playing List:", $x - 10, $y + 25, 135, 20)
 		$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 138, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $SS_LEFT, $ES_AUTOHSCROLL))
-			$txtTip = "Input the desired order of switching CoC Accounts."
+			$txtTip = "Input group of accounts you want to play."
 			GUICtrlSetTip(-1,$txtTip)
-		$lbProfileIdxOrder = GUICtrlCreateLabel("BOT Profile Indexs order:", $x + 215, $y + 25, 130, 20)
+		$lbProfileIdxOrder = GUICtrlCreateLabel("Mapping Profile Indexs:", $x + 215, $y + 25, 130, 20)
 		$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 340, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $SS_LEFT, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 8)
-			$txtTip = "Input the order of Profiles to align with CoC Accounts order" & @CRLF & _
-					  "Supporting maximum 8 Profiles"
+			$txtTip = "Input the order of Profiles correspond to CoC Accounts order."
 			GUICtrlSetTip(-1,$txtTip)
 		$chkAtkPln = GUICtrlCreateCheckbox("Check attack plan", $x - 10, $y + 44, -1, -1)
-			$txtTip = "Enable/Disable attack plan"
+			$txtTip = "Enable/Disable attack plan."
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkAtkPln")
