@@ -2519,7 +2519,6 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($profile, "switchcocacc", "Enable", 0)
 	EndIf
 	IniWrite($profile, "switchcocacc", "totalacc", GUICtrlRead($txtTotalCoCAcc))
-	IniWrite($profile, "switchcocacc", "activeacc", GUICtrlRead($txtActiveCoCAcc))
 	IniWrite($profile, "switchcocacc", "order", GUICtrlRead($txtAccBottingOrder))
 	IniWrite($profile, "switchcocacc", "profile", GUICtrlRead($txtProfileIdxOrder))
 	IniWrite($profile, "switchcocacc", "SwitchMode", GUICtrlRead($cmbSwitchMode))

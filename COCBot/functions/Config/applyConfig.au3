@@ -2677,7 +2677,6 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	EndIf
 	GUICtrlSetData($txtTotalCoCAcc, $nTotalCOCAcc)	;fix set data from GUI
 	GUICtrlSetData($txtTotalCoCAcc, IniRead($profile, "switchcocacc" , "totalacc" ,"0"))
-	GUICtrlSetData($txtActiveCoCAcc, IniRead($profile, "switchcocacc" , "activeacc" ,"0"))
 	GUICtrlSetData($txtAccBottingOrder, IniRead($profile, "switchcocacc" , "order" ,"123"))
 	GUICtrlSetData($txtProfileIdxOrder, IniRead($profile, "switchcocacc" , "profile" ,"123"))
 	GUICtrlSetData($cmbSwitchMode, IniRead($profile, "switchcocacc" , "SwitchMode" ,"0"))
