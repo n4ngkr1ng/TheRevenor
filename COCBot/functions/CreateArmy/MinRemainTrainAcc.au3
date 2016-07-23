@@ -10,6 +10,47 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+Func SetCurTrainTime($TrainTime)
+	If $iSwitchMode = 0 And $CommandStop <>  0 Then
+		;SetLog("Set timer")
+		$accTrainTime[$nCurAtkIdx] = $TrainTime
+		$aTimerStart[$nCurAtkIdx] = TimerInit()
+	EndIf
+EndFunc   ;==> SetCurTrainTime
+
+Func GetMinTrain()		; demen & chalicucu
+	Local $lnTimerEnd, $minIdx
+	Local $lRemTrainTime = $accTrainTime
+	For $i = 0 To Ubound($accAttack) - 1
+		$lnTimerEnd = Round(TimerDiff($aTimerStart[$i])/1000/60,2)		;elapse of training time of an account from last army checking - in minutes
+		$lRemTrainTime[$i] = $accTrainTime[$i] - $lnTimerEnd		; remain train time
+		SetLog("Account " & $accAttack[$i] & " remain " & $lRemTrainTime[$i] & " minute(s)")
+	Next
+
+	$minIdx = _ArrayMinIndex($lRemTrainTime, 1)			; 1 - compare numerically
+	$accTrainTime[$minIdx] =  $lRemTrainTime[$minIdx]
+	$aTimerStart[$minIdx] = TimerInit()		;set new point of timer (don't set for other accs, because of Round can make wrong time)
+	Return $minIdx
+EndFunc   ;==> GetMinTrain
+
+Func ResetMinTrainMode()
+	If $iSwitchMode = 0 Then
+		SetLog("Playing list or mode changed. Reset mode as beginning...", $COLOR_RED)
+		$iSwitchCnt = 0
+		Redim $aTimerStart[1]
+		$aTimerStart[0] = 0
+		Redim $accTrainTime[1]
+		$accTrainTime[0]= 0
+		Redim $accDonate[1]
+		$accDonate[0] = -1
+		Redim $accAttack[1]
+		$accAttack[0] = -1
+		$nLastDonAcc = 0
+		$nCurAtkIdx =0
+	EndIf
+ EndFunc   ;==> ResetMinTrainMode
+
+#cs
 Func ResetTrainTimer() ; Run this function first and once to set the remain train timer of all Accounts. All set to 0
    $aActiveCoCAcc = StringSplit(IniRead($Profile,"switchcocacc", "order", "1"), "", $STR_NOCOUNT)	; making an array of active acount number, by reading from profile.ini
    $nActiveCoCAcc = UBound($aActiveCoCAcc)
@@ -58,3 +99,4 @@ Func MinRemainTrainAcc()
    checkMainScreen()
    Return $nNextCoCAcc-1
 EndFunc
+#ce
