@@ -33,7 +33,7 @@ Func ExtremeZap()
 	Local $aDarkDrills = drillSearch($listPixelByLevel)
 
 	Local $strikeOffsets = [7, 10]
-	Local $drillLvlOffset, $spellAdjust, $searchDark, $numDrills, $numSpells, $testX, $testY, $tempTestX, $tempTestY, $strikeGain
+	Local $drillLvlOffset, $spellAdjust, $searchDark, $numDrills, $numSpells, $testX, $testY, $tempTestX, $tempTestY, $strikeGain, $expectedDE
 	Local $error = 5 ; 5 pixel error margin for DE drill search
 
 	; Get the number of drills
@@ -77,19 +77,24 @@ Func ExtremeZap()
 			SetLog("Dark Elixir is below minimum value " & $itxtMinDE & ", Exiting Now!", $COLOR_RED)
 			Return $performedZap
 		EndIf
-
 		CheckHeroesHealth()
+
+		; Store the DE value before any Zaps are done.
+		$oldSearchDark = $searchDark
+
 		; If you have max lightning spells, drop lightning on any level DE drill
-		If $oldSearchDark = $searchDark Then
+		If $numDrills >= 1 Then
 			SetLog("ExtremeZap Drop L.Spell For All Dark Elixir Drill.", $COLOR_FUCHSIA)
 			zapDrill($eLSpell, $aDarkDrills[0][0] + $strikeOffsets[0], $aDarkDrills[0][1] + $strikeOffsets[1])
 
+			$numSpells -= 1
 			$performedZap = True
 			$skippedZap = False
 
 			If _Sleep(3500) Then Return
 		Else
-			$oldSearchDark = $searchDark
+			$skippedZap = True
+			SetLog("No Dark Elixir Gained Or Dark Drill Already Destroyed.", $COLOR_ORANGE)
 		EndIf
 
 		; Get the DE Value after ExtremeZap has performed its actions.
@@ -105,11 +110,17 @@ Func ExtremeZap()
 		If $skippedZap = False Then
 			$strikeGain = $oldSearchDark - $searchDark
 			$numLSpellsUsed += 1
-			$numSpells -= 1
 		EndIf
 
-			If $strikeGain = 1 Then
-				For $i = 0 To UBound($aDarkDrills, 2) - 0
+		If $aDarkDrills[0][1] <> -1 Then
+			$expectedDE = 81
+		Else
+			$expectedDE = -1
+		EndIf
+
+			; If change in DE is less than expected, remove the Drill from list. else, subtract change from assumed total
+			If $strikeGain < $expectedDE And $expectedDE <> -1 Then
+				For $i = 0 To UBound($aDarkDrills, 1) - 1
 					$aDarkDrills[0][$i] = -1
 				Next
 			Else
@@ -165,4 +176,4 @@ Func ExtremeZap()
 	WEnd
 
 	Return $performedZap
- EndFunc   ;==>ExtremeZap
+EndFunc   ;==>ExtremeZap
