@@ -27,6 +27,7 @@ Func chkPBenabled()
 		$PushBulletEnabled = 1
 		GUICtrlSetState($chkPBenabled2, $GUI_DISABLE)
 		GUICtrlSetState($chkPBRemote, $GUI_ENABLE)
+		GUICtrlSetState($chkPBRemote, $GUI_CHECKED)
 		GUICtrlSetState($PushBulletTokenValue, $GUI_ENABLE)
 		GUICtrlSetState($OrigPushBullet, $GUI_ENABLE)
 		GUICtrlSetState($chkAlertPBVMFound, $GUI_ENABLE)
@@ -53,13 +54,14 @@ Func chkPBenabled()
 		EndIf
 	Else
 		If GUICtrlRead($chkPBenabled2) = $GUI_CHECKED Then
-		GUICtrlSetState($chkAlertBuilderIdle, $GUI_ENABLE)
+			GUICtrlSetState($chkAlertBuilderIdle, $GUI_ENABLE)
 			GUICtrlSetState($PushBulletTokenValue, $GUI_DISABLE)
 		ElseIf GUICtrlRead($chkPBenabled) = $GUI_UNCHECKED Then
 			GUICtrlSetState($chkPBenabled2, $GUI_ENABLE)
 			GUICtrlSetState($PushBulletTokenValue, $GUI_DISABLE)
 			$PushBulletEnabled = 0
 			GUICtrlSetState($chkPBRemote, $GUI_DISABLE)
+			GUICtrlSetState($chkPBRemote, $GUI_UNCHECKED)
 			GUICtrlSetState($OrigPushBullet, $GUI_DISABLE)
 			GUICtrlSetState($chkAlertPBVMFound, $GUI_DISABLE)
 			GUICtrlSetState($chkAlertPBLastRaid, $GUI_DISABLE)
@@ -80,7 +82,7 @@ Func chkPBenabled()
 			GUICtrlSetState($chkVillageStatIncrement, $GUI_DISABLE)
 			GUICtrlSetState($txtVillageStatIncrement, $GUI_DISABLE)
 
-		GUICtrlSetState($cmbHoursPushBullet, $GUI_DISABLE)
+			GUICtrlSetState($cmbHoursPushBullet, $GUI_DISABLE)
 		EndIf
 	EndIf
 EndFunc   ;==>chkPBenabled
@@ -91,6 +93,7 @@ Func chkPBenabled2()
 		GUICtrlSetState($chkPBenabled, $GUI_DISABLE)
 		GUICtrlSetState($chkAlertBuilderIdle, $GUI_ENABLE)
 		GUICtrlSetState($chkPBRemote, $GUI_ENABLE)
+		GUICtrlSetState($chkPBRemote, $GUI_CHECKED)
 		GUICtrlSetState($TelegramTokenValue, $GUI_ENABLE)
 		GUICtrlSetState($OrigPushBullet, $GUI_ENABLE)
 		GUICtrlSetState($chkAlertPBVMFound, $GUI_ENABLE)
@@ -102,19 +105,15 @@ Func chkPBenabled2()
 		GUICtrlSetState($chkAlertPBVillage, $GUI_ENABLE)
 		GUICtrlSetState($chkAlertPBLastAttack, $GUI_ENABLE)
 		GUICtrlSetState($chkAlertPBOtherDevice, $GUI_ENABLE)
-		GUICtrlSetState($chkDeleteAllPBPushes, $GUI_ENABLE)
-		GUICtrlSetState($chkDeleteOldPBPushes, $GUI_ENABLE)
-		GUICtrlSetState($btnDeletePBmessages, $GUI_ENABLE)
 		GUICtrlSetState($chkAlertPBCampFull, $GUI_ENABLE)
 		GUICtrlSetState($chkAlertBuilderIdle, $GUI_ENABLE)
-		GUICtrlSetState($chkSearchNotifyCount, $GUI_ENABLE)
-		GUICtrlSetState($txtSearchNotifyCount, $GUI_ENABLE)
-		GUICtrlSetState($chkVillageStatIncrement, $GUI_ENABLE)
-		GUICtrlSetState($txtVillageStatIncrement, $GUI_ENABLE)
-
-		If $ichkDeleteOldPBPushes = 1 Then
-			GUICtrlSetState($cmbHoursPushBullet, $GUI_ENABLE)
-		EndIf
+		GUICtrlSetState($chkDeleteAllPBPushes, $GUI_DISABLE)
+		GUICtrlSetState($chkDeleteOldPBPushes, $GUI_DISABLE)
+		GUICtrlSetState($btnDeletePBmessages, $GUI_DISABLE)
+		GUICtrlSetState($chkSearchNotifyCount, $GUI_DISABLE)
+		GUICtrlSetState($txtSearchNotifyCount, $GUI_DISABLE)
+		GUICtrlSetState($chkVillageStatIncrement, $GUI_DISABLE)
+		GUICtrlSetState($txtVillageStatIncrement, $GUI_DISABLE)
 
 	Else
 		If GUICtrlRead($chkPBenabled) = $GUI_CHECKED Then
@@ -126,6 +125,7 @@ Func chkPBenabled2()
 			GUICtrlSetState($TelegramTokenValue, $GUI_DISABLE)
 			$TelegramEnabled = 0
 			GUICtrlSetState($chkPBRemote, $GUI_DISABLE)
+			GUICtrlSetState($chkPBRemote, $GUI_UNCHECKED)
 			GUICtrlSetState($OrigPushBullet, $GUI_DISABLE)
 			GUICtrlSetState($chkAlertPBVMFound, $GUI_DISABLE)
 			GUICtrlSetState($chkAlertPBLastRaid, $GUI_DISABLE)
@@ -149,6 +149,7 @@ Func chkPBenabled2()
 		Else
 			$TelegramEnabled = 0
 			GUICtrlSetState($chkPBRemote, $GUI_DISABLE)
+			GUICtrlSetState($chkPBRemote, $GUI_UNCHECKED)
 			GUICtrlSetState($OrigPushBullet, $GUI_DISABLE)
 			GUICtrlSetState($chkAlertPBVMFound, $GUI_DISABLE)
 			GUICtrlSetState($chkAlertPBLastRaid, $GUI_DISABLE)
