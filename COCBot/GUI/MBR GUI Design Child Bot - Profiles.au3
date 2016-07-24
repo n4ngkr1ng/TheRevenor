@@ -13,6 +13,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+Global $ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
 Global $txtPresetSaveFilename, $txtSavePresetMessage, $lblLoadPresetMessage,$btnGUIPresetDeleteConf, $chkCheckDeleteConf
 Global $cmbPresetList, $txtPresetMessage,$btnGUIPresetLoadConf,  $lblLoadPresetMessage,$btnGUIPresetDeleteConf, $chkCheckDeleteConf
 

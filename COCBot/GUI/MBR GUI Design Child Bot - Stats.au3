@@ -34,8 +34,6 @@ GUICtrlSetOnEvent(-1, "btnResetStats")
 GUICtrlSetState(-1, $GUI_DISABLE)
 
 ;TAB Gain  - Separate stats per Profile - Edited by DEMEN
-
-Global $ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
 Global $lblGoldLootAcc[$ProfileList[0]], $lblElixirLootAcc[$ProfileList[0]], $lblDarkLootAcc[$ProfileList[0]], $lblHourlyStatsGoldAcc[$ProfileList[0]], $lblHourlyStatsElixirAcc[$ProfileList[0]], $lblHourlyStatsDarkAcc[$ProfileList[0]]
 Global $aGoldTotalAcc[$ProfileList[0]], $aElixirTotalAcc[$ProfileList[0]], $aDarkTotalAcc[$ProfileList[0]], $aAttackedCountAcc[$ProfileList[0]] , $aSkippedVillageCountAcc[$ProfileList[0]]
 
