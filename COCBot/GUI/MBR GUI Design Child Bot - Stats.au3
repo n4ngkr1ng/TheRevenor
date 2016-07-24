@@ -33,10 +33,7 @@ $btnResetStats = GUICtrlCreateButton(GetTranslated(632,31, "Reset Stats"), $x, $
 GUICtrlSetOnEvent(-1, "btnResetStats")
 GUICtrlSetState(-1, $GUI_DISABLE)
 
-;TAB Gain  - Separate stats per Profile - Edited by DEMEN
-Global $lblGoldLootAcc[$ProfileList[0]], $lblElixirLootAcc[$ProfileList[0]], $lblDarkLootAcc[$ProfileList[0]], $lblHourlyStatsGoldAcc[$ProfileList[0]], $lblHourlyStatsElixirAcc[$ProfileList[0]], $lblHourlyStatsDarkAcc[$ProfileList[0]]
-Global $aGoldTotalAcc[$ProfileList[0]], $aElixirTotalAcc[$ProfileList[0]], $aDarkTotalAcc[$ProfileList[0]], $aAttackedCountAcc[$ProfileList[0]] , $aSkippedVillageCountAcc[$ProfileList[0]]
-
+;TAB Gain - Reworked for adding Stats Per Profile - SwitchAcc Mode - DEMEN
 $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 	Local $xStart = 25, $yStart = 45
 	$x = $xStart
@@ -162,6 +159,7 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 			GUICtrlSetTip(-1, $txtTip)
     GUICtrlCreateGroup("", -99, -99, 1, 1)
 
+
     $x = $xStart + (90 * 2) + (85 * 2)
     $y = $yStart + 23
 	   $grpLastAttackBonus = GUICtrlCreateGroup(GetTranslated(632,16, "Last Bonus"), $x - 20, $y - 15, 80, 90)
@@ -182,8 +180,17 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 			   GUICtrlSetTip(-1, $txtTip)
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-    ; Separate Stats per each Profile - supporting 4 profiles
-	If $ProfileList[0] >= 2 Then
+
+	$ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
+	$nTotalProfile = _GUICtrlComboBox_GetCount($cmbProfile)
+	ReDim $lblGoldLootAcc[$nTotalProfile]
+	ReDim $lblElixirLootAcc[$nTotalProfile]
+	ReDim $lblDarkLootAcc[$nTotalProfile]
+	ReDim $lblHourlyStatsGoldAcc[$nTotalProfile]
+	ReDim $lblHourlyStatsElixirAcc[$nTotalProfile]
+	ReDim $lblHourlyStatsDarkAcc[$nTotalProfile]
+
+	If $nTotalProfile >= 2 Then
 	  $x = $xStart
 	  $y = $yStart + 118
 	   $grpProfileStats = GUICtrlCreateGroup($ProfileList[1], $x - 20, $y - 15, 210, 98)
@@ -272,7 +279,7 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 
     EndIf
 
-	If $ProfileList[0] >= 3 Then
+	If $nTotalProfile >= 3 Then
 	  $x = $xStart
 	  $y = $yStart + 220
 	   $grpProfileStats = GUICtrlCreateGroup($ProfileList[3], $x - 20, $y - 15, 210, 98)
@@ -318,7 +325,7 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 
     EndIf
 
-	If $ProfileList[0] >= 4 Then
+	If $nTotalProfile >= 4 Then
 	  $x = $xStart
 	  $y = $yStart + 220
 		 $grpProfileStats = GUICtrlCreateGroup($ProfileList[4], $x - 20 + 215, $y - 15, 210, 98)
@@ -362,7 +369,7 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 				  GUICtrlSetTip(-1, $txtTip)
 			GUICtrlCreateGroup("", -99, -99, 1, 1)
     EndIf
-;  ---> TAB Gain
+;-->TAB Gain - Reworked for adding Stats Per Profile - SwitchAcc Mode - DEMEN
 
 ;TAB Misc
 $hGUI_STATS_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,39,"Misc"))
