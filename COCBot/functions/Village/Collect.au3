@@ -40,7 +40,6 @@ Func Collect()
 	; Setup arrays, including default return values for $return
 	Local $Filename = ""
 	Local $CollectXY
-	Local $aTimes[5] = [1, 2, 5, 7, 9]
 
 	Local $aResult = returnMultipleMatchesOwnVillage($directory)
 	If UBound($aResult) > 1 Then
@@ -51,8 +50,7 @@ Func Collect()
 				For $t = 0 To UBound($CollectXY) - 1 ; each filename can have several positions
 					If $DebugSetLog = 1 Then SetLog($Filename & " found (" & $CollectXY[$t][0] & "," & $CollectXY[$t][1] & ")", $COLOR_GREEN)
 					If IsMainPage() Then Click($CollectXY[$t][0], $CollectXY[$t][1], 1, 0, "#0430")
-					; Random Sleep from 100ms to 900ms
-					If _Sleep($iDelayCollect1 * $aTimes[Random(0, 4, 1)]) Then Return
+					If _Sleep($iDelayCollect2) Then Return
 				Next
 			EndIf
 		Next
@@ -128,18 +126,21 @@ Func Collect()
 		$tempGoldCollected = $iGoldCurrent - $tempGold
 		$iGoldFromMines += $tempGoldCollected
 		$iGoldTotal += $tempGoldCollected
+		$aGoldTotalAcc[$nCurProfile -1] += $tempGoldCollected ; Separate Stats per Each Account - Switch Acc Mode - DEMEN
 	EndIf
 
 	If $tempElixir <> "" And $iElixirCurrent <> "" Then
 		$tempElixirCollected = $iElixirCurrent - $tempElixir
 		$iElixirFromCollectors += $tempElixirCollected
 		$iElixirTotal += $tempElixirCollected
+		$aElixirTotalAcc[$nCurProfile -1] += $tempElixirCollected ; Separate Stats per Each Account - Switch Acc Mode - DEMEN
 	EndIf
 
 	If $tempDElixir <> "" And $iDarkCurrent <> "" Then
 		$tempDElixirCollected = $iDarkCurrent - $tempDElixir
 		$iDElixirFromDrills += $tempDElixirCollected
 		$iDarkTotal += $tempDElixirCollected
+		$aDarkTotalAcc[$nCurProfile -1] += $tempDElixirCollected  ; Separate Stats per Each Account - Switch Acc Mode - DEMEN
 	EndIf
 
 	UpdateStats()

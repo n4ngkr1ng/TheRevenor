@@ -33,82 +33,87 @@ $btnResetStats = GUICtrlCreateButton(GetTranslated(632,31, "Reset Stats"), $x, $
 GUICtrlSetOnEvent(-1, "btnResetStats")
 GUICtrlSetState(-1, $GUI_DISABLE)
 
-;TAB Gain
+;TAB Gain  - Separate stats per Profile - Edited by DEMEN
+
+Global $ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
+Global $lblGoldLootAcc[$ProfileList[0]], $lblElixirLootAcc[$ProfileList[0]], $lblDarkLootAcc[$ProfileList[0]], $lblHourlyStatsGoldAcc[$ProfileList[0]], $lblHourlyStatsElixirAcc[$ProfileList[0]], $lblHourlyStatsDarkAcc[$ProfileList[0]]
+Global $aGoldTotalAcc[$ProfileList[0]], $aElixirTotalAcc[$ProfileList[0]], $aDarkTotalAcc[$ProfileList[0]], $aAttackedCountAcc[$ProfileList[0]] , $aSkippedVillageCountAcc[$ProfileList[0]]
+
 $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 	Local $xStart = 25, $yStart = 45
 	$x = $xStart
 	$y = $yStart
-	$grpResourceOnStart = GUICtrlCreateGroup(GetTranslated(632, 2, "Started with"), $x - 20, $y - 20, 90, 118)
+	$grpResourceOnStart = GUICtrlCreateGroup(GetTranslated(632, 2, "Started with"), $x - 20, $y - 20, 85, 118)
 			;Boju Display TH Level in Stats
 		$THLevels = GUICtrlCreateLabel(GetTranslated(632,0, "TH Level:"), $x - 20, $y + 3, 55, 17, $SS_RIGHT)
-			$THLevels04 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV04.ico",-1, $x + 42, $y - 2, 24, 24)
+			$THLevels04 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV04.ico",-1, $x + 37, $y - 2, 24, 24)
 			GUICtrlSetState(-1,$GUI_HIDE)
-			$THLevels05 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV05.ico",-1, $x + 42, $y - 2, 24, 24)
+			$THLevels05 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV05.ico",-1, $x + 37, $y - 2, 24, 24)
 			GUICtrlSetState(-1,$GUI_HIDE)
-			$THLevels06 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV06.ico",-1, $x + 42, $y - 2, 24, 24)
+			$THLevels06 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV06.ico",-1, $x + 37, $y - 2, 24, 24)
 			GUICtrlSetState(-1,$GUI_HIDE)
-			$THLevels07 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV07.ico",-1, $x + 42, $y - 2, 24, 24)
+			$THLevels07 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV07.ico",-1, $x + 37, $y - 2, 24, 24)
 			GUICtrlSetState(-1,$GUI_HIDE)
-			$THLevels08 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV08.ico",-1, $x + 42, $y - 2, 24, 24)
+			$THLevels08 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV08.ico",-1, $x + 37, $y - 2, 24, 24)
 			GUICtrlSetState(-1,$GUI_HIDE)
-			$THLevels09 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV09.ico",-1, $x + 42, $y - 2, 24, 24)
+			$THLevels09 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV09.ico",-1, $x + 37, $y - 2, 24, 24)
 			GUICtrlSetState(-1,$GUI_HIDE)
-			$THLevels10 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV10.ico",-1, $x + 42, $y - 2, 24, 24)
+			$THLevels10 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV10.ico",-1, $x + 37, $y - 2, 24, 24)
 			GUICtrlSetState(-1,$GUI_HIDE)
-			$THLevels11 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV11.ico",-1, $x + 42, $y - 2, 24, 24)
+			$THLevels11 = GUICtrlCreateIcon(@ScriptDir & "\images\TH\Levels\HdV11.ico",-1, $x + 37, $y - 2, 24, 24)
 			GUICtrlSetState(-1,$GUI_HIDE)
 			;-->Display TH Level in Stats
 		$y += 25
 		$lblResultStatsTemp = GUICtrlCreateLabel(GetTranslated(632, 3, "Report") & @CRLF & GetTranslated(632, 4, "will appear") & @CRLF & GetTranslated(632, 5, "here on") & @CRLF & GetTranslated(632, 6, "first run."), $x - 15, $y + 5, 100, 65, BitOR($SS_LEFT, $BS_MULTILINE))
 
-		$picResultGoldStart = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
-			$lblResultGoldStart = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+		$picResultGoldStart = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 45, $y, 16, 16)
+			$lblResultGoldStart = GUICtrlCreateLabel("", $x - 20, $y + 2, 60, 17, $SS_RIGHT)
 			$txtTip = GetTranslated(632, 7, "The amount of Gold you had when the bot started.")
 			GUICtrlSetTip(-1, $txtTip)
 		$y += 17
-		$picResultElixirStart = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
-			$lblResultElixirStart = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+		$picResultElixirStart = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 45, $y, 16, 16)
+			$lblResultElixirStart = GUICtrlCreateLabel("", $x - 20, $y + 2, 60, 17, $SS_RIGHT)
 			$txtTip = GetTranslated(632, 8, "The amount of Elixir you had when the bot started.")
 			GUICtrlSetTip(-1, $txtTip)
 		$y += 17
-		$picResultDEStart = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
-			$lblResultDEStart = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+		$picResultDEStart = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 45, $y, 16, 16)
+			$lblResultDEStart = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
 			$txtTip = GetTranslated(632, 9, "The amount of Dark Elixir you had when the bot started.")
 			GUICtrlSetTip(-1, $txtTip)
 		$y += 17
-		$picResultTrophyStart = GUICtrlCreateIcon($pIconLib, $eIcnTrophy, $x + 50, $y, 16, 16)
-			$lblResultTrophyStart = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+		$picResultTrophyStart = GUICtrlCreateIcon($pIconLib, $eIcnTrophy, $x + 45, $y, 16, 16)
+			$lblResultTrophyStart = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
 			$txtTip = GetTranslated(632, 10, "The amount of Trophies you had when the bot started.")
 			GUICtrlSetTip(-1, $txtTip)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	$x = $xStart + 95
+	$x = $xStart + 90
 	$y = $yStart + 23
-	$grpTotalLoot = GUICtrlCreateGroup(GetTranslated(632,20, "Total Gain"), $x - 20, $y - 15, 90, 90)
+	$grpTotalLoot = GUICtrlCreateGroup(GetTranslated(632,20, "Total Gain"), $x - 20, $y - 15, 85, 90)
 		$lblTotalLootTemp = GUICtrlCreateLabel(GetTranslated(632,3, "Report") & @CRLF & GetTranslated(632,99, "will update") & @CRLF & GetTranslated(632,97, "here after") & @CRLF & GetTranslated(632,98, "each attack."), $x - 15, $y + 5, 100, 65, BitOR($SS_LEFT, $BS_MULTILINE))
 
-		$picGoldLoot = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
-			$lblGoldLoot = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+		$picGoldLoot = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 45, $y, 16, 16)
+			$lblGoldLoot = GUICtrlCreateLabel("", $x - 20, $y + 2, 60, 17, $SS_RIGHT)
 			$txtTip = GetTranslated(632,21, "The total amount of Gold you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
 			GUICtrlSetTip(-1, $txtTip)
 		$y += 17
-		$picElixirLoot = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
-			$lblElixirLoot = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+		$picElixirLoot = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 45, $y, 16, 16)
+			$lblElixirLoot = GUICtrlCreateLabel("", $x - 20, $y + 2, 60, 17, $SS_RIGHT)
 			$txtTip = GetTranslated(632,23, "The total amount of Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
 			GUICtrlSetTip(-1, $txtTip)
 		$y += 17
-		$picDarkLoot = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
-			$lblDarkLoot = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+		$picDarkLoot = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 45, $y, 16, 16)
+			$lblDarkLoot = GUICtrlCreateLabel("", $x - 20, $y + 2, 60, 17, $SS_RIGHT)
 			$txtTip = GetTranslated(632,24, "The total amount of Dark Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
 			GUICtrlSetTip(-1, $txtTip)
 		$y += 17
-		$picTrophyLoot = GUICtrlCreateIcon($pIconLib, $eIcnTrophy, $x + 50, $y, 16, 16)
-			$lblTrophyLoot = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+		$picTrophyLoot = GUICtrlCreateIcon($pIconLib, $eIcnTrophy, $x + 45, $y, 16, 16)
+			$lblTrophyLoot = GUICtrlCreateLabel("", $x - 20, $y + 2, 60, 17, $SS_RIGHT)
 			$txtTip = GetTranslated(632,25, "The amount of Trophies you gained or lost while the Bot is running.")
 			GUICtrlSetTip(-1, $txtTip)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	$x = $xStart + (95 * 2)
+	$x = $xStart + (90 * 2)
 	$y = $yStart + 23
 	$grpHourlyStats = GUICtrlCreateGroup(GetTranslated(632,26, "Gain per Hour"), $x - 20, $y - 15, 80, 90)
 		$lblHourlyStatsTemp = GUICtrlCreateLabel(GetTranslated(632,3, "Report") & @CRLF & GetTranslated(632,99, "will update") & @CRLF & GetTranslated(632,97, "here after") & @CRLF & GetTranslated(632,98, "each attack."), $x - 15, $y + 5, 100, 65, BitOR($SS_LEFT, $BS_MULTILINE))
@@ -134,82 +139,232 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 			GUICtrlSetTip(-1, $txtTip)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
+	$x = $xStart + (90 * 2) + 85
+	$y = $yStart + 23
+    $grpLastAttack = GUICtrlCreateGroup(GetTranslated(632, 11, "Last Gain"), $x - 20, $y - 15, 80, 90)
+	    $lblLastAttackTemp = GUICtrlCreateLabel(GetTranslated(632, 3, "Report") & @CRLF & GetTranslated(632, 4, "will appear") & @CRLF & GetTranslated(632, 97, "here after") & @CRLF & GetTranslated(632, 98, "each attack."), $x - 15, $y + 5, 100, 65, BitOR($SS_LEFT, $BS_MULTILINE))
+	    GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 40, $y, 16, 16)
+			$lblGoldLastAttack = GUICtrlCreateLabel("", $x - 20, $y + 2, 55, 17, $SS_RIGHT)
+			$txtTip = GetTranslated(632, 12, "The amount of Gold you gained on the last attack.")
+			GUICtrlSetTip(-1, $txtTip)
+	    $y += 17
+	    GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 40, $y, 16, 16)
+			$lblElixirLastAttack = GUICtrlCreateLabel("", $x - 20, $y + 2, 55, 17, $SS_RIGHT)
+			$txtTip = GetTranslated(632, 13, "The amount of Elixir you gained on the last attack.")
+			GUICtrlSetTip(-1, $txtTip)
+	    $y += 17
+	    $picDarkLastAttack = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 40, $y, 16, 16)
+			$lblDarkLastAttack = GUICtrlCreateLabel("", $x - 20, $y + 2, 55, 17, $SS_RIGHT)
+			$txtTip = GetTranslated(632,14, "The amount of Dark Elixir you gained on the last attack.")
+			GUICtrlSetTip(-1, $txtTip)
+	    $y += 17
+	    GUICtrlCreateIcon($pIconLib, $eIcnTrophy, $x + 40, $y, 16, 16)
+			$lblTrophyLastAttack = GUICtrlCreateLabel("", $x - 20, $y + 2, 55, 17, $SS_RIGHT)
+			$txtTip = GetTranslated(632,15, "The amount of Trophies you gained or lost on the last attack.")
+			GUICtrlSetTip(-1, $txtTip)
+    GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	$x = $xStart
-	$y = $yStart + 118
-
-	$grpLastAttack1 = GUICtrlCreateGroup(GetTranslated(632,102,"Last Attack"), $x - 20, $y - 15, 195, 115)
-	$x = $xStart + 10
-	$y = $yStart + 118 +20
-	   $grpLastAttack = GUICtrlCreateGroup(GetTranslated(632, 11, "Gain"), $x - 20, $y - 15, 85, 90)
-		   $lblLastAttackTemp = GUICtrlCreateLabel(GetTranslated(632, 3, "Report") & @CRLF & GetTranslated(632, 4, "will appear") & @CRLF & GetTranslated(632, 97, "here after") & @CRLF & GetTranslated(632, 98, "each attack."), $x - 15, $y + 5, 100, 65, BitOR($SS_LEFT, $BS_MULTILINE))
-			   GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 45, $y, 16, 16)
-			   $lblGoldLastAttack = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
-			   $txtTip = GetTranslated(632, 12, "The amount of Gold you gained on the last attack.")
-			   GUICtrlSetTip(-1, $txtTip)
-		   $y += 17
-		   GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 45, $y, 16, 16)
-			   $lblElixirLastAttack = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
-			   $txtTip = GetTranslated(632, 13, "The amount of Elixir you gained on the last attack.")
-			   GUICtrlSetTip(-1, $txtTip)
-		   $y += 17
-		   $picDarkLastAttack = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 45, $y, 16, 16)
-			   $lblDarkLastAttack = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
-			   $txtTip = GetTranslated(632,14, "The amount of Dark Elixir you gained on the last attack.")
-			   GUICtrlSetTip(-1, $txtTip)
-		   $y += 17
-		   GUICtrlCreateIcon($pIconLib, $eIcnTrophy, $x + 45, $y, 16, 16)
-			   $lblTrophyLastAttack = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
-			   $txtTip = GetTranslated(632,15, "The amount of Trophies you gained or lost on the last attack.")
-			   GUICtrlSetTip(-1, $txtTip)
-	   GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-	   $x = $xStart +10 + 90
-	   $y = $yStart + 118 +20
-	   $grpLastAttackBonus = GUICtrlCreateGroup(GetTranslated(632,16, "League Bonus"), $x - 20, $y - 15, 85, 90)
+    $x = $xStart + (90 * 2) + (85 * 2)
+    $y = $yStart + 23
+	   $grpLastAttackBonus = GUICtrlCreateGroup(GetTranslated(632,16, "Last Bonus"), $x - 20, $y - 15, 80, 90)
 		   $lblLastAttackBonusTemp = GUICtrlCreateLabel(GetTranslated(632,3, "Report") & @CRLF & GetTranslated(632,99, "will update") & @CRLF & GetTranslated(632,97, "here after") & @CRLF & GetTranslated(632,98, "each attack."), $x - 15, $y + 5, 100, 65, BitOR($SS_LEFT, $BS_MULTILINE))
-			   GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 45, $y, 16, 16)
-			   $lblGoldBonusLastAttack = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
+			   GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 40, $y, 16, 16)
+			   $lblGoldBonusLastAttack = GUICtrlCreateLabel("", $x - 20, $y + 2, 55, 17, $SS_RIGHT)
 			   $txtTip = GetTranslated(632,17, "The amount of Bonus Gold you gained on the last attack.")
 			   GUICtrlSetTip(-1, $txtTip)
 		   $y += 17
-			   GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 45, $y, 16, 16)
-			   $lblElixirBonusLastAttack = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
+			   GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 40, $y, 16, 16)
+			   $lblElixirBonusLastAttack = GUICtrlCreateLabel("", $x - 20, $y + 2, 55, 17, $SS_RIGHT)
 			   $txtTip = GetTranslated(632,18, "The amount of Bonus Elixir you gained on the last attack.")
 			   GUICtrlSetTip(-1, $txtTip)
 		   $y += 17
-			   $picDarkBonusLastAttack = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 45, $y, 16, 16)
-			   $lblDarkBonusLastAttack = GUICtrlCreateLabel("", $x - 15, $y + 2, 55, 17, $SS_RIGHT)
+			   $picDarkBonusLastAttack = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 40, $y, 16, 16)
+			   $lblDarkBonusLastAttack = GUICtrlCreateLabel("", $x - 20, $y + 2, 55, 17, $SS_RIGHT)
 			   $txtTip = GetTranslated(632,19, "The amount of Bonus Dark Elixir you gained on the last attack.")
 			   GUICtrlSetTip(-1, $txtTip)
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
-			$x = 3
-			$y += 70
-              $grpMods = GUICtrlCreateGroup(GetTranslated(11,106,"Stats Top Loot"), $x +2, $y -16, 429, 45)
-              GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 5, $y, 16, 16)
-              $lbltopgold = GUICtrlCreateLabel(GetTranslated(11,104, "Top Loot: "), $x + 15, $y + 2, 55, 17, $SS_RIGHT)
-              $lbltopgoldloot = GUICtrlCreateLabel("0", $x + 70, $y - 1, 65, 17, $SS_LEFT)
-			  GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
-			  GUICtrlSetColor(-1, 0x2AA69D)
-              $txtTip = GetTranslated(11,102, "Top Gold gained")
-              GUICtrlSetTip(-1, $txtTip)
-              GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 145 , $y, 16, 16)
-              $lbltopelixir = GUICtrlCreateLabel(GetTranslated(11,104, "Top Loot: "), $x + 155, $y + 2, 55, 17, $SS_RIGHT)
-              $lbltopelixirloot = GUICtrlCreateLabel("0", $x + 210, $y - 1, 65, 17, $SS_LEFT)
-			  GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
-			  GUICtrlSetColor(-1, 0x2AA69D)
-              $txtTip = GetTranslated(11,103, "Top Elixir gained")
-              GUICtrlSetTip(-1, $txtTip)
-             GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 285 , $y, 16, 16)
-             $lbltopdark = GUICtrlCreateLabel(GetTranslated(11,104, "Top Loot: "), $x + 295, $y + 2, 55, 17, $SS_RIGHT)
-             $lbltopdarkloot = GUICtrlCreateLabel("0", $x + 350, $y - 1, 65, 17, $SS_LEFT)
-			 GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
-			 GUICtrlSetColor(-1, 0x2AA69D)
-             $txtTip = GetTranslated(11,105, "Top dark gained")
-             GUICtrlSetTip(-1, $txtTip)
-         GUICtrlCreateGroup("", -99, -99, 1, 1)
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
-;-->TAB Gain
+
+    ; Separate Stats per each Profile - supporting 4 profiles
+	If $ProfileList[0] >= 2 Then
+	  $x = $xStart
+	  $y = $yStart + 118
+	   $grpProfileStats = GUICtrlCreateGroup($ProfileList[1], $x - 20, $y - 15, 210, 98)
+	   GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+		 $x = $xStart + 15
+		 $y = $yStart + 118 +20
+		   $grpTotalLoot = GUICtrlCreateGroup(GetTranslated(632,20, "Total Gain"), $x - 20, $y - 15, 90, 73)
+			  $picGoldLoot = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
+				  $lblGoldLootAcc[0] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,21, "The total amount of Gold you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			  $y += 17
+			  $picElixirLoot = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
+				  $lblElixirLootAcc[0] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,23, "The total amount of Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			  $y += 17
+			  $picDarkLoot = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
+				  $lblDarkLootAcc[0] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,24, "The total amount of Dark Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+		 $x = $xStart + 15 + 95
+		 $y = $yStart + 118 +20
+			$grpHourlyStats = GUICtrlCreateGroup(GetTranslated(632,26, "Gain per Hour"), $x - 20, $y - 15, 90, 73)
+			   $picHourlyStatsGold = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsGoldAcc[0] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,27, "Gold gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			   $y += 17
+			   $picHourlyStatsElixir = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsElixirAcc[0] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,28, "Elixir gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			   $y += 17
+			   $picHourlyStatsDark = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsDarkAcc[0] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,29, "Dark Elixir gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+	  $x = $xStart + 215
+	  $y = $yStart + 118
+	   $grpProfileStats = GUICtrlCreateGroup($ProfileList[2], $x - 20, $y - 15, 210, 98)
+	   GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+		 $x = $xStart + 215 + 15
+		 $y = $yStart + 118 +20
+		   $grpTotalLoot = GUICtrlCreateGroup(GetTranslated(632,20, "Total Gain"), $x - 20, $y - 15, 90, 73)
+			  $picGoldLoot = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
+				  $lblGoldLootAcc[1] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,21, "The total amount of Gold you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			  $y += 17
+			  $picElixirLoot = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
+				  $lblElixirLootAcc[1] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,23, "The total amount of Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			  $y += 17
+			  $picDarkLoot = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
+				  $lblDarkLootAcc[1] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,24, "The total amount of Dark Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+		 $x = $xStart + 215 + 15 + 95
+		 $y = $yStart + 118 +20
+			$grpHourlyStats = GUICtrlCreateGroup(GetTranslated(632,26, "Gain per Hour"), $x - 20, $y - 15, 90, 73)
+			   $picHourlyStatsGold = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsGoldAcc[1] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,27, "Gold gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			   $y += 17
+			   $picHourlyStatsElixir = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsElixirAcc[1] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,28, "Elixir gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			   $y += 17
+			   $picHourlyStatsDark = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsDarkAcc[1] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,29, "Dark Elixir gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+    EndIf
+
+	If $ProfileList[0] >= 3 Then
+	  $x = $xStart
+	  $y = $yStart + 220
+	   $grpProfileStats = GUICtrlCreateGroup($ProfileList[3], $x - 20, $y - 15, 210, 98)
+	   GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+		 $x = $xStart + 15
+		 $y = $yStart + 220 +20
+		   $grpTotalLoot = GUICtrlCreateGroup(GetTranslated(632,20, "Total Gain"), $x - 20, $y - 15, 90, 73)
+			  $picGoldLoot = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
+				  $lblGoldLootAcc[2] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,21, "The total amount of Gold you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			  $y += 17
+			  $picElixirLoot = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
+				  $lblElixirLootAcc[2] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,23, "The total amount of Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			  $y += 17
+			  $picDarkLoot = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
+				  $lblDarkLootAcc[2] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,24, "The total amount of Dark Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+		 $x = $xStart + 15 + 95
+		 $y = $yStart + 220 + 20
+			$grpHourlyStats = GUICtrlCreateGroup(GetTranslated(632,26, "Gain per Hour"), $x - 20, $y - 15, 90, 73)
+			   $picHourlyStatsGold = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsGoldAcc[2] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,27, "Gold gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			   $y += 17
+			   $picHourlyStatsElixir = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsElixirAcc[2] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,28, "Elixir gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			   $y += 17
+			   $picHourlyStatsDark = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsDarkAcc[2] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,29, "Dark Elixir gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+    EndIf
+
+	If $ProfileList[0] >= 4 Then
+	  $x = $xStart
+	  $y = $yStart + 220
+		 $grpProfileStats = GUICtrlCreateGroup($ProfileList[4], $x - 20 + 215, $y - 15, 210, 98)
+		 GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+		 $x = $xStart + 215 + 15
+		 $y = $yStart + 220 + 20
+		   $grpTotalLoot = GUICtrlCreateGroup(GetTranslated(632,20, "Total Gain"), $x - 20, $y - 15, 90, 73)
+			  $picGoldLoot = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
+				  $lblGoldLootAcc[3] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,21, "The total amount of Gold you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			  $y += 17
+			  $picElixirLoot = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
+				  $lblElixirLootAcc[3] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,23, "The total amount of Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			  $y += 17
+			  $picDarkLoot = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
+				  $lblDarkLootAcc[3] = GUICtrlCreateLabel("", $x - 15, $y + 2, 60, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,24, "The total amount of Dark Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
+				  GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+		 $x = $xStart + 215 + 15 + 95
+		 $y = $yStart + 220 + 20
+			$grpHourlyStats = GUICtrlCreateGroup(GetTranslated(632,26, "Gain per Hour"), $x - 20, $y - 15, 90, 73)
+			   $picHourlyStatsGold = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsGoldAcc[3] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,27, "Gold gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			   $y += 17
+			   $picHourlyStatsElixir = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsElixirAcc[3] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,28, "Elixir gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			   $y += 17
+			   $picHourlyStatsDark = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 50, $y, 16, 16)
+				  $lblHourlyStatsDarkAcc[3] = GUICtrlCreateLabel("", $x - 10, $y + 2, 55, 17, $SS_RIGHT)
+				  $txtTip = GetTranslated(632,29, "Dark Elixir gain per hour")
+				  GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateGroup("", -99, -99, 1, 1)
+    EndIf
+;  ---> TAB Gain
 
 ;TAB Misc
 $hGUI_STATS_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,39,"Misc"))
@@ -549,27 +704,6 @@ $hGUI_STATS_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600,40,"Attacks"))
 			GUICtrlCreateIcon($pIconLib, $eIcnCollector, $x + 37, $y - 4, 16, 16)
 		$lblNbrOfDetectedDrills[$TB] = GUICtrlCreateLabel("0", $x + 54, $y - 2, 18, 17, $SS_RIGHT)
 			GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 73, $y - 4, 16, 16)
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-	; MOD Smart Zap
-	$x = $xStart
-	$y = $yStart + 270
-	$grpStatsSZ = GUICtrlCreateGroup("SmZap && ExZap", $x - 20, $y - 20, 111, 55)
-			GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x - 15, $y - 4, 16, 16)
-			GUICtrlCreateLabel("Zap" & ":", $x +3, $y - 2, -1, 17)
-			$lblLightningUsedStat = GUICtrlCreateLabel("0", $x + 2, $y - 4, 80, 17, $SS_RIGHT)
-			GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
-			GUICtrlSetColor(-1, 0x2AA69D)
-			$txtTip = "Number of used spells"
-			GUICtrlSetTip(-1, $txtTip)
-		$y += 17
-			GUICtrlCreateIcon($pIconLib, $eIcnDark, $x - 15, $y - 4, 16, 16)
-			GUICtrlCreateLabel(GetTranslated(632,74, -1) & ":", $x + 3, $y - 2, -1, 17)
-			$lblSmartZapStat = GUICtrlCreateLabel("0", $x + 2, $y - 4, 80, 17, $SS_RIGHT)
-			GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
-			GUICtrlSetColor(-1, 0x2AA69D)
-			$txtTip = "Number of dark elixir zapped during the attack with lightning."
-			GUICtrlSetTip(-1, $txtTip)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 ;--> TAB Attacks
