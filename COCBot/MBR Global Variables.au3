@@ -1626,5 +1626,9 @@ Global $iSwitchCnt = 0		;counting switching time to identify next switching step
 Global $iAtkPlan_HalfHour = True		;Chalicucu, attack more half hour in attack plan
 
 ; separate stats per each account - Switch Acc Mod - DEMEN
+Global $ProfileList
+Global $nTotalProfile = 1
+Global $nCurProfile = 1
+
 Global $aGoldTotalAcc[1], $aElixirTotalAcc[1], $aDarkTotalAcc[1], $aAttackedCountAcc[1], $aSkippedVillageCountAcc[1]
 Global $lblGoldLootAcc[1], $lblElixirLootAcc[1], $lblDarkLootAcc[1], $lblHourlyStatsGoldAcc[1], $lblHourlyStatsElixirAcc[1], $lblHourlyStatsDarkAcc[1]

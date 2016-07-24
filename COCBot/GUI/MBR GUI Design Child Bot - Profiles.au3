@@ -13,7 +13,6 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-Global $ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
 Global $txtPresetSaveFilename, $txtSavePresetMessage, $lblLoadPresetMessage,$btnGUIPresetDeleteConf, $chkCheckDeleteConf
 Global $cmbPresetList, $txtPresetMessage,$btnGUIPresetLoadConf,  $lblLoadPresetMessage,$btnGUIPresetDeleteConf, $chkCheckDeleteConf
 
@@ -114,3 +113,5 @@ Local $x = 20, $y = 25
 			EndIf
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 ;GUISetState()
+$ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
+$nTotalProfile = _GUICtrlComboBox_GetCount($cmbProfile)

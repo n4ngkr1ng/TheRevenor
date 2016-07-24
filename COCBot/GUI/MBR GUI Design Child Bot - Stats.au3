@@ -180,9 +180,6 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 			   GUICtrlSetTip(-1, $txtTip)
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-
-	$ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
-	$nTotalProfile = _GUICtrlComboBox_GetCount($cmbProfile)
 	ReDim $lblGoldLootAcc[$nTotalProfile]
 	ReDim $lblElixirLootAcc[$nTotalProfile]
 	ReDim $lblDarkLootAcc[$nTotalProfile]
