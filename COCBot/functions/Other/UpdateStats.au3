@@ -30,8 +30,10 @@ Global $iOldAttackedCount, $iOldAttackedVillageCount[$iModeCount + 1] ; number o
 Global $iOldTotalGoldGain[$iModeCount + 1], $iOldTotalElixirGain[$iModeCount + 1], $iOldTotalDarkGain[$iModeCount + 1], $iOldTotalTrophyGain[$iModeCount + 1] ; total resource gains for DB, LB, TB, TS
 Global $iOldNbrOfDetectedMines[$iModeCount + 1], $iOldNbrOfDetectedCollectors[$iModeCount + 1], $iOldNbrOfDetectedDrills[$iModeCount + 1] ; number of mines, collectors, drills detected for DB, LB, TB
 
-; Smart Zap Totals - Added by LunaEclipse
+; Smart Zap Totals - From ChaCalGyn (LunaEclipse) - DEMEN
 Global $iOldsmartZapGain = 0, $iOldNumLTSpellsUsed = 0
+Global $iOldCloseCoC = 0, $iOldCloseAndroid = 0
+
 
 Func UpdateStats()
 	If $FirstRun = 1 Then
@@ -236,7 +238,12 @@ Func UpdateStats()
 
 	If $iOldSkippedVillageCount <> $iSkippedVillageCount Then
 		GUICtrlSetData($lblresultvillagesskipped, _NumberFormat($iSkippedVillageCount, True))
-		GUICtrlSetData($lblResultSkippedHourNow, _NumberFormat($iSkippedVillageCount, True))
+
+		If $ichkSwitchAcc = 1 Then																; 		SwitchAcc - DEMEN
+		   GUICtrlSetData($lblResultSkippedHourNow, $aSkippedVillageCountAcc[$nCurProfile -1])	; 		SwitchAcc - DEMEN
+		Else																					; 		SwitchAcc - DEMEN
+		   GUICtrlSetData($lblResultSkippedHourNow, _NumberFormat($iSkippedVillageCount, True))
+		EndIf																					; 		SwitchAcc - DEMEN
 		$iOldSkippedVillageCount = $iSkippedVillageCount
 	EndIf
 
@@ -317,19 +324,27 @@ Func UpdateStats()
 		$iOldDElixirFromDrills = $iDElixirFromDrills
 	EndIf
 
-	; SmartZap DE Gain - Added by LunaEclipse
+    ; SmartZap DE Gain - From ChaCalGyn(LunaEclipse) - DEMEN
 	If $iOldSmartZapGain <> $smartZapGain Then
 		GUICtrlSetData($lblSmartZap, _NumberFormat($smartZapGain, True))
-		GUICtrlSetData($lblSmartZapStat, _NumberFormat($smartZapGain, True))
 		$iOldSmartZapGain = $smartZapGain
 	EndIf
 
-	; SmartZap Spells Used - Added by LunaEclipse
+	; SmartZap Spells Used  From ChaCalGyn(LunaEclipse) - DEMEN
 	If $iOldNumLTSpellsUsed <> $numLSpellsUsed Then
 		GUICtrlSetData($lblLightningUsed, _NumberFormat($numLSpellsUsed, True))
-		GUICtrlSetData($lblLightningUsedStat, _NumberFormat($numLSpellsUsed, True))
 		$iOldNumLTSpellsUsed = $numLSpellsUsed
  	EndIf
+
+    ; Sleep/Hibernate count - DEMEN
+
+    If $iOldCloseCoC <> $iCloseCoCCounter Or $iOldCloseAndroid <> $iCloseAndroidCounter Then
+		GUICtrlSetData($lblCloseCoC, $iCloseCoCCounter) ; Show in Profile Tab
+		GUICtrlSetData($lblCloseAndroid, $iCloseAndroidCounter) ; Show in Profile Tab
+		$iOldCloseCoC = $iCloseCoCCounter
+		$iOldCloseAndroid = $iCloseAndroidCounter
+	 EndIf
+
 
 	Local $iAttackedCount = 0
 
@@ -366,8 +381,16 @@ Func UpdateStats()
 	If $iOldAttackedCount <> $iAttackedCount Then
 		GUICtrlSetData($lblresultvillagesattacked, _NumberFormat($iAttackedCount, True))
 		GUICtrlSetData($lblResultAttackedHourNow, _NumberFormat($iAttackedCount, True))
+
+		If $ichkSwitchAcc = 1 Then															; 		SwitchAcc - DEMEN
+		   GUICtrlSetData($lblResultAttackedHourNow, $aAttackedCountAcc[$nCurProfile -1])	; 		SwitchAcc - DEMEN
+		Else																				; 		SwitchAcc - DEMEN
+		   GUICtrlSetData($lblResultAttackedHourNow, $iAttackedCount)
+		EndIf																				; 		SwitchAcc - DEMEN
 		$iOldAttackedCount = $iAttackedCount
 	EndIf
+
+
 
 	For $i = 0 To $iModeCount
 
@@ -390,20 +413,45 @@ Func UpdateStats()
 
 	Next
 
+; SwitchAcc Mod - Demen
+    For $i = 0 To $nTotalProfile-1
+	   GUICtrlSetData($lblGoldLootAcc[$i], _NumberFormat($aGoldTotalAcc[$i]))
+	   GUICtrlSetData($lblHourlyStatsGoldAcc[$i], _NumberFormat(Round($aGoldTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
+
+	   GUICtrlSetData($lblElixirLootAcc[$i], _NumberFormat($aElixirTotalAcc[$i]))
+	   GUICtrlSetData($lblHourlyStatsElixirAcc[$i], _NumberFormat(Round($aElixirTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
+
+	   If $iDarkStart <> "" Then
+		  GUICtrlSetData($lblDarkLootAcc[$i], _NumberFormat($aDarkTotalAcc[$i]))
+		  GUICtrlSetData($lblHourlyStatsDarkAcc[$i], _NumberFormat(Round($aDarkTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
+	   EndIf
+	Next
+
+; =============SwitchAcc Mod - Demen
+
 	If $FirstAttack = 2 Then
 		GUICtrlSetData($lblHourlyStatsGold, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
 		GUICtrlSetData($lblHourlyStatsElixir, _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
+
 		If $iDarkStart <> "" Then
 			GUICtrlSetData($lblHourlyStatsDark, _NumberFormat(Round($iDarkTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
 		EndIf
 		GUICtrlSetData($lblHourlyStatsTrophy, _NumberFormat(Round($iTrophyTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
 
-		GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
-		GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
-		If $iDarkStart <> "" Then
-			GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($iDarkTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM
-		EndIf
+		If $ichkSwitchAcc = 1 Then
+		   GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($aGoldTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
+		   GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($aElixirTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
+		   If $iDarkStart <> "" Then
+			  GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($aDarkTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
+		   EndIf
+		Else
 
+		   GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
+		   GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
+		   If $iDarkStart <> "" Then
+			   GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($iDarkTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM
+		   EndIf
+		EndIf
 	EndIf
 
 	If $ResetStats = 1 Then
@@ -444,6 +492,15 @@ Func ResetStats()
 	$iGoldTotal = 0
 	$iElixirTotal = 0
 	$iDarkTotal = 0
+
+	For $i = 0 To $nTotalProfile-1 ; SwitchAcc Mod - Demen
+	   $aGoldTotalAcc[$i] = 0
+	   $aElixirTotalAcc[$i] = 0
+	   $aDarkTotalAcc[$i] = 0
+	   $aAttackedCountAcc[$i] = 0
+	   $aSkippedVillageCountAcc[$i] = 0
+	Next
+
 	$iTrophyTotal = 0
 	$iGoldLast = 0
 	$iElixirLast = 0
@@ -473,10 +530,11 @@ Func ResetStats()
 	$iGoldFromMines = 0
 	$iElixirFromCollectors = 0
 	$iDElixirFromDrills = 0
-	; Reset SmartZap stats - Added by LunaEclipse
+
+    ; Reset SmartZap stats - From ChaCalGyn(LunaEclipse) - DEMEN
 	$smartZapGain = 0
-	$ExtremeZapGain = 0
 	$numLSpellsUsed = 0
+
 	For $i = 0 To $iModeCount
 		$iAttackedVillageCount[$i] = 0
 		$iTotalGoldGain[$i] = 0
