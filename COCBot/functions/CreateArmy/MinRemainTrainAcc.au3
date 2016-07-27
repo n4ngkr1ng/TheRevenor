@@ -48,7 +48,7 @@ Func ResetMinTrainMode()
 		$nLastDonAcc = 0
 		$nCurAtkIdx =0
 	EndIf
- EndFunc   ;==> ResetMinTrainMode
+EndFunc   ;==> ResetMinTrainMode
 
 #cs
 Func ResetTrainTimer() ; Run this function first and once to set the remain train timer of all Accounts. All set to 0
