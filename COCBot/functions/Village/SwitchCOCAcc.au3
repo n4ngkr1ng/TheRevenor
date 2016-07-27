@@ -24,11 +24,13 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 	If $iSwitchMode = 0 And $iSwitchCnt >= $CoCAccNo Then
 		If ($accAttack[0] <>  -1 And ($iSwitchCnt < $CoCAccNo + Ubound($accAttack))) Or ($accDonate[0] = -1) Then
 			$lnNextStep = GetMinTrain()
-			if $nCurCOCAcc = $accAttack[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
+			if $nCurCOCAcc = $accAttack[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account
 				SetLog("1. Target account is current one. Nothing to do..", $COLOR_GREEN)
 				$iGoldLast = ""
 				$iElixirLast = ""
-				Return True
+				$iSwitchCnt += 1
+				If _Sleep(1000) Then Return False
+				Return False
 			EndIf
 			$nCurCOCAcc = $accAttack[$lnNextStep]     ;target attack account
 			SetLog("Account " & $nCurCOCAcc & " has shortest training time now")
@@ -46,6 +48,7 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 			$nCurStep = $lnNextStep		;but still move to next step
 			$iGoldLast = ""
 			$iElixirLast = ""
+			If _Sleep(1000) Then Return False
 			Return True
 		EndIf
 		$nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
@@ -58,11 +61,11 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
     PureClick(800, 585, 1, 0, "Click Setting")      ;Click setting
     If _Sleep(3000) Then Return False
     If _GetPixelColor($XConnect, $YConnect, True) = Hex($ColorConnect, 6) Then       ;Green
-        PureClick($XConnect, $YConnect, 1, 0, "Click Connected")      ;Click Connect
+        PureClick($XConnect, $YConnect, 1, 0, "Click Connected")		;Click Connect
     EndIf
 
     If _Sleep(3000) Then Return False
-    PureClick($XConnect, $YConnect, 1, 0, "Click DisConnect")      ;Click DisConnect
+    PureClick($XConnect, $YConnect, 1, 0, "Click DisConnect")			;Click DisConnect
     If _Sleep(8000) Then Return False
     ;need check acc clicked or not-------------------------
 	Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
@@ -76,6 +79,7 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
                 ClickP($aAway, 1, 0, "#0167") ;Click Away
 				$nCurStep = $lnNextStep		;but still move to next step
                 If _Sleep(2000) Then Return True
+				If $iSwitchMode = 0 Then $iSwitchCnt += 1
                 Return True
             EndIf
 		ElseIf _GetPixelColor($XConnect, $YConnect, True) = Hex(4291299336, 6) Then       ;red
@@ -85,10 +89,10 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
                 ClickP($aAway, 1, 0, "#0167") ;Click Away
                 If _Sleep(2000) Then Return False
                 CloseAndroid()
+				$nCurCOCAcc = $nPreCOCAcc
                 Return False
             EndIf
 		ElseIf _GetPixelColor($XConnect, $YConnect, True) = Hex(4294309365, 6) Then 	;not yet clicked google acc
-			;Click(383, 300 + 80*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
 			Click(383, 370 - 70 * Int(($nTotalCOCAcc - 1)/2) + 70*($nCurCOCAcc - 1), 1, 0, "Click Account " & $nCurCOCAcc)      ;Click Google Account
 		Else	;4293454048
             Setlog("Changing to account [" & $nCurCOCAcc & "]", $COLOR_RED)
@@ -97,7 +101,6 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
         $idx = $idx + 1
         If _Sleep(1000) Then Return False
     WEnd
-    ;If _Sleep(1000) Then Return
     $idx = 0
     While $idx <= 30
         If _GetPixelColor(443, 430, True) = Hex(4284390935, 6) Then
@@ -136,7 +139,6 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 	If $iSwitchMode = 0 Then
 		$nCurAtkIdx = $lnNextStep
 		$iSwitchCnt += 1
-		;If $iSwitchCnt > $CoCAccNo + Ubound($accAttack) Then $iSwitchCnt = $CoCAccNo
 		If $iSwitchCnt >= $CoCAccNo + $CoCAccNo Then $iSwitchCnt = $CoCAccNo	;back to attack list
 	EndIf
 	$nCurStep = $lnNextStep
@@ -187,14 +189,12 @@ Func Init4NewAcc($nPreCOCAcc, $FirstSwitch = False)
 		Assign("Don" & $TroopName[$i], Execute("$AccDon" & $TroopName[$i] & "[" & String($nCurCOCAcc - 1) & "]"))	;set new donate troops no.
 		Execute("$AccCur" & $TroopName[$i] & "[" & String($nPreCOCAcc - 1) & "] = $Cur" & $TroopName[$i])			;save previous current troops no.
 		Assign("Cur" & $TroopName[$i], Execute("$AccCur" & $TroopName[$i] & "[" & String($nCurCOCAcc - 1) & "]"))	;set new current troops no.
-		;SETLOG("AccCur" & $TroopName[$i] & "[" & String($nCurCOCAcc - 1) & "]............" & Execute("$AccCur" & $TroopName[$i] & "[" & String($nCurCOCAcc - 1) & "]"))
 	Next
 	For $i = 0 To UBound($TroopDarkName) - 1
 		Execute("$AccDon" & $TroopDarkName[$i] & "[" & String($nPreCOCAcc - 1) & "] = $Don" & $TroopDarkName[$i])		;save previous donate troops no.
 		Assign("Don" & $TroopDarkName[$i], Eval("AccDon" & $TroopDarkName[$i] & "[" & String($nCurCOCAcc - 1) & "]"))	;set new donate troops no.
 		Execute("$AccCur" & $TroopDarkName[$i] & "[" & String($nPreCOCAcc - 1) & "] = $Cur" & $TroopDarkName[$i])		;save previous current troops no.
 		Execute("$Cur" & $TroopDarkName[$i] & " = $AccCur" & $TroopDarkName[$i] & "[" & String($nCurCOCAcc - 1) & "]")	;set new current troops no.
-		;SETLOG("AccCur" & $TroopDarkName[$i] & "[" & String($nCurCOCAcc - 1) & "]............" & Execute("$AccCur" & $TroopDarkName[$i] & "[" & String($nCurCOCAcc - 1) & "]"))
 	Next
 
 	MatchProfile()
@@ -239,10 +239,8 @@ EndFunc   ;==>Init4NewAcc
 
 Func AccGetStep()
 	Local $orderstr = ""
-	;Local $lnacc = $nCurCOCAcc
 	$orderstr = String($anCOCAccIdx[0])
 	For $i = 1 To $CoCAccNo - 1
-		;$lnacc = $anCOCAccIdx[$i]
 		$orderstr &= "->" & String($anCOCAccIdx[$i])
 	Next
 	$orderstr &= "->" & String($anCOCAccIdx[0]) & "->..."
@@ -295,7 +293,6 @@ Func AccStartInit()
 		$AccFirstStart[$i] = True
 	Next
 	$AccTotalTrainedTroops = $initAccTrain
-	;SETLOG("AccStartInit done")
 EndFunc   ;==> AccStartInit
 
 Func AccStatInit()
@@ -361,9 +358,6 @@ Func RemAcc($accIdx)		;remove account from order list
 		For $i = 0 To $CoCAccNo - 1
 			If $anCOCAccIdx[$i] = $newAcc Then
 				If $CoCAccNo =  1 Then Return "Remain only this account on playing list. Skip.."
-				; For $j = $i To $CoCAccNo - 2
-					; $anCOCAccIdx[$j] = $anCOCAccIdx[$j + 1]
-				; Next
 				_ArrayDelete($anCOCAccIdx, $i)
 				$CoCAccNo -= 1
 				Redim $anCOCAccIdx[$CoCAccNo]
@@ -505,7 +499,10 @@ Func MapAccPro($imapstr) ; $mapstr = <Account No>-<Profile No> , ie: 1-9, accoun
 		SetLog("Mapping success account " & $lnAcno & " to profile " & $lnProNo, $COLOR_RED)
 		ProSaveConfig()
 		ShowProMap()
-		;If $lnAcno = $nCurCOCAcc Then MatchProfile()
+		If $lnAcno = $nCurCOCAcc Then 		;immediatly switch profile
+			MatchProfile()
+			$FirstStart= True		;set new training progress
+		EndIf
 		Return True
 	EndIf
 	Return False
@@ -566,7 +563,7 @@ Func SetAtkDonAcc($accIdx)		;for shortest training switch mode
 		Else
 			_ArrayAdd($accDonate, $accIdx)
 		EndIf
-		SetLog("Account " & $nCurCOCAcc & " added to donation list")
+		SetLog("Account " & $nCurCOCAcc & " is added to donation list")
 		For $i = 0 To Ubound($accAttack) - 1
 			If $accAttack[$i] = $accIdx Then
 				If Ubound($accAttack) = 1 Then
@@ -576,7 +573,7 @@ Func SetAtkDonAcc($accIdx)		;for shortest training switch mode
 					_ArrayDelete($aTimerStart, $i)
 					_ArrayDelete($accTrainTime, $i)
 				EndIf
-				SetLog("Account " & $nCurCOCAcc & " removed from attacking list")	;happen after switch profile from attack to train/donate
+				SetLog("Account " & $nCurCOCAcc & " is removed from attacking list")	;happen after switch profile from attack to train/donate
 				Return
 			EndIf
 		Next
@@ -595,7 +592,7 @@ Func SetAtkDonAcc($accIdx)		;for shortest training switch mode
 			_ArrayAdd($accTrainTime, 0)		;init troops training time
 			$nCurAtkIdx = Ubound($accAttack) - 1
 		EndIf
-		SetLog("Account " & $nCurCOCAcc & " added to attacking list")
+		SetLog("Account " & $nCurCOCAcc & " is added to attacking list")
 		For $i = 0 To Ubound($accDonate) - 1
 			If $accDonate[$i] = $accIdx Then
 				If Ubound($accDonate) = 1 Then
@@ -603,7 +600,7 @@ Func SetAtkDonAcc($accIdx)		;for shortest training switch mode
 				Else
 					_ArrayDelete($accDonate, $i)
 				EndIf
-				SetLog("Account " & $nCurCOCAcc & " removed from donation list")
+				SetLog("Account " & $nCurCOCAcc & " is removed from donation list")
 				Return
 			EndIf
 		Next
