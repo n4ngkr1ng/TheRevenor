@@ -15,6 +15,7 @@
 Global $LastBarrackTrainDonatedTroop = 1
 Global $LastDarkBarrackTrainDonatedTroop = 1
 
+
 Func Train()
 
 	If $iAtkAlgorithm[$LB] = 2 Then
@@ -59,6 +60,7 @@ Func Train()
 		Next
 
 	EndIf
+
 
 	Local $anotherTroops
 	Local $tempCounter = 0
@@ -119,7 +121,9 @@ Func Train()
 		Assign(("tooFew" & $TroopDarkName[$i]), 0)
 	Next
 
+
 	;If $FirstStart And $OptTrophyMode = 1 And $icmbTroopComp <> 8 Then
+
 	If $FirstStart And $icmbTroopComp <> 8 Then
 		$ArmyComp = $CurCamp
 	EndIf
@@ -130,13 +134,14 @@ Func Train()
 	; $CurCamp - quantity of troops existing in ArmyCamp  / $TotalCamp - your total troops capacity
 	; BarracksStatus() - Verifying how many barracks / spells factory exists and if are available to use.
 	; $numBarracksAvaiables returns to be used as the divisor to assign the amount of kind troops each barracks | $TroopName+EBarrack
+	;
 
 	SetLog("Training Troops & Spells", $COLOR_BLUE)
 	If _Sleep($iDelayTrain1) Then Return
 	ClickP($aAway, 1, 0, "#0268") ;Click Away to clear open windows in case user interupted
 	If _Sleep($iDelayTrain4) Then Return
 
-	; OPEN ARMY OVERVIEW WITH NEW BUTTON
+	;OPEN ARMY OVERVIEW WITH NEW BUTTON
 	; WaitforPixel($iLeft, $iTop, $iRight, $iBottom, $firstColor, $iColorVariation, $maxDelay = 10)
 	If WaitforPixel(28, 505 + $bottomOffsetY, 30, 507 + $bottomOffsetY, Hex(0xE4A438, 6), 5, 10) Then
 		If $debugsetlogTrain = 1 Then SetLog("Click $aArmyTrainButton", $COLOR_GREEN)
@@ -145,7 +150,7 @@ Func Train()
 		EndIf
 	EndIf
 
-	; Wait for the armyoverview Window
+	;Wait for the armyoverview Window
 	If WaitforPixel(762, 328 + $midOffsetY, 763, 329 + $midOffsetY, Hex(0xF18439, 6), 10, 10) Then
 		If $debugsetlogTrain = 1 Then SetLog("Wait for ArmyOverView Window", $COLOR_GREEN)
 		If IsTrainPage() Then checkArmyCamp()
@@ -243,7 +248,7 @@ Func Train()
 		$BarrackDarkStatus[0] = False
 		$BarrackDarkStatus[1] = False
 		SetLog("Your Army Camps are now Full", $COLOR_RED)
-		If ($PushBulletEnabled = 1 And $ichkAlertPBCampFull = 1) Then PushMsg("CampFull")
+		If ($PushBulletEnabled = 1 Or $TelegramEnabled = 1) And $ichkAlertPBCampFull = 1 Then PushMsgToPushBullet("CampFull")
 	EndIf
 
 	;If is fullArmy or FirstStart or we are using the Barracks modes is not necessary count the donations , the $Cur will add the correct troops to make
@@ -511,6 +516,9 @@ Func Train()
 						If $icount = 7 Then ExitLoop
 					WEnd
 				EndIf
+
+				If $iChkDontRemove = 0 Then
+
 				$icount = 0
 				While Not _ColorCheck(_GetPixelColor(599, 202 + $midOffsetY, True), Hex(0xD0D0C0, 6), 20) ; while not disappears  green arrow
 					If Not (IsTrainPage()) Then Return
@@ -518,6 +526,7 @@ Func Train()
 					$icount += 1
 					If $icount = 100 Then ExitLoop
 				WEnd
+				EndIf
 				If $debugsetlogTrain = 1 And $icount = 100 Then SetLog("Train warning 6", $COLOR_PURPLE)
 			EndIf
 			If _Sleep($iDelayTrain2) Then Return
@@ -586,6 +595,7 @@ Func Train()
 						If $icount = 7 Then ExitLoop
 					WEnd
 				EndIf
+				If $iChkDontRemove = 0 Then
 				$icount = 0
 				While Not _ColorCheck(_GetPixelColor(593, 200 + $midOffsetY, True), Hex(0xD0D0C0, 6), 20) ; while not disappears  green arrow
 					If Not (IsTrainPage()) Then Return ;exit if no train page
@@ -595,6 +605,7 @@ Func Train()
 					If $icount = 100 Then ExitLoop
 				WEnd
 				If $debugsetlogTrain = 1 And $icount = 100 Then SetLog("Train warning 7", $COLOR_PURPLE)
+				EndIf
 			EndIf
 
 			If _Sleep($iDelayTrain1) Then Return
@@ -866,7 +877,7 @@ Func Train()
 							If $icount = 7 Then ExitLoop
 						WEnd
 					EndIf
-
+					If $iChkDontRemove = 0 Then
 					$icount = 0
 					While Not _ColorCheck(_GetPixelColor(599, 202 + $midOffsetY, True), Hex(0xD0D0C0, 6), 20) ; while not disappears  green arrow
 						If Not (IsTrainPage()) Then Return
@@ -876,6 +887,7 @@ Func Train()
 						If $RunState = False Then Return
 					WEnd
 					If $debugsetlogTrain = 1 And $icount = 100 Then SetLog("Train warning 6", $COLOR_PURPLE)
+					EndIf
 				EndIf
 				If _Sleep($iDelayTrain2) Then ExitLoop
 				If Not (IsTrainPage()) Then Return ; exit from train if no train page
@@ -933,6 +945,7 @@ Func Train()
 						WEnd
 					EndIf
 					$icount = 0
+					If $iChkDontRemove = 0 Then
 					While Not _ColorCheck(_GetPixelColor(599, 202 + $midOffsetY, True), Hex(0xD0D0C0, 6), 20) ; while not disappears  green arrow
 						If Not (IsTrainPage()) Then Return ;exit if no train page
 						Click(568, 177 + $midOffsetY, 10, 0, "#0287") ; Remove Troops in training
@@ -941,6 +954,7 @@ Func Train()
 						If $RunState = False Then Return
 					WEnd
 					If $debugsetlogTrain = 1 And $icount = 100 Then SetLog("Train warning 9", $COLOR_PURPLE)
+					EndIf
 				EndIf
 				If _Sleep($iDelayTrain1) Then Return
 				For $i = 0 To UBound($TroopDarkName) - 1
@@ -1169,18 +1183,16 @@ Func Train()
 		VillageReport(True, True)
 	WEnd
 
-    If $tempElixir <> "" And $iElixirCurrent <> "" Then
+	If $tempElixir <> "" And $iElixirCurrent <> "" Then
 		$tempElixirSpent = ($tempElixir - $iElixirCurrent)
 		$iTrainCostElixir += $tempElixirSpent
 		$iElixirTotal -= $tempElixirSpent
-		$aElixirTotalAcc[$nCurCOCAcc - 1] -= $tempElixirSpent ; Separate stats per account - SwitchAcc - DEMEN
 	EndIf
 
 	If $tempDElixir <> "" And $iDarkCurrent <> "" Then
 		$tempDElixirSpent = ($tempDElixir - $iDarkCurrent)
 		$iTrainCostDElixir += $tempDElixirSpent
 		$iDarkTotal -= $tempDElixirSpent
-		$aDarkTotalAcc[$nCurCOCAcc - 1] -= $tempDElixirSpent ; Separate stats per account - SwitchAcc -  DEMEN
 	EndIf
 
 	UpdateStats()
