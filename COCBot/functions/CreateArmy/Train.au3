@@ -15,7 +15,6 @@
 Global $LastBarrackTrainDonatedTroop = 1
 Global $LastDarkBarrackTrainDonatedTroop = 1
 
-
 Func Train()
 
 	If $iAtkAlgorithm[$LB] = 2 Then
@@ -60,7 +59,6 @@ Func Train()
 		Next
 
 	EndIf
-
 
 	Local $anotherTroops
 	Local $tempCounter = 0
@@ -121,9 +119,7 @@ Func Train()
 		Assign(("tooFew" & $TroopDarkName[$i]), 0)
 	Next
 
-
 	;If $FirstStart And $OptTrophyMode = 1 And $icmbTroopComp <> 8 Then
-
 	If $FirstStart And $icmbTroopComp <> 8 Then
 		$ArmyComp = $CurCamp
 	EndIf
@@ -134,14 +130,13 @@ Func Train()
 	; $CurCamp - quantity of troops existing in ArmyCamp  / $TotalCamp - your total troops capacity
 	; BarracksStatus() - Verifying how many barracks / spells factory exists and if are available to use.
 	; $numBarracksAvaiables returns to be used as the divisor to assign the amount of kind troops each barracks | $TroopName+EBarrack
-	;
 
 	SetLog("Training Troops & Spells", $COLOR_BLUE)
 	If _Sleep($iDelayTrain1) Then Return
 	ClickP($aAway, 1, 0, "#0268") ;Click Away to clear open windows in case user interupted
 	If _Sleep($iDelayTrain4) Then Return
 
-	;OPEN ARMY OVERVIEW WITH NEW BUTTON
+	; OPEN ARMY OVERVIEW WITH NEW BUTTON
 	; WaitforPixel($iLeft, $iTop, $iRight, $iBottom, $firstColor, $iColorVariation, $maxDelay = 10)
 	If WaitforPixel(28, 505 + $bottomOffsetY, 30, 507 + $bottomOffsetY, Hex(0xE4A438, 6), 5, 10) Then
 		If $debugsetlogTrain = 1 Then SetLog("Click $aArmyTrainButton", $COLOR_GREEN)
@@ -150,7 +145,7 @@ Func Train()
 		EndIf
 	EndIf
 
-	;Wait for the armyoverview Window
+	; Wait for the armyoverview Window
 	If WaitforPixel(762, 328 + $midOffsetY, 763, 329 + $midOffsetY, Hex(0xF18439, 6), 10, 10) Then
 		If $debugsetlogTrain = 1 Then SetLog("Wait for ArmyOverView Window", $COLOR_GREEN)
 		If IsTrainPage() Then checkArmyCamp()
@@ -1178,14 +1173,14 @@ Func Train()
 		$tempElixirSpent = ($tempElixir - $iElixirCurrent)
 		$iTrainCostElixir += $tempElixirSpent
 		$iElixirTotal -= $tempElixirSpent
-		$aElixirTotalAcc[$nCurProfile-1] -= $tempElixirSpent ; Separate stats per account - SwitchAcc - DEMEN
+		$aElixirTotalAcc[$nCurCOCAcc - 1] -= $tempElixirSpent ; Separate stats per account - SwitchAcc - DEMEN
 	EndIf
 
 	If $tempDElixir <> "" And $iDarkCurrent <> "" Then
 		$tempDElixirSpent = ($tempDElixir - $iDarkCurrent)
 		$iTrainCostDElixir += $tempDElixirSpent
 		$iDarkTotal -= $tempDElixirSpent
-		$aDarkTotalAcc[$nCurProfile - 1] -= $tempDElixirSpent ; Separate stats per account - SwitchAcc -  DEMEN
+		$aDarkTotalAcc[$nCurCOCAcc - 1] -= $tempDElixirSpent ; Separate stats per account - SwitchAcc -  DEMEN
 	EndIf
 
 	UpdateStats()

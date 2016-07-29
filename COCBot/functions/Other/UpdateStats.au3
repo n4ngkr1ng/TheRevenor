@@ -240,7 +240,7 @@ Func UpdateStats()
 		GUICtrlSetData($lblresultvillagesskipped, _NumberFormat($iSkippedVillageCount, True))
 
 		If $ichkSwitchAcc = 1 Then																; 		SwitchAcc - DEMEN
-		   GUICtrlSetData($lblResultSkippedHourNow, $aSkippedVillageCountAcc[$nCurProfile -1])	; 		SwitchAcc - DEMEN
+		   GUICtrlSetData($lblResultSkippedHourNow, $aSkippedVillageCountAcc[$nCurCOCAcc - 1])	; 		SwitchAcc - DEMEN
 		Else																					; 		SwitchAcc - DEMEN
 		   GUICtrlSetData($lblResultSkippedHourNow, _NumberFormat($iSkippedVillageCount, True))
 		EndIf																					; 		SwitchAcc - DEMEN
@@ -383,7 +383,7 @@ Func UpdateStats()
 		GUICtrlSetData($lblResultAttackedHourNow, _NumberFormat($iAttackedCount, True))
 
 		If $ichkSwitchAcc = 1 Then															; 		SwitchAcc - DEMEN
-		   GUICtrlSetData($lblResultAttackedHourNow, $aAttackedCountAcc[$nCurProfile -1])	; 		SwitchAcc - DEMEN
+		   GUICtrlSetData($lblResultAttackedHourNow, $aAttackedCountAcc[$nCurCOCAcc - 1])	; 		SwitchAcc - DEMEN
 		Else																				; 		SwitchAcc - DEMEN
 		   GUICtrlSetData($lblResultAttackedHourNow, $iAttackedCount)
 		EndIf																				; 		SwitchAcc - DEMEN
@@ -414,7 +414,7 @@ Func UpdateStats()
 	Next
 
 ; SwitchAcc Mod - Demen
-    For $i = 0 To $nTotalProfile-1
+    For $i = 0 To $nTotalCOCAcc-1
 	   GUICtrlSetData($lblGoldLootAcc[$i], _NumberFormat($aGoldTotalAcc[$i]))
 	   GUICtrlSetData($lblHourlyStatsGoldAcc[$i], _NumberFormat(Round($aGoldTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
 
@@ -439,10 +439,10 @@ Func UpdateStats()
 		GUICtrlSetData($lblHourlyStatsTrophy, _NumberFormat(Round($iTrophyTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
 
 		If $ichkSwitchAcc = 1 Then
-		   GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($aGoldTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
-		   GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($aElixirTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
+		   GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($aGoldTotalAcc[$nCurCOCAcc - 1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
+		   GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($aElixirTotalAcc[$nCurCOCAcc - 1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
 		   If $iDarkStart <> "" Then
-			  GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($aDarkTotalAcc[$nCurProfile-1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
+			  GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($aDarkTotalAcc[$nCurCOCAcc - 1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
 		   EndIf
 		Else
 
@@ -493,7 +493,7 @@ Func ResetStats()
 	$iElixirTotal = 0
 	$iDarkTotal = 0
 
-	For $i = 0 To $nTotalProfile-1 ; SwitchAcc Mod - Demen
+	For $i = 0 To $nTotalCOCAcc - 1 ; SwitchAcc Mod - Demen
 	   $aGoldTotalAcc[$i] = 0
 	   $aElixirTotalAcc[$i] = 0
 	   $aDarkTotalAcc[$i] = 0
