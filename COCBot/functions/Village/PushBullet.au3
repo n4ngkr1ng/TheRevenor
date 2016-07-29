@@ -1,3 +1,4 @@
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: PushBullet
 ; Description ...: This function will report to your mobile phone your values and last attack
@@ -167,6 +168,7 @@ Func _RemoteControlPushBullet()
 							If $Runstate = True Then
 								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620, 48, "Request to Stop") & "..." & "\n" & GetTranslated(620, 49, "Your bot is now stopping") & "...")
 								btnStop()
+								AutoStart()
 							Else
 								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620, 48, "Request to Stop") & "..." & "\n" & GetTranslated(620, 50, "Your bot is currently stopped, no action was taken"))
 							EndIf

@@ -92,7 +92,7 @@ Global $AndroidAdbScreencapEnabled = True ; Use Android ADB to capture screensho
 Global $AndroidAdbScreencapPngEnabled = False ; Use Android ADB to capture screenshots in PNG format, significantly slower than raw format (not final, captured screenshot resize too slow...)
 Global $AndroidAdbZoomoutEnabled = True ; Use Android ADB zoom-out script
 Global $AndroidAdbClickDragEnabled = True ; Use Android ADB click drag script
-Global $AndroidAdbInputEnabled = False ; Enable Android ADB send text (CC requests), swipe not used as click drag anymore
+Global $AndroidAdbInputEnabled = True ; Enable Android ADB send text (CC requests), swipe not used as click drag anymore
 Global $AndroidAdbInputWordsCharLimit = 0 ; Android ADB send text words (split by space) with this limit of specified characters per command (0 = disabled and entire text is sent at once)
 Global $AndroidAdbClickEnabled = False ; Enable Android ADB mouse click
 Global $AndroidAdbClicksEnabled = False ; (Experimental & Dangerous!) Enable Android KeepClicks() and ReleaseClicks() to fire collected clicks all at once, only available when also $AndroidAdbClick = True
@@ -582,7 +582,7 @@ $iChkDeploySettings[$DB] = 3 ;4 sides
 $iChkDeploySettings[$LB] = 3 ;4 sides
 $iChkDeploySettings[$MA] = 1 ;1 sides
 Global $iChkRedArea[$iModeCount+3], $iCmbSmartDeploy[$iModeCount+3], $iChkSmartAttack[$iModeCount+3][3], $iCmbSelectTroop[$iModeCount+3]
-$iChkRedArea[$DB] = 1
+$iChkRedArea[$DB] = 0
 $iChkRedArea[$LB] = 1
 $iChkRedArea[$MA] = 1
 
@@ -927,7 +927,6 @@ Global $itxtRestartGold = 10000
 Global $itxtRestartElixir = 25000
 Global $itxtRestartDark = 500
 
-
 ;Global $iWBMortar
 ;Global $iWBWizTower
 ;Global $iWBXbow
@@ -994,10 +993,8 @@ Global $isHeroesDropped = False
 Global $DeployCCPosition[2] = [-1, -1]
 Global $DeployHeroesPosition[2] = [-1, -1]
 
-
 ;Debug CLick
 Global $debugClick = 0
-
 
 Global $DESTOLoc = ""
 
@@ -1446,7 +1443,6 @@ Global $SecondaryOutputFile = ""
 Global $quicklyfirststart = true
 Global $configLoaded = false
 
-
 Global $chkMakeIMGCSV
 
 ; Splash Variables - mikemikemikecoc
@@ -1466,7 +1462,7 @@ Global $THSnipeBeforeDBTiles = 0 , $THSnipeBeforeLBTiles = 0
 Global $THSnipeBeforeDBScript = 0 , $THSnipeBeforeLBScript = 0
 
 ; mikemikemikecoc - Wait For Spells
-Global $iEnableSpellsWait[$iModeCount], $iTotalSpellSpace = 0, $bFullArmySpells = False
+Global $iEnableSpellsWait[$iModeCount], $iTotalSpellSpace = 0, $bFullArmySpells = False, $IsWaitingForHeroesSpells = 0
 
 ; Close while training variables
 Global $ichkCloseTraining = 1
@@ -1502,9 +1498,12 @@ Global $iAccount, $OkLoc, $AccountLoc
 Global $iconfirm
 Global $bAccount[6] = ["Main", "Second", "Third", "Fourth", "Fifth", "Sixth"]
 
-; Donate Stats - by Cutidudz
+; Donate Stats - Added by TheRevenor
 Global $ichkLimitDStats = 0
 Global $iLimitDStats = 5000
+
+; Check Connections - by TheRevenor
+Global $ichkConnection = 1
 
 ; ExtremeZap - by TheRevenor
 Global $ichkExtLightSpell = 1

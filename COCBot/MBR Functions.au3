@@ -189,6 +189,9 @@
 #include "functions\Other\CheckVersion.au3"
 #include "functions\Other\CloseRunningBot.au3"
 
+; Check Connections - Added by TheRevenor
+#include "functions\Other\CheckConnection.au3"
+
 #include "functions\Other\ComError.au3"
 #include "functions\Other\IsPage.au3"
 #include "functions\Other\MoveMouseOutBS.au3"
