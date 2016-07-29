@@ -65,7 +65,6 @@ Func CloseCOCAndWait($timeRemaining, $forceClose = False)
 			If _Sleep(1000) Then Return
 				CloseAndroid()
 			; Pushbullet Msg/Telegram
-			_PushToPushBullet(@HOUR & ":" & @MIN &" - " & $iOrigPushBullet & " - TakeBreak With Close Emulator")
 			StartEmulatorCoC($timeRemaining * 1000, True)
 		Else
 		; Nothing is needed here for timeout, as WaitnOpenCoC will stop the bot from doing anything so it will timeout naturally

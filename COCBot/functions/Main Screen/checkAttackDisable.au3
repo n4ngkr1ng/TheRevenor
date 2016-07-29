@@ -143,7 +143,17 @@ Func checkAttackDisable($iSource, $Result = "")
 	; CoC is closed >>
 	If $iModSource = $iTaBChkTime And $aShieldStatus[0] <> "guard" Then
 		Setlog("Personal Break Reset log off: " & $iValueSinglePBTimeForced & " Minutes", $COLOR_BLUE)
-		WaitnOpenCoC($iValueSinglePBTimeForced * 60 * 1000, True) ; Log off CoC for user set time in expert tab
+		If $iValueSinglePBTimeForced >= 10 Then
+			If _Sleep(1000) Then Return
+				CloseAndroid()
+			; Pushbullet Msg/Telegram
+			_PushToPushBullet($iOrigPushBullet & " | Time To PersonalBreak - Close Emulator - Waiting " & $iValueSinglePBTimeForced & " Minutes")
+			StartEmulatorCoC($iValueSinglePBTimeForced * 60 * 1000, True)
+			Setlog("Personal Break Finish..", $COLOR_BLUE)
+			_PushToPushBullet($iOrigPushBullet & " | Finish PersonalBreak - Start Emulator And CoC")
+		Else
+			WaitnOpenCoC($iValueSinglePBTimeForced * 60 * 1000, True) ; Log off CoC for user set time in expert tab
+		EndIf
 	Else
 		WaitnOpenCoC(20000, True) ; close CoC for 20 seconds to ensure server logoff, True=call checkmainscreen to clean up if needed
 	EndIf
@@ -153,4 +163,3 @@ Func checkAttackDisable($iSource, $Result = "")
 	Next
 
 EndFunc   ;==>checkAttackDisable
-

@@ -2428,6 +2428,13 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	EndIf
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
 
+	; Check Connections - Added by TheRevenor
+	If $ichkConnection = 1 Then
+		GUICtrlSetState($chkConnection, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkConnection, $GUI_UNCHECKED)
+	 EndIf
+
 	; ExtremeZap - Added by TheRevenor
 	If $ichkExtLightSpell = 1 Then
 		GUICtrlSetState($chkSmartLightSpell, $GUI_DISABLE)
@@ -2446,6 +2453,7 @@ _GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStrin
 	Else
 		GUICtrlSetState($chkSwitchDonate, $GUI_UNCHECKED)
 	EndIf
+		GUICtrlSetData($Account, $iAccount)
 
 	If $ichkMultyFarming = 1 Then
 		GUICtrlSetState($chkMultyFarming, $GUI_CHECKED)

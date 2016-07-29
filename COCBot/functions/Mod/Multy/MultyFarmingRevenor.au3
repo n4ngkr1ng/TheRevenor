@@ -28,8 +28,9 @@ Local $hHBMP_Cropped = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBMP_Cropped)
 
 If  Not FileExists(@ScriptDir & "\images\Multyfarming\main.bmp") Then
 	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\main.bmp")
-ElseIf  Not FileExists(@ScriptDir & "\images\Multyfarming\Second.bmp") Then
-	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Second.bmp")
+ElseIf  Not FileExists(@ScriptDir & "\images\Multyfarming\Second.bmp") And ($iAccount = "2" Or $iAccount = "3" Or $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6") Then
+
+	_GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Second.bmp")
 ElseIf  Not FileExists(@ScriptDir & "\images\Multyfarming\Third.bmp") And ($iAccount = "3" Or $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6") Then
 
 	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Third.bmp")
@@ -52,8 +53,8 @@ EndIf
 	  _GDIPlus_ImageDispose($hBitmap)
 
 $bm1 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\main.bmp")
-$bm3 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Second.bmp")
 $bm2 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\temp.bmp")
+$bm3 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Second.bmp")
 $bm4 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Third.bmp")
 $bm5 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Fourth.bmp")
 $bm6 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Fifth.bmp")
@@ -85,6 +86,8 @@ $bm7 = _GDIPlus_ImageLoadFromFile (@ScriptDir & "\images\Multyfarming\Sixth.bmp"
 		cmbProfile()
 	Else
 		SetLog("Temporary account Detected...", $COLOR_Red)
+		; Pushbullet/Telegram Msg
+		_PushToPushBullet("Temporary account Detected")
 	EndIf
 
 _GDIPlus_ImageDispose($bm1)
@@ -128,7 +131,7 @@ Func MakeAccount()
 	PureClick(830, 590) ;Click Switch
 	Sleep(2000) ;1000
 	PureClick(437, 399 + $midOffsetY) ;Click  Disconn
-	Sleep(500) ;1000
+	Sleep(600) ;1000
 	PureClick(437, 399 + $midOffsetY) ;Click  Connect
 	While 1
 		Sleep(1000)
@@ -342,7 +345,6 @@ Func SwitchAndDonate()
 	EndIf
 EndFunc   ;==>SwitchAndDonate
 
-
 Func MultiFarming()
 	If GUICtrlRead($chkMultyFarming) = $GUI_CHECKED Then
 		$ichkMultyFarming = 1
@@ -362,7 +364,6 @@ Func MultiFarming()
 			GUICtrlSetState($i, $GUI_ENABLE)
 		Next
 	EndIf
-
 
 	GUICtrlSetState($btnmultyAcc1, $GUI_DISABLE)
 	GUICtrlSetState($btnmultyAcc2, $GUI_DISABLE)
@@ -681,7 +682,7 @@ Func SwitchAccount($bAccount)
 	EndIf
 	checkMainScreen()
 	Send("{CapsLock off}")
-	PureClick(830, 590) ;Click Switch
+	PureClick(830, 590, 1, 0, "Click Settings") ;Click Switch
 	If _Sleep(2000) Then Return ;1000
 
 	SelectAccount($bAccount)
@@ -695,7 +696,7 @@ Func SwitchAccount($bAccount)
 	While 1
 		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0) ;load pixel
 		If IsArray($Message) Then
-			SetLog("Load " & $bAccount & " Account", $COLOR_blue)
+			SetLog("Loading Account In Progress...", $COLOR_blue)
 			If _Sleep(500) Then Return ;Not
 			SetLog("Loading Load Button: 1", $COLOR_blue)
 			If _Sleep(1000) Then Return ;Not
@@ -703,7 +704,7 @@ Func SwitchAccount($bAccount)
 			If _Sleep(1000) Then Return ;Not
 			SetLog("Loading Load Button: 3", $COLOR_blue)
 			If _Sleep(500) Then Return ;Not
-			PureClick(512, 433) ;Click Load Button
+			PureClick(512, 433, 1, 0, "Click Load") ;Click Load Button
 			If _Sleep(1000) Then Return
 
 			Local $Message = _PixelSearch(470, 249 + $midOffsetY, 478, 255 + $midOffsetY, Hex(0xE8E8E0, 6), 0)
@@ -711,14 +712,19 @@ Func SwitchAccount($bAccount)
 				$iConfirm = 1
 				PureClick(521, 198) ;Click Confirm
 				If _Sleep(1500) Then Return
-				PureClick(339, 215) ;Click Confirm txtbox
+				PureClick(339, 215, 1, 0, "Click Textbox") ;Click Confirm textbox
 				SetLog("Insert CONFIRM To Text Box ", $COLOR_blue)
 				If _Sleep(2000) Then Return
-				ControlSend($Title, "", "", "{LSHIFT DOWN}{C DOWN}{C UP}{O DOWN}{O UP}{N DOWN}{N UP}{F DOWN}{F UP}{I DOWN}{I UP}{R DOWN}{R UP}{M DOWN}{M UP}{LSHIFT UP}") ;Enter  Confirm  txt
+				If SendText("CONFIRM") = 0 Then ;Insert CONFIRM To Text
+					Setlog("Error Insert CONFIRM To Text Box", $COLOR_RED)
+					Return
+				EndIf
 				If _Sleep(2000) Then Return
-				PureClick(521, 200) ;Click Confirm
+				PureClick(521, 200, 1, 0, "Click Okay") ;Click Confirm
+				If _Sleep(1500) Then Return
 			Else
-				PureClick(521, 200) ;Click Confirm
+				PureClick(521, 200, 1, 0, "Click Okay") ;Click Confirm
+				If _Sleep(1500) Then Return
 			EndIf
 			ExitLoop
 		EndIf
@@ -733,15 +739,19 @@ EndFunc
 
 Func SelectAccount($bAccount)
 	Local $iLoopCount = 0
-	PureClick(437, 399 + $midOffsetY) ;Click  Disconn
-	If _Sleep(500) Then Return ;1000
-	PureClick(437, 399 + $midOffsetY) ;Click  Connect
-	$iSwCount += 1
-	If $iSwCount > 7 Then
+	Local Const $XCon = 431
+	Local Const $YCon = 434
+	If _ColorCheck(_GetPixelColor($XCon, $YCon, True), Hex(4284458031, 6), 20) Then
+		PureClick($XCon, $YCon, 1, 0, "Click Connected") ;Click Connect
+	EndIf
+	If _Sleep(1500) Then Return
+		PureClick($XCon, $YCon, 1, 0, "Click Disconnected") ;Click Disconn
+
+	$iSwCount = 0
+	If $iSwCount > 6 Then
 		SetLog(" Exit Now ...Cancel change account")
 		SetLog("PLease make sure image create From png", $COLOR_RED)
-		PureClick(437, 399 + $midOffsetY) ;Click  Disconn
-		ClickP($aAway, 2, 250, "#0291")
+		PureClickP($aAway, 2, 250, "#0291")
 		Return
 	ElseIf IsMainPage() Then
 		Setlog("Change account cancel")
@@ -751,13 +761,16 @@ Func SelectAccount($bAccount)
 	While 1
 		Local $Message = _PixelSearch(230, 235 + $midOffsetY, 232, 455 + $midOffsetY, Hex(0xF5F5F5, 6), 0) ;(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0x689F38, 6), 0)
 		Local $Message1 = _PixelSearch(230, 235 + $midOffsetY, 232, 455 + $midOffsetY, Hex(0xF5F5F5, 6), 0) ;(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0xF5F5F5, 6), 0)
+
 		If IsArray($Message) Then
-			SetLog("Searching " & $bAccount & " Account...", $COLOR_blue)
+			SetLog("Searching " & $bAccount & " Account...", $COLOR_BLUE)
 			If _Sleep(1500) Then Return
 			CheckAccount($bAccount)
-			CheckOK()
+			;CheckOK()
 			ExitLoop
 		ElseIf IsArray($Message1) Then
+			SetLog("Searching " & $bAccount & " Account...", $COLOR_RED)
+			If _Sleep(1500) Then Return
 			CheckAccount($bAccount)
 			ExitLoop
 		EndIf
@@ -765,8 +778,9 @@ Func SelectAccount($bAccount)
 
 		$iLoopCount += 1
 		ConsoleWrite($iLoopCount & @CRLF)
-		If $iLoopCount > 2000 Then
+		If $iLoopCount > 120 Then
 			SetLog("No Detect Account, Sory..", $COLOR_PURPLE)
+			If _Sleep(1500) Then Return
 			SelectAccount($bAccount)
 			ExitLoop
 		EndIf
@@ -780,7 +794,6 @@ EndFunc
 
 Func LoadAccount($bAccount)
 	Local $iLoopCount = 0
-
 	While 1
 		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0) ;load pixel
 		If IsArray($Message) Then
@@ -792,7 +805,7 @@ Func LoadAccount($bAccount)
 			If _Sleep(1000) Then Return ;Not
 			SetLog("Loading Load Button: 3", $COLOR_blue)
 			If _Sleep(500) Then Return ;Not
-			PureClick(512, 433) ;Click Load Button
+			PureClick(512, 433, 1, 0, "Click Load") ;Click Load Button
 			If _Sleep(1000) Then Return
 
 			Local $Message = _PixelSearch(470, 249 + $midOffsetY, 478, 255 + $midOffsetY, Hex(0xE8E8E0, 6), 0)
@@ -800,14 +813,19 @@ Func LoadAccount($bAccount)
 				$iConfirm = 1
 				PureClick(521, 198) ;Click Confirm
 				If _Sleep(1500) Then Return
-				PureClick(339, 215) ;Click Confirm txtbox
+				PureClick(339, 215, 1, 0, "Click Textbox") ;Click Confirm textbox
 				SetLog("Insert CONFIRM To Text Box ", $COLOR_blue)
 				If _Sleep(2000) Then Return
-				ControlSend($Title, "", "", "{LSHIFT DOWN}{C DOWN}{C UP}{O DOWN}{O UP}{N DOWN}{N UP}{F DOWN}{F UP}{I DOWN}{I UP}{R DOWN}{R UP}{M DOWN}{M UP}{LSHIFT UP}") ;Enter  Confirm  txt
+				If SendText("CONFIRM") = 0 Then ;Insert CONFIRM To Text
+					Setlog("Error Insert CONFIRM To Text Box", $COLOR_RED)
+					Return
+				EndIf
 				If _Sleep(2000) Then Return
-				PureClick(521, 200) ;Click Confirm
+				PureClick(521, 200, 1, 0, "Click Okay") ;Click Confirm
+				If _Sleep(1500) Then Return
 			Else
-				PureClick(521, 200) ;Click Confirm
+				PureClick(521, 200, 1, 0, "Click Okay") ;Click Confirm
+				If _Sleep(1500) Then Return
 			EndIf
 			ExitLoop
 		EndIf
@@ -824,7 +842,6 @@ EndFunc
 
 Func LoadAccount2($bAccount)
 	Local $iLoopCount = 0
-
 	While 1
 		Local $Message = _PixelSearch(487, 387, 492, 391, Hex(0xE8E8E0, 6), 0) ;load pixel
 		If IsArray($Message) Then
@@ -836,7 +853,7 @@ Func LoadAccount2($bAccount)
 			If _Sleep(1000) Then Return ;Not
 			SetLog("Loading Load Button: 3", $COLOR_blue)
 			If _Sleep(500) Then Return ;Not
-			PureClick(512, 433) ;Click Load Button
+			PureClick(512, 433, 1, 0, "Click Load") ;Click Load Button
 			If _Sleep(1000) Then Return
 
 			Local $Message = _PixelSearch(470, 249 + $midOffsetY, 478, 255 + $midOffsetY, Hex(0xE8E8E0, 6), 0)
@@ -844,14 +861,19 @@ Func LoadAccount2($bAccount)
 				$iConfirm = 1
 				PureClick(521, 198) ;Click Confirm
 				If _Sleep(1500) Then Return
-				PureClick(339, 215) ;Click Confirm txtbox
+				PureClick(339, 215, 1, 0, "Click Textbox") ;Click Confirm textbox
 				SetLog("Insert CONFIRM To Text Box ", $COLOR_blue)
 				If _Sleep(2000) Then Return
-				ControlSend($Title, "", "", "{LSHIFT DOWN}{C DOWN}{C UP}{O DOWN}{O UP}{N DOWN}{N UP}{F DOWN}{F UP}{I DOWN}{I UP}{R DOWN}{R UP}{M DOWN}{M UP}{LSHIFT UP}") ;Enter  Confirm  txt
+				If SendText("CONFIRM") = 0 Then ;Insert CONFIRM To Text
+					Setlog("Error Insert CONFIRM To Text Box", $COLOR_RED)
+					Return
+				EndIf
 				If _Sleep(2000) Then Return
-				PureClick(521, 200) ;Click Confirm
+				PureClick(521, 200, 1, 0, "Click Okay") ;Click Confirm
+				If _Sleep(1500) Then Return
 			Else
-				PureClick(521, 200) ;Click Confirm
+				PureClick(521, 200, 1, 0, "Click Okay") ;Click Confirm
+				If _Sleep(1500) Then Return
 			EndIf
 			ExitLoop
 		EndIf
@@ -911,7 +933,7 @@ Func CheckAccount($bAccount)
 			If $AccountLoc = 1 Then
 				SetLog("Found " & $bAccount & " Account...", $COLOR_GREEN)
 				If $DebugSetLog = 1 Then SetLog("Found " & $bAccount & " Account (" & $AccountX & "," & $AccountY & ") tolerance:" & $AccountTol, $COLOR_PURPLE)
-				PureClick($AccountX, $AccountY,1,0,"#0120")
+				PureClick($AccountX, $AccountY, 1, 0, "Click Account")
 				If _Sleep(500) Then Return
 				Return True
 			EndIf
@@ -940,102 +962,133 @@ Func SwitchDonate()
 		;..............Switch Account & Donate Then Switch Back...................
 	If $ichkSwitchDonate = 1 Then
 		SetLog("Loading Switching Account For Donate...", $COLOR_BLUE)
-		DetectAccount()
-		If _Sleep(1000) Then Return
+		;DetectAccount()
+		If _Sleep(1500) Then Return
 		If $sCurrProfile = "[01] Main" Then
 			SwitchAccount("Second")
+			checkMainScreen()
 			$RunState = True
 			While 1
-				;Collect()
 				ZoomOut()
-				Sleep(1000)
+				Sleep(1500)
+				DetectAccount()
+				Collect()
+				_Sleep($iDelayRunBot1)
 				DonateCC()
 				RequestCC()
-				DetectAccount()
 				Train()
 				ExitLoop
 			WEnd
 			SwitchAccount("Main")
+			checkMainScreen()
 		ElseIf $sCurrProfile = "[02] Second" Then
 			If $iAccount = "3" Or $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6" Then
 				SwitchAccount("Third")
+				checkMainScreen()
 			Else
 				SwitchAccount("Main")
+				checkMainScreen()
 			EndIf
 			$RunState = True
 			While 1
 				ZoomOut()
-				Sleep(1000)
+				Sleep(1500)
+				DetectAccount()
+				Collect()
+				Sleep(1500)
 				DonateCC()
 				RequestCC()
-				DetectAccount()
 				Train()
 				ExitLoop
 			WEnd
 			SwitchAccount("Second")
+			checkMainScreen()
 		ElseIf $sCurrProfile = "[03] Third" Then
 			If $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6" Then
 				SwitchAccount("Fourth")
+				checkMainScreen()
 			ElseIf $iAccount = "3" Then
 				SwitchAccount("Main")
+				checkMainScreen()
 			EndIf
 			$RunState = True
 			While 1
 				ZoomOut()
+				Sleep(1500)
+				DetectAccount()
+				Collect()
+				_Sleep($iDelayRunBot1)
 				DonateCC()
 				RequestCC()
-				DetectAccount()
 				Train()
 				ExitLoop
 			WEnd
 			SwitchAccount("Third")
+			checkMainScreen()
 		ElseIf $sCurrProfile = "[04] Fourth" Then
 			If $iAccount = "5" Or $iAccount = "6" Then
 				SwitchAccount("Fifth")
+				checkMainScreen()
 			ElseIf $iAccount = "4" Then
 				SwitchAccount("Main")
+				checkMainScreen()
 			EndIf
 			$RunState = True
 			While 1
 				ZoomOut()
+				Sleep(1500)
+				DetectAccount()
+				Collect()
+				_Sleep($iDelayRunBot1)
 				DonateCC()
 				RequestCC()
-				DetectAccount()
 				Train()
 				ExitLoop
 			WEnd
 			SwitchAccount("Fourth")
+			checkMainScreen()
 		ElseIf $sCurrProfile = "[05] Fifth" Then
 			If $iAccount = "6" Then
 				SwitchAccount("Fifth")
+				checkMainScreen()
 			ElseIf $iAccount = "5" Then
 				SwitchAccount("Main")
+				checkMainScreen()
 			EndIf
 			$RunState = True
 			While 1
 				ZoomOut()
+				Sleep(1500)
+				DetectAccount()
+				Collect()
+				_Sleep($iDelayRunBot1)
 				DonateCC()
 				RequestCC()
-				DetectAccount()
 				Train()
 				ExitLoop
 			WEnd
 			SwitchAccount("Fifth")
+			checkMainScreen()
 		ElseIf $sCurrProfile = "[06] Sixth" Then
 			$RunState = True
 			SwitchAccount("Main")
+			checkMainScreen()
 			While 1
 				ZoomOut()
+				Sleep(1500)
+				DetectAccount()
+				Collect()
+				_Sleep($iDelayRunBot1)
 				DonateCC()
 				RequestCC()
-				DetectAccount()
 				Train()
 				ExitLoop
 			WEnd
 			SwitchAccount("Sixth")
+			checkMainScreen()
 		EndIf
-		If _Sleep(1000) Then Return
+		If _Sleep(1500) Then Return
 		SetLog("Switching Account For Donate Completed", $COLOR_BLUE)
 		DetectAccount()
 	EndIf
- EndFunc ; Switch Donate
+EndFunc ; Switch Donate

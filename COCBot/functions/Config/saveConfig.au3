@@ -1,3 +1,5 @@
+
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: saveConfig.au3
 ; Description ...: Saves all of the GUI values to the config.ini and building.ini files
@@ -524,6 +526,13 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		$ichkDisableSplash = 0
 	EndIf
+	; Check Connections - Added by TheRevenor
+	If GUICtrlRead($chkConnection) = $GUI_CHECKED Then
+		$ichkConnection = 1
+	Else
+		$ichkConnection = 0
+	EndIf
+	IniWriteS($config, "General", "ChkConnect", $ichkConnection)
 	If GUICtrlRead($chkVersion) = $GUI_CHECKED Then
 		$ichkVersion = 1
 	Else
@@ -854,8 +863,6 @@ Func saveConfig() ;Saves the controls settings to the config
 	$MilkingAttackDropGoblinAlgorithm = _GUICtrlComboBox_GetCurSel($cmbMilkingAttackDropGoblinAlgorithm)
 	$MilkingAttackStructureOrder = _GUICtrlComboBox_GetCurSel($cmbStructureOrder)
 
-
-
 	;scripted attack save
 	If GUICtrlRead($chkMilkAfterAttackScripted) = $GUI_CHECKED Then
 		$MilkAttackAfterScriptedAtk = 1
@@ -885,7 +892,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		$iChkRandomspeedatk[$DB] = 0
 	EndIf
 	If GUICtrlRead($chkSmartAttackRedAreaDB) = $GUI_CHECKED Then
-		$iChkRedArea[$DB] = 1
+		$iChkRedArea[$DB] = 0
 	Else
 		$iChkRedArea[$DB] = 0
 	EndIf
