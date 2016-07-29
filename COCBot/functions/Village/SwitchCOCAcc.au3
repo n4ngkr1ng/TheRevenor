@@ -18,6 +18,7 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 	SetLog("Ordered COC account: " & AccGetOrder() & " (" & AccGetStep() & ")", $COLOR_GREEN);
 	SetLog("Ordered bot profile: " & ProGetOrderName(), $COLOR_GREEN);
 	SetLog("Switching Mode: " & $iSwitchMode & " - " & GUICtrlRead($cmbSwitchMode), $COLOR_GREEN)
+	;if $nCurCOCAcc = $anCOCAccIdx[$nCurCOCAcc - 1] And Not $FirstStart Then		;Loopping 1 account, disable switching
 	Local $lnNextStep = 0
 	Local $nPreCOCAcc = $nCurCOCAcc
 	If $iSwitchMode = 0 And $iSwitchCnt >= $CoCAccNo Then
@@ -31,32 +32,32 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 				If _Sleep(1000) Then Return False
 				Return False
 			EndIf
-			$nCurCOCAcc = $accAttack[$lnNextStep]		;target attack account
+			$nCurCOCAcc = $accAttack[$lnNextStep]     ;target attack account
 			SetLog("Account " & $nCurCOCAcc & " has shortest training time now")
 		Else
-			$nCurCOCAcc = GetNextDonAcc()				;$accDonate[0], target donate account
+			$nCurCOCAcc = GetNextDonAcc();	$accDonate[0]				;target donate account
 			SetLog("Account " & $nCurCOCAcc & " for donation")
 		EndIf
-	ElseIf $iSwitchMode = 2 Then 						;random switch
+	ElseIf $iSwitchMode = 2 Then ; random switch
 		$nCurCOCAcc = GetRandomAcc()
 		SetLog("Randomized to Account " & $nCurCOCAcc)
 	Else
 		$lnNextStep = AccGetNext()
 		if $nCurCOCAcc = $anCOCAccIdx[$lnNextStep] And Not $FirstStart Then		;Loopping 1 account, disable switching
 			SetLog("Target account is current one. Nothing to do..", $COLOR_GREEN)
-			$nCurStep = $lnNextStep						;but still move to next step
+			$nCurStep = $lnNextStep		;but still move to next step
 			$iGoldLast = ""
 			$iElixirLast = ""
 			If _Sleep(1000) Then Return False
 			Return True
 		EndIf
-		$nCurCOCAcc = $anCOCAccIdx[$lnNextStep]			;target account
+		$nCurCOCAcc = $anCOCAccIdx[$lnNextStep]     ;target account
 		SetLog("Account " & $nCurCOCAcc & " is next acc")
 	EndIf
 
     Local Const $XConnect = 431
     Local Const $YConnect = 434
-    Local Const $ColorConnect = 4284458031      	;Connected Button: green
+    Local Const $ColorConnect = 4284458031      ;Connected Button: green
     PureClick(800, 585, 1, 0, "Click Setting")      ;Click setting
     If _Sleep(3000) Then Return False
     If _GetPixelColor($XConnect, $YConnect, True) = Hex($ColorConnect, 6) Then       ;Green

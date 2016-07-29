@@ -180,17 +180,17 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 			   GUICtrlSetTip(-1, $txtTip)
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	ReDim $lblGoldLootAcc[$nTotalCOCAcc]
-	ReDim $lblElixirLootAcc[$nTotalCOCAcc]
-	ReDim $lblDarkLootAcc[$nTotalCOCAcc]
-	ReDim $lblHourlyStatsGoldAcc[$nTotalCOCAcc]
-	ReDim $lblHourlyStatsElixirAcc[$nTotalCOCAcc]
-	ReDim $lblHourlyStatsDarkAcc[$nTotalCOCAcc]
+	ReDim $lblGoldLootAcc[$nTotalProfile]
+	ReDim $lblElixirLootAcc[$nTotalProfile]
+	ReDim $lblDarkLootAcc[$nTotalProfile]
+	ReDim $lblHourlyStatsGoldAcc[$nTotalProfile]
+	ReDim $lblHourlyStatsElixirAcc[$nTotalProfile]
+	ReDim $lblHourlyStatsDarkAcc[$nTotalProfile]
 
-	If $nTotalCOCAcc >= 2 Then
+	If $nTotalProfile >= 2 Then
 	  $x = $xStart
 	  $y = $yStart + 118
-	   $grpProfileStats = GUICtrlCreateGroup($nCurCOCAcc, $x - 20, $y - 15, 210, 98)
+	   $grpProfileStats = GUICtrlCreateGroup($ProfileList[1], $x - 20, $y - 15, 210, 98)
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 		 $x = $xStart + 15
@@ -233,7 +233,7 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 
 	  $x = $xStart + 215
 	  $y = $yStart + 118
-	   $grpProfileStats = GUICtrlCreateGroup($nCurCOCAcc + 1, $x - 20, $y - 15, 210, 98)
+	   $grpProfileStats = GUICtrlCreateGroup($ProfileList[2], $x - 20, $y - 15, 210, 98)
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 		 $x = $xStart + 215 + 15
@@ -276,10 +276,10 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 
     EndIf
 
-	If $nTotalCOCAcc >= 3 Then
+	If $nTotalProfile >= 3 Then
 	  $x = $xStart
 	  $y = $yStart + 220
-	   $grpProfileStats = GUICtrlCreateGroup($nCurCOCAcc + 2, $x - 20, $y - 15, 210, 98)
+	   $grpProfileStats = GUICtrlCreateGroup($ProfileList[3], $x - 20, $y - 15, 210, 98)
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 		 $x = $xStart + 15
@@ -322,10 +322,10 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 
     EndIf
 
-	If $nTotalCOCAcc >= 4 Then
+	If $nTotalProfile >= 4 Then
 	  $x = $xStart
 	  $y = $yStart + 220
-		 $grpProfileStats = GUICtrlCreateGroup($nCurCOCAcc + 3, $x - 20 + 215, $y - 15, 210, 98)
+		 $grpProfileStats = GUICtrlCreateGroup($ProfileList[4], $x - 20 + 215, $y - 15, 210, 98)
 		 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 		 $x = $xStart + 215 + 15
